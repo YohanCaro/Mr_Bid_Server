@@ -25,6 +25,10 @@ public class BidTime {
 		return (short) (year*365 + month*30 + day);
 	}
 	
+	public float getTimeOnHours() {
+		return this.getTimeOnDays()*24;
+	}
+	
 	public BidDate getDate() {
 		return date;
 	}
