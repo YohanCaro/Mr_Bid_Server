@@ -54,4 +54,10 @@ public class User {
 		return creditCard;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
 }

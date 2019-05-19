@@ -6,63 +6,97 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pgr3.mr_bid.model.entity.User;
 
 public class UsersPersistence {
 	private File file;
+	private Gson gson;
 	private BufferedReader bufferedReader;
 	private BufferedWriter bufferedWriter;
 	
 	public UsersPersistence() {
 		file = new File("data/appData/usersData.json");		
+		gson = new Gson();
 	}
 	
 	public void addNewUser(User user) throws Exception {
-		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("FirstName", user.getFirstName());
-		jsonObject.addProperty("LastName", user.getLastName());
-		jsonObject.addProperty("e-mail", user.getEmail());
-		jsonObject.addProperty("Password", encryptPasswd(user.getPassword()));
-		jsonObject.addProperty("birthDate", user.getBirthDate().toString());
-		jsonObject.addProperty("Gender", user.isFemale());
-		jsonObject.addProperty("CreditCard", user.getCreditCard().convertToString());
-		System.out.println(jsonObject.toString());
-		openFile('w');
-		bufferedWriter.write(jsonObject.toString());
-		bufferedWriter.flush();
-		
+		openFile('w',true);
+		user.setPassword(this.encryptPasswd(user.getPassword()));
+		bufferedWriter.write(gson.toJson(user));
+		bufferedWriter.newLine();
 		closeFile('w');
 	}
 	
+	public void deleteUser(User user) throws IOException {
+		openFile('r',true);
+		boolean finded=false;
+		String line = "";
+		int numLine=0;
+		while(!finded&&(line = bufferedReader.readLine())!=null) {
+			if(gson.fromJson(line, User.class).getFirstName().equals(user.getFirstName())) {
+				finded=true;
+			}else 
+				numLine++;
+		}
+		deleteLine(numLine);
+		closeFile('r');
+	}
 	
+	private void deleteLine(int indexLine) throws IOException {
+		String dataFile = "";
+		String currentLine="";
+		int counter = 0;
+		openFile('r', true);
+		while((currentLine=bufferedReader.readLine())!=null) {
+			if(counter!=indexLine) 
+				dataFile+=currentLine+"\n";
+			counter++;	
+		}
+		overWriteFile(dataFile);
+	}
+	
+	private void overWriteFile(String dataFile) throws IOException {
+		openFile('w',false);
+		String[] lines = dataFile.split("\n");
+		for (int i = 0; i < lines.length; i++) { 
+			bufferedWriter.write(lines[i]);
+			bufferedWriter.newLine();
+		}
+		closeFile('w');
+	}
+	
+	public User getUserByFirstName(String firstName) throws IOException {
+		User user = null;
+		openFile('r', true);
+		String line = "";
+		bufferedReader.reset();
+		while(user==null&&(line = bufferedReader.readLine())!=null) {
+			if(gson.fromJson(line, User.class).getFirstName().equals(firstName)) {
+				user = gson.fromJson(line, User.class);
+			}
+		}
+		closeFile('r');
+		return user;
+	}
 	
 	/**
 	 * Prepares the file for the read/write operations
 	 * @param mode indicates the mode to open the file (w=write/r=read)
 	 * @throws IOException Activated when the file doesn't exists
 	 */
-	private void openFile(char mode) throws IOException {
+	private void openFile(char mode, boolean accumulate) throws IOException {
 		switch (mode) {
 		case 'w':
-			FileWriter fileWriter = new FileWriter(file, true);
+			FileWriter fileWriter = new FileWriter(file, accumulate);
 			bufferedWriter = new BufferedWriter(fileWriter);
 			break;
 		case 'r':
-			FileReader fileReader = new FileReader(file);		
+			FileReader fileReader = new FileReader(file);				
 			bufferedReader = new BufferedReader(fileReader);
 			break;
 		}

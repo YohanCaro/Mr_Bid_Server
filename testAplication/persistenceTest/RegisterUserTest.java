@@ -14,6 +14,7 @@ public class RegisterUserTest {
 					new CreditCard(LocalDate.of(2020, 4, 18), "holder", "84923481", "24519201"));
 		try {
 			persistence.addNewUser(user);
+//			persistence.deleteUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
