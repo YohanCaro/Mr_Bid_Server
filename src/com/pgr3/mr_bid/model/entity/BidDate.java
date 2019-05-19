@@ -35,7 +35,7 @@ public class BidDate {
 	}
 	
 	public String getDateString() {
-		return day + "/" + month.getValue() + "/" + year;
+		return day + "/" + (month.getValue()+1) + "/" + year;
 	}
 	
 }
