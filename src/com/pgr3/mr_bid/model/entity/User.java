@@ -53,5 +53,9 @@ public class User {
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
+	
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 
 }
