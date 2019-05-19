@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class CreditCard {
 	
-	private LocalDate expirationDate;
+	private BidDate expirationDate;
 	private String cardholderName;
 	private String cardNumber;
 	private String securityCode;
 	
-	public CreditCard(LocalDate expirationDate, String cardholderName, String cardNumber, String securityCode) {
+	public CreditCard(BidDate expirationDate, String cardholderName, String cardNumber, String securityCode) {
 		this.expirationDate = expirationDate;
 		this.cardholderName = cardholderName;
 		this.cardNumber = cardNumber;
@@ -20,7 +20,7 @@ public class CreditCard {
 		
 	}
 
-	public LocalDate getExpirationDate() {
+	public BidDate getExpirationDate() {
 		return expirationDate;
 	}
 

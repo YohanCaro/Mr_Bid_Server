@@ -17,7 +17,7 @@ public class BidTime {
 	
 	public short getTimeOnDays() {
 		short year = (short) (date.getYear() - calendar.get(calendar.YEAR));
-		short month = (short) (date.getMonth().getValue() - calendar.get(calendar.MONTH));
+		short month = (short) (date.getMonth() - calendar.get(calendar.MONTH));
 		short day = (short) (date.getDay() - calendar.get(calendar.DAY_OF_MONTH));
 		
 		return (short) (year*365 + month*30 + day);

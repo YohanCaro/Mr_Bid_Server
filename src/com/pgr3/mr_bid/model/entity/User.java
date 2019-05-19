@@ -53,6 +53,10 @@ public class User {
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
+	
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 
 	public void setPassword(String password) {
 		this.password = password;
