@@ -1,6 +1,5 @@
 package com.prg3.mr_bid.persistence;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -8,10 +7,12 @@ import java.util.ResourceBundle;
 public class FileOperations {
 	/**
 	 * @author Luis!
-	 * @throws IOException 
+	 * @since 19-05-2019 
 	 * 
+	 * The FileOperations class contains all the methods related to 
+	 * the persistence of the program 
 	 */
-	public FileOperations(String path) throws IOException {
+	public FileOperations(String path) {
 
 	}
 	

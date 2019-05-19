@@ -35,5 +35,9 @@ public class CreditCard {
 	public String getSecurityCode() {
 		return securityCode;
 	}	
+	
+	public String convertToString() {
+		return expirationDate.toString()+" "+cardholderName+" "+cardNumber+" "+securityCode;
+	}
 
 }
