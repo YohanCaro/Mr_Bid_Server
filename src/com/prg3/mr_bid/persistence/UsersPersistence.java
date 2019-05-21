@@ -7,10 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
 import com.google.gson.Gson;
 import com.pgr3.mr_bid.model.entity.User;
 
@@ -48,6 +48,32 @@ public class UsersPersistence {
 		closeFile('r');
 	}
 	
+	public ArrayList<User> getAllUsers() throws IOException{
+		ArrayList<User> users = new ArrayList<User>();
+		openFile('r', true);
+		String line = "";
+		while((line = bufferedReader.readLine())!=null) {
+			users.add(gson.fromJson(line, User.class));
+		}		
+		closeFile('r');
+		return users;
+	}
+	
+	public User getUserByFirstName(String firstName) throws Exception {
+		User user = null;
+		openFile('r', true);
+		String line = "";
+		bufferedReader.reset();
+		while(user==null&&(line = bufferedReader.readLine())!=null) {
+			if(gson.fromJson(line, User.class).getFirstName().equals(firstName)) {
+				user = gson.fromJson(line, User.class);
+				user.setPassword(desencrypt(user.getPassword()));
+			}
+		}
+		closeFile('r');			
+		return user;
+	}
+	
 	private void deleteLine(int indexLine) throws IOException {
 		String dataFile = "";
 		String currentLine="";
@@ -69,20 +95,6 @@ public class UsersPersistence {
 			bufferedWriter.newLine();
 		}
 		closeFile('w');
-	}
-	
-	public User getUserByFirstName(String firstName) throws IOException {
-		User user = null;
-		openFile('r', true);
-		String line = "";
-		bufferedReader.reset();
-		while(user==null&&(line = bufferedReader.readLine())!=null) {
-			if(gson.fromJson(line, User.class).getFirstName().equals(firstName)) {
-				user = gson.fromJson(line, User.class);
-			}
-		}
-		closeFile('r');
-		return user;
 	}
 	
 	/**
@@ -119,14 +131,14 @@ public class UsersPersistence {
 		}
 	}
 	
-	public String encryptPasswd(String password) throws Exception {
+	private String encryptPasswd(String password) throws Exception {
 		final byte[] bytes = password.getBytes("UTF-8");
 		final Cipher aes = getCipher(true);
 		final byte[] encrypted = aes.doFinal(bytes);
 		return Arrays.toString(encrypted);
 	}
 
-	public String desencrypt(String encrypted) throws Exception {
+	private String desencrypt(String encrypted) throws Exception {
 		String[] byteValues = encrypted.substring(1, encrypted.length() - 1).split(",");
 		byte[] encryptedBytes = new byte[byteValues.length];				
 		for (int i=0, len=encryptedBytes.length; i<len; i++) 
@@ -138,9 +150,9 @@ public class UsersPersistence {
 	}
 
 	private Cipher getCipher(boolean operationMode) throws Exception {
-		final String frase = "\r\n"+"LongPhraseWithDifferentLettersNumbersAndSpecialCharacters_áÁéÉíÍóÓúÚüÜñÑ1234567890!#%$&()=%_!_";
+		final String phrase = "\r\n"+"LongPhraseWithDifferentLettersNumbersAndSpecialCharacters_áÁéÉíÍóÓúÚüÜñÑ1234567890!#%$&()=%_!_";
 		final MessageDigest digest = MessageDigest.getInstance("SHA");
-		digest.update(frase.getBytes("UTF-8"));
+		digest.update(phrase.getBytes("UTF-8"));
 		final SecretKeySpec key = new SecretKeySpec(digest.digest(), 0, 16, "AES");
 
 		final Cipher aes = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -149,7 +161,6 @@ public class UsersPersistence {
 		} else {
 			aes.init(Cipher.DECRYPT_MODE, key);
 		}
-
 		return aes;
 	}
 }
