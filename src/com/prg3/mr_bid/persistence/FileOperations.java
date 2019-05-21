@@ -60,6 +60,12 @@ public class FileOperations {
 		return gson.toJson(object);
 	}
 	
+	/**
+	 * Converts a string json into an object of a specific class
+	 * @param json
+	 * @param class1
+	 * @return
+	 */
 	public Object jsonToObject(String json, Class class1) {
 		return gson.fromJson(json, class1);
 	}
