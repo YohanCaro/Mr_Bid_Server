@@ -20,7 +20,7 @@ public class FileOperations {
 	private Gson gson;
 	public FileOperations(String path) {
 		gson = new Gson();
-		usersPersistence = new UsersPersistence();
+		usersPersistence = new UsersPersistence(gson);
 	}
 	
 	public void addUser(User user) throws Exception {

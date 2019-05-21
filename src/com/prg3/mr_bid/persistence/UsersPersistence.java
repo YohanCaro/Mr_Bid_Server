@@ -20,9 +20,9 @@ public class UsersPersistence {
 	private BufferedReader bufferedReader;
 	private BufferedWriter bufferedWriter;
 	
-	public UsersPersistence() {
+	public UsersPersistence(Gson gson) {
 		file = new File("data/appData/usersData.json");		
-		gson = new Gson();
+		this.gson = gson;
 	}
 	
 	public void addNewUser(User user) throws Exception {
