@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 import com.pgr3.mr_bid.model.entity.Bidding;
-import com.pgr3.mr_bid.model.entity.User;
 
 public class BiddingPersistence {
 	private Gson gson;

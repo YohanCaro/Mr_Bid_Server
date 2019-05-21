@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.google.gson.Gson;
+import com.pgr3.mr_bid.model.entity.Bidding;
 import com.pgr3.mr_bid.model.entity.User;
 
 /**
@@ -17,10 +18,12 @@ import com.pgr3.mr_bid.model.entity.User;
  */
 public class FileOperations {
 	private UsersPersistence usersPersistence;
+	private BiddingPersistence biddingPersistence;
 	private Gson gson;
 	public FileOperations(String path) {
 		gson = new Gson();
 		usersPersistence = new UsersPersistence(gson);
+		biddingPersistence = new BiddingPersistence(gson);
 	}
 	
 	public void addUser(User user) throws Exception {
@@ -33,6 +36,14 @@ public class FileOperations {
 	
 	public ArrayList<User> getUsersList() throws IOException {
 		return usersPersistence.getAllUsers();
+	}
+	
+	public void addBidding(Bidding bidding) throws Exception {
+		biddingPersistence.addNewBidding(bidding);
+	}
+	
+	public void deleteBidding(Bidding bidding) throws IOException {
+		biddingPersistence.deleteBidding(bidding);
 	}
 	
 	/**
