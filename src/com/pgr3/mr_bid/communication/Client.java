@@ -7,6 +7,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import com.google.gson.Gson;
+import com.pgr3.mr_bid.model.entity.BidDate;
+import com.pgr3.mr_bid.model.entity.CreditCard;
+import com.pgr3.mr_bid.model.entity.Product;
+import com.pgr3.mr_bid.model.entity.User;
+import com.pgr3.mr_bid.utilities.Constants;
 
 public class Client implements Runnable {
 	
@@ -14,7 +19,6 @@ public class Client implements Runnable {
 	private Socket socket;
 	private DataInputStream dataIS;
 	private DataOutputStream dataOS;
-	private Gson gson;
 	private boolean isConect;
 	
 	public Client(Server server, Socket socket) throws UnknownHostException, IOException {
@@ -22,7 +26,6 @@ public class Client implements Runnable {
 		this.server = server;
 		dataIS = new DataInputStream(this.socket.getInputStream());
 		dataOS = new DataOutputStream(this.socket.getOutputStream());
-		gson = new Gson();
 		this.isConect = true;
 	}
 	
@@ -36,9 +39,9 @@ public class Client implements Runnable {
 		String jsonString;
 		while (isConect) {
 			try {
-				command = gson.fromJson(this.dataIS.readUTF(), Commands.class);
+				command = Constants.gson.fromJson(this.dataIS.readUTF(), Commands.class);
 				jsonString = this.dataIS.readUTF();
-				this.server.reciveRequest(command, jsonString, this);
+				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
 				isConect = false;
 				e.printStackTrace();
@@ -46,13 +49,33 @@ public class Client implements Runnable {
 		}
 	}
 	
+	public void reciveRequest(Commands c, String g) throws IOException {
+		System.out.println(g);
+		switch (c) {
+		case LOGIN:
+			Constants.user = Constants.gson.fromJson(g, User.class);
+			Constants.user.setCreditCard(new CreditCard(new BidDate(10, 10, 2010), "Juan", "123", "321"));
+			this.sendData(c, Constants.user);
+			break;
+		case SIGNIN:
+			Constants.product = Constants.gson.fromJson(g, Product.class);
+			this.sendData(c, Constants.product);
+			break;
+		case UPBIDDING:
+			
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void sendCommand(Commands command) throws IOException {
-		dataOS.writeUTF(gson.toJson(command));
+		dataOS.writeUTF(Constants.gson.toJson(command));
 	}
 	
 	public void sendData(Commands command, Object o) throws IOException {
-		dataOS.writeUTF(gson.toJson(command));
-		dataOS.writeUTF(gson.toJson(o));
+		dataOS.writeUTF(Constants.gson.toJson(command));
+		dataOS.writeUTF(Constants.gson.toJson(o));
 	}
 
 }
