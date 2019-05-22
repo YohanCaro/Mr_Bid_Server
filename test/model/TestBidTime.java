@@ -3,8 +3,8 @@ package model;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.pgr3.mr_bid.model.entity.BidDate;
-import com.pgr3.mr_bid.model.entity.BidTime;
+import com.prg3.mr_bid.model.entity.BidDate;
+import com.prg3.mr_bid.model.entity.BidTime;
 
 public class TestBidTime {
 

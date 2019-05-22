@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.google.gson.Gson;
-import com.pgr3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.model.entity.User;
 
 /**
  * @author Luis!

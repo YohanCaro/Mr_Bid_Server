@@ -2,7 +2,7 @@ package communication;
 
 import java.io.IOException;
 
-import com.pgr3.mr_bid.communication.Server;
+import com.prg3.mr_bid.communication.Server;
 
 public class TestServer {
 

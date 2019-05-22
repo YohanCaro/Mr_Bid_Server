@@ -1,8 +1,8 @@
-package com.pgr3.mr_bid.utilities;
+package com.prg3.mr_bid.utilities;
 
 import com.google.gson.Gson;
-import com.pgr3.mr_bid.model.entity.Product;
-import com.pgr3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.model.entity.Product;
+import com.prg3.mr_bid.model.entity.User;
 
 public class Constants {
 	

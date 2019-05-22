@@ -1,4 +1,4 @@
-package com.pgr3.mr_bid.communication;
+package com.prg3.mr_bid.communication;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,11 +7,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import com.google.gson.Gson;
-import com.pgr3.mr_bid.model.entity.BidDate;
-import com.pgr3.mr_bid.model.entity.CreditCard;
-import com.pgr3.mr_bid.model.entity.Product;
-import com.pgr3.mr_bid.model.entity.User;
-import com.pgr3.mr_bid.utilities.Constants;
+import com.prg3.mr_bid.model.entity.BidDate;
+import com.prg3.mr_bid.model.entity.CreditCard;
+import com.prg3.mr_bid.model.entity.Product;
+import com.prg3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.utilities.Constants;
 
 public class Client implements Runnable {
 	

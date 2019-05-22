@@ -1,4 +1,4 @@
-package com.pgr3.mr_bid.communication;
+package com.prg3.mr_bid.communication;
 
 public enum Commands {
 

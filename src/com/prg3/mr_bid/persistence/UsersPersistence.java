@@ -12,7 +12,7 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import com.google.gson.Gson;
-import com.pgr3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.model.entity.User;
 
 public class UsersPersistence {
 	private File file;
