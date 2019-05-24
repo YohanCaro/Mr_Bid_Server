@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.Bidding;
+import com.prg3.mr_bid.model.entity.User;
 
 public class BiddingPersistence {
 	private Gson gson;
@@ -41,6 +42,19 @@ public class BiddingPersistence {
 		}
 		deleteLine(numLine);
 		closeFile('r');
+	}
+	
+	public Bidding getBiddingByName(String biddingName) throws IOException {
+		Bidding bidding = null;
+		openFile('r', true);
+		String line = "";
+		while(bidding==null&&(line = bufferedReader.readLine())!=null) {
+			String[] splits = line.split("\"");
+			if(splits[3].equals(biddingName)) 
+				bidding = gson.fromJson(line, Bidding.class);
+		}
+		closeFile('r');			
+		return bidding;
 	}
 	
 	private void deleteLine(int indexLine) throws IOException {

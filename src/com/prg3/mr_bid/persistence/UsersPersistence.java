@@ -63,9 +63,9 @@ public class UsersPersistence {
 		User user = null;
 		openFile('r', true);
 		String line = "";
-		bufferedReader.reset();
 		while(user==null&&(line = bufferedReader.readLine())!=null) {
-			if(gson.fromJson(line, User.class).getFirstName().equals(firstName)) {
+			String[] splits = line.split("\"");
+			if(splits[3].equals(firstName)) {
 				user = gson.fromJson(line, User.class);
 				user.setPassword(desencrypt(user.getPassword()));
 			}
