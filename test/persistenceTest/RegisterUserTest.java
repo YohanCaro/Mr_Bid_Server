@@ -3,9 +3,9 @@ package persistenceTest;
 import java.time.LocalDate;
 
 import com.google.gson.Gson;
-import com.pgr3.mr_bid.model.entity.BidDate;
-import com.pgr3.mr_bid.model.entity.CreditCard;
-import com.pgr3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.model.entity.BidDate;
+import com.prg3.mr_bid.model.entity.CreditCard;
+import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.UsersPersistence;
 
 public class RegisterUserTest {

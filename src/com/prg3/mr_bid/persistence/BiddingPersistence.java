@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.pgr3.mr_bid.model.entity.Bidding;
+import com.prg3.mr_bid.model.entity.Bidding;
 
 public class BiddingPersistence {
 	private Gson gson;

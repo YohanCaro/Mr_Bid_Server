@@ -1,4 +1,4 @@
-package com.pgr3.mr_bid.model.entity;
+package com.prg3.mr_bid.model.entity;
 
 import java.util.ArrayList;
 
