@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.Bidding;
@@ -42,6 +43,17 @@ public class BiddingPersistence {
 		}
 		deleteLine(numLine);
 		closeFile('r');
+	}
+	
+	public ArrayList<Bidding> getAllBiddings() throws IOException {
+		ArrayList<Bidding> biddings = new ArrayList<Bidding>();
+		openFile('r', true);
+		String line = "";
+		while((line = bufferedReader.readLine())!=null) {
+			biddings.add(gson.fromJson(line, Bidding.class));
+		}		
+		closeFile('r');
+		return biddings;
 	}
 	
 	public Bidding getBiddingByName(String biddingName) throws IOException {
