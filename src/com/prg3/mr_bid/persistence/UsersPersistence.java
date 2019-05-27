@@ -59,13 +59,21 @@ public class UsersPersistence {
 		return users;
 	}
 	
-	public User getUserByFirstName(String firstName) throws Exception {
+	/**
+	 * Receives the full name of an user (firstName+" "+lastName). Next to this, the name is
+	 * seeked into the users data. If the user is founded, return an user object with the 
+	 * request info; in another case, return a null object
+	 * @param fullName the first name and the last name of an user splited by a space character
+	 * @return the user object corresponding to the required user
+	 * @throws Exception It's activated when the file can't be founded
+	 */
+	public User getUserByFullName(String fullName) throws Exception {
 		User user = null;
 		openFile('r', true);
 		String line = "";
 		while(user==null&&(line = bufferedReader.readLine())!=null) {
 			String[] splits = line.split("\"");
-			if(splits[3].equals(firstName)) {
+			if((splits[3]+" "+splits[7]).equals(fullName)) {
 				user = gson.fromJson(line, User.class);
 				user.setPassword(desencrypt(user.getPassword()));
 			}
