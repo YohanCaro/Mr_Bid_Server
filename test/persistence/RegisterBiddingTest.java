@@ -1,4 +1,4 @@
-package persistenceTest;
+package persistence;
 
 import java.time.LocalDate;
 

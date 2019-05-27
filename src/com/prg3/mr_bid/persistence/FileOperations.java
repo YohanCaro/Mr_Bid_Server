@@ -12,7 +12,7 @@ import com.prg3.mr_bid.model.entity.User;
 
 /**
  * @author Luis!
- * @since 19-05-2019 
+ * @version 19-05-2019 
  * 
  * The FileOperations class contains all the methods related to 
  * the persistence of the program 
@@ -45,6 +45,14 @@ public class FileOperations {
 	
 	public void deleteBidding(Bidding bidding) throws IOException {
 		biddingPersistence.deleteBidding(bidding);
+	}
+	
+	public void updateBiddings(ArrayList<Bidding> biddings) throws IOException {
+		biddingPersistence.updateBiddings(biddings);
+	}
+	
+	public ArrayList<Bidding> getBiddingsList() throws IOException{
+		return biddingPersistence.getAllBiddings();
 	}
 	
 	/**

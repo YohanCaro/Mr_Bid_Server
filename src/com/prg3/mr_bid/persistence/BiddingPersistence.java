@@ -7,10 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.Bidding;
-import com.prg3.mr_bid.model.entity.User;
 
 public class BiddingPersistence {
 	private Gson gson;
@@ -43,6 +41,13 @@ public class BiddingPersistence {
 		}
 		deleteLine(numLine);
 		closeFile('r');
+	}
+	
+	public void updateBiddings(ArrayList<Bidding> biddings) throws IOException {
+		String data = "";
+		for (int i = 0; i < biddings.size(); i++) 
+			data+=gson.toJson(biddings.get(i))+"\n";
+		this.overWriteFile(data);
 	}
 	
 	public ArrayList<Bidding> getAllBiddings() throws IOException {
