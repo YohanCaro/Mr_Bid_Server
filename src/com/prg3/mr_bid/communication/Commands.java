@@ -2,7 +2,7 @@ package com.prg3.mr_bid.communication;
 
 public enum Commands {
 
-	SIGNIN("signin"), LOGIN("login"), UPBIDDING("up_bidding");
+	SIGNIN("signin"), LOGIN("login"), UPBIDDING("up_bidding"), SENDIMG("send_img");
 	
 	private String value;
 	

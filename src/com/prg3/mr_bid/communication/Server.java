@@ -45,5 +45,4 @@ public class Server extends ServerSocket implements Runnable {
 		return c;
 	}
 	
-	
 }

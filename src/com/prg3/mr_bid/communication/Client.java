@@ -1,10 +1,15 @@
 package com.prg3.mr_bid.communication;
 
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.BidDate;
@@ -47,6 +52,22 @@ public class Client implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	//al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
+	//envía en un ciclo de n imagenes cada imagen usando un BufferedImage
+	
+	public ArrayList<String> getImages(int numImgs, long bidId) throws IOException {
+		ArrayList<String> biddingsPath = new ArrayList<>();
+		BufferedImage bufferedImage;
+		for (int i = 0; i < numImgs; i++) {
+			bufferedImage = ImageIO.read(socket.getInputStream());
+			String imagePath = "data/biddingImages/bidding"+bidId+"_"+i+".png";
+			ImageIO.write(bufferedImage,"png", new FileOutputStream(imagePath));
+			bufferedImage.flush();
+			biddingsPath.add(imagePath);
+		}		
+		return biddingsPath;
 	}
 	
 	public void reciveRequest(Commands c, String g) throws IOException {
