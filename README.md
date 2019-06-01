@@ -2,7 +2,7 @@
 Servidor de la aplicación Mr Bid
 ==================
 
-*Creado por: *
+*Creado por: 
 - Luis Eduardo Martinez Bautista
 - Yohan Eduardo Caro Ponguta
 - Daniel Felipe Garcia Lopez
