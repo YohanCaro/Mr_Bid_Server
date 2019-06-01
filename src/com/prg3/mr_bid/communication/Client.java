@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.google.gson.Gson;
+import com.prg3.mr_bid.controller.ServerController;
 import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.CreditCard;
 import com.prg3.mr_bid.model.entity.Product;
@@ -20,12 +21,13 @@ import com.prg3.mr_bid.utilities.Constants;
 
 public class Client implements Runnable {
 	
+	private User user;
 	private Server server;
 	private Socket socket;
 	private DataInputStream dataIS;
 	private DataOutputStream dataOS;
 	private boolean isConect;
-	
+		
 	public Client(Server server, Socket socket) throws UnknownHostException, IOException {
 		this.socket = socket;
 		this.server = server;
@@ -48,8 +50,8 @@ public class Client implements Runnable {
 				jsonString = this.dataIS.readUTF();
 				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
+				server.getClients().remove(this);
 				isConect = false;
-				e.printStackTrace();
 			}
 		}
 	}
@@ -74,13 +76,15 @@ public class Client implements Runnable {
 		System.out.println(g);
 		switch (c) {
 		case LOGIN:
-			Constants.user = Constants.gson.fromJson(g, User.class);
-			Constants.user.setCreditCard(new CreditCard(new BidDate(10, 10, 2010), "Juan", "123", "321"));
-			this.sendData(c, Constants.user);
+//			Constants.user.setCreditCard(new CreditCard(new BidDate(10, 10, 2010), "Juan", "123", "321"));
 			break;
 		case SIGNIN:
-			Constants.product = Constants.gson.fromJson(g, Product.class);
-			this.sendData(c, Constants.product);
+			User user = Constants.gson.fromJson(g, User.class);
+			if (!ServerController.getInstanceOf().existUser(user.getEmail())) {
+				ServerController.getInstanceOf().addUser(user);
+			} else {
+				this.sendData(Commands.ERROR_SINGIN, "Usuario ya registrado");
+			}
 			break;
 		case UPBIDDING:
 			
