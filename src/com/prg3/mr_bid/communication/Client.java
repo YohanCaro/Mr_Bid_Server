@@ -89,8 +89,6 @@ public class Client implements Runnable {
 		case UPBIDDING:
 			
 			break;
-		default:
-			break;
 		}
 	}
 	

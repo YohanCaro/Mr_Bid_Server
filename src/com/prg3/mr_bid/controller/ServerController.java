@@ -13,7 +13,7 @@ public class ServerController {
 	 * 
 	 */
 	private ServerController() {
-		
+		userList = new ArrayList<>();
 	}
 	
 	public void addUser(User user) {
