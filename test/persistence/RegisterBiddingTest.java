@@ -1,7 +1,5 @@
 package persistence;
 
-import java.time.LocalDate;
-
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.BidTime;
@@ -13,7 +11,7 @@ import com.prg3.mr_bid.persistence.BiddingPersistence;
 public class RegisterBiddingTest {
 	public static void main(String[] args) {
 		BiddingPersistence persistence = new BiddingPersistence(new Gson());
-		Bidding bidding = new Bidding("Subasta de Navaja Suiza (2)", 
+		Bidding bidding = new Bidding(1,"Subasta de Navaja Suiza", 
 				TypeProduct.OTHERS, 
 				new Product("Navaja Suiza", "Sirve para apuñalar", null), 
 				new BidTime(new BidDate(21, 5, 2019), 24), 
@@ -21,7 +19,7 @@ public class RegisterBiddingTest {
 				new BidTime(new BidDate(30, 5, 2019), 24), 
 				true, true);
 		try {
-//			persistence.addNewBidding(bidding);
+			persistence.addNewBidding(bidding);
 			Bidding bidding2 = persistence.getBiddingByName("Subasta de Navaja Suiza");
 			System.out.println("Si sirve!"+bidding2.getTypeProduct());
 //			persistence.deleteUser(user);

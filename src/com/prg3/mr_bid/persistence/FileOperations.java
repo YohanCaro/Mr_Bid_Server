@@ -21,7 +21,8 @@ public class FileOperations {
 	private UsersPersistence usersPersistence;
 	private BiddingPersistence biddingPersistence;
 	private Gson gson;
-	public FileOperations(String path) {
+	
+	public FileOperations() {
 		gson = new Gson();
 		usersPersistence = new UsersPersistence(gson);
 		biddingPersistence = new BiddingPersistence(gson);
@@ -53,27 +54,6 @@ public class FileOperations {
 	
 	public ArrayList<Bidding> getBiddingsList() throws IOException{
 		return biddingPersistence.getAllBiddings();
-	}
-	
-	/**
-	 * Gives the resources of a specific language
-	 * @param requestLanguage the language of the request dialogs
-	 * @return a resourceBundle object with dialogs in the specific language
-	 */
-	public ResourceBundle getLanguageResource(String requestLanguage) {
-		Locale locale = null;
-		switch (requestLanguage) {
-		case "Spanish":
-			locale = new Locale("es", "CO");
-			break;
-		case "English":
-			locale = new Locale("en","US");
-			break;
-		case "French":
-			locale = new Locale("fr","FR");
-			break;
-		}
-		return ResourceBundle.getBundle("data.languages.dialogs", locale);
 	}
 	
 	public String objectToJson(Object object) {

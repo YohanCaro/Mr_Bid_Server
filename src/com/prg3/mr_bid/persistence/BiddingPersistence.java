@@ -67,7 +67,7 @@ public class BiddingPersistence {
 		String line = "";
 		while(bidding==null&&(line = bufferedReader.readLine())!=null) {
 			String[] splits = line.split("\"");
-			if(splits[3].equals(biddingName)) 
+			if(splits[5].equals(biddingName)) 
 				bidding = gson.fromJson(line, Bidding.class);
 		}
 		closeFile('r');			
