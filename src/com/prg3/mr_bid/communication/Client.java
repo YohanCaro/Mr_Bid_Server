@@ -79,10 +79,14 @@ public class Client implements Runnable {
 			break;
 		case SIGNIN:
 			User user = Constants.gson.fromJson(g, User.class);
-			if (!ServerController.getInstanceOf().existUser(user.getEmail())) {
-				ServerController.getInstanceOf().addUser(user);
+			if (user != null) {
+				if (!ServerController.getInstanceOf().existUser(user.getEmail())) {
+					ServerController.getInstanceOf().addUser(user);
+				} else {
+					this.sendData(Commands.ERROR_SINGIN, "Usuario ya registrado");
+				}
 			} else {
-				this.sendData(Commands.ERROR_SINGIN, "Usuario ya registrado");
+				System.out.println("El usuario ha llegado nulo");
 			}
 			break;
 		case UPBIDDING:
