@@ -21,11 +21,16 @@ public class FileOperations {
 	private UsersPersistence usersPersistence;
 	private BiddingPersistence biddingPersistence;
 	private Gson gson;
+	public static FileOperations fileOperations = null;
 	
-	public FileOperations() {
+	private FileOperations() {
 		gson = new Gson();
 		usersPersistence = new UsersPersistence(gson);
 		biddingPersistence = new BiddingPersistence(gson);
+	}
+	
+	public FileOperations getInstanceOf() {
+		return (fileOperations==null)?this.fileOperations = new FileOperations():this.fileOperations;
 	}
 	
 	public void addUser(User user) throws Exception {
