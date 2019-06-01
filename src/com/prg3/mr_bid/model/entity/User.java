@@ -1,6 +1,5 @@
 package com.prg3.mr_bid.model.entity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class User {
@@ -9,21 +8,57 @@ public class User {
 	private String lastName;
 	private String email;
 	private String password;
-	private LocalDate birthDate;
-	private boolean isFemale;
+	private BidDate birthDate;
+	private String document;
+	private TypeDocument typeDocument;
+	private Gender gender;
 	private CreditCard creditCard;
 	private ArrayList<Bidding> myBiddings;
 	private ArrayList<Bidding> myParcitipations;
 	
-	public User(String firstName, String lastName, String email, String password, LocalDate birthDate, boolean isFemale,
-			CreditCard creditCard) {
+	/**
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param password
+	 * @param birthDate
+	 * @param document
+	 * @param typeDocument
+	 * @param isFemale
+	 * @param creditCard
+	 * @param myBiddings
+	 * @param myParcitipations
+	 */
+	public User(String firstName, String lastName, String email, String password, BidDate birthDate, String document,
+			TypeDocument typeDocument, Gender gender, CreditCard creditCard) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.birthDate = birthDate;
-		this.isFemale = isFemale;
+		this.document = document;
+		this.typeDocument = typeDocument;
+		this.gender = gender;
 		this.creditCard = creditCard;
+		
+		myBiddings = new ArrayList<>();
+		myParcitipations = new ArrayList<>();
+	}
+	
+	/**
+	 * Cambia 
+	 * @param creditCard the creditCard to set
+	 */
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
+	
+	/**
+	 * Cambia 
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -42,26 +77,30 @@ public class User {
 		return password;
 	}
 
-	public LocalDate getBirthDate() {
+	public BidDate getBirthDate() {
 		return birthDate;
 	}
 
-	public boolean isFemale() {
-		return isFemale;
+	public Gender getGender() {
+		return gender;
 	}
 
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
 	
-	public void setCreditCard(CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public ArrayList<Bidding> getMyBiddings() {
+		return myBiddings;
 	}
 	
+	public ArrayList<Bidding> getMyParcitipations() {
+		return myParcitipations;
+	}
 	
+	@Override
+	public String toString() {
+		return "Nombre y apellido: " + firstName + " email " + email +
+				"\nFecha de nacimiento: " + birthDate.getDateString() + " genero " + gender.getValue();
+	}
 
 }

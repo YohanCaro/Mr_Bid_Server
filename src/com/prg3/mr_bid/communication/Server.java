@@ -41,8 +41,17 @@ public class Server extends ServerSocket implements Runnable {
 	
 	public Client createClient() throws UnknownHostException, IOException {
 		Client c = new Client(this, this.accept());
+		System.out.println(".");
 		c.initClient();
 		return c;
+	}
+	
+	/**
+	 * Obtiene los clientes
+	 * @return clients clientes
+	 */
+	public ArrayList<Client> getClients() {
+		return clients;
 	}
 	
 }
