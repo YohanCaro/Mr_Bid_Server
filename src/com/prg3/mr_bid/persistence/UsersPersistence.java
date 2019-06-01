@@ -163,6 +163,7 @@ public class UsersPersistence {
 	}
 	
 	private String encryptPasswd(String password) throws Exception {
+		System.out.println("pass " + password);
 		final byte[] bytes = password.getBytes("UTF-8");
 		final Cipher aes = getCipher(true);
 		final byte[] encrypted = aes.doFinal(bytes);
