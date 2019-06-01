@@ -73,7 +73,6 @@ public class Client implements Runnable {
 	}
 	
 	public void reciveRequest(Commands c, String g) throws IOException {
-		System.out.println(g);
 		switch (c) {
 		case LOGIN:
 //			Constants.user.setCreditCard(new CreditCard(new BidDate(10, 10, 2010), "Juan", "123", "321"));
