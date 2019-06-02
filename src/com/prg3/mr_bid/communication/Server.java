@@ -11,22 +11,39 @@ import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.utilities.Constants;
 
+/**
+ * Clase Server - Servidor que controla a los usuarios y las subastas
+ *
+ * @author Yohan Caro
+ * @version 1.0 - 2/06/2019
+ */
 public class Server extends ServerSocket implements Runnable {
 	
 	private ArrayList<Client> clients;
 	private boolean isLive;
 
+	/**
+	 * Crea el servidor con un puerto
+	 * @param port puerto
+	 * @throws IOException ioe
+	 */
 	public Server(int port) throws IOException {
 		super(port);
 		this.isLive = true;
 		this.clients = new ArrayList<>();
 	}
 	
+	/**
+	 * Inicia la conexión del servidor
+	 */
 	public void start() {
 		new Thread(this).start();
 	}
 
 	@Override
+	/**
+	 * Hilo de recepción de peticiones
+	 */
 	public void run() {
 		while (isLive) {
 			try {
@@ -39,6 +56,12 @@ public class Server extends ServerSocket implements Runnable {
 		}
 	}
 	
+	/**
+	 * Inicia la conexión con un cliente
+	 * @return
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public Client createClient() throws UnknownHostException, IOException {
 		Client c = new Client(this, this.accept());
 		System.out.println(".");

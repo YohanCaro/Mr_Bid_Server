@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
 
+/**
+ * Clase ServerController - Controlador del servidor
+ *
+ * @author Yohan Caro
+ * @version 1.0 - 2/06/2019
+ */
 public class ServerController {
 	
 	private ArrayList<User> userList;
@@ -13,7 +19,7 @@ public class ServerController {
 	private FileOperations fileOperations;
 	
 	/**
-	 * 
+	 * Inicia los usuarios ya registrados
 	 */
 	private ServerController() {
 		userList = new ArrayList<>();
@@ -21,6 +27,10 @@ public class ServerController {
 		this.loadUsers();
 	}
 	
+	/**
+	 * Añade un usuario al archivo y a la lista
+	 * @param user usuario
+	 */
 	public void addUser(User user) {
 		try {
 			userList.add(user);
@@ -32,6 +42,11 @@ public class ServerController {
 		}
 	}
 	
+	/**
+	 * Analiza si un usuario existe, mediante el correo
+	 * @param email correo
+	 * @return true/false
+	 */
 	public boolean existUser(String email) {
 		if (!userList.isEmpty()) {
 			for (User user : userList) {
@@ -43,6 +58,9 @@ public class ServerController {
 		return false;
 	}
 	
+	/**
+	 * Carga los usuarios 
+	 */
 	public void loadUsers() {
 		try {
 			this.userList = fileOperations.getUsersList();
@@ -55,6 +73,10 @@ public class ServerController {
 		}
 	}
 	
+	/**
+	 * Muestra los usurios registrados (Se tiene que quitar)
+	 * @return out users
+	 */
 	public String showUsers() {
 		String out = "";
 		for (User user : userList) {
@@ -63,6 +85,12 @@ public class ServerController {
 		return out;
 	}
 	
+	/**
+	 * Verifica que los datos del lgueo sean los correctos
+	 * @param email correo
+	 * @param password contraseña
+	 * @return true/false
+	 */
 	public boolean loginAccess(String email, String password) {
 		User user = this.searchUser(email);
 		if (user != null) {
@@ -74,6 +102,11 @@ public class ServerController {
 		return false;
 	}
 	
+	/**
+	 * Busca un usuario por el correo
+	 * @param email correo
+	 * @return user
+	 */
 	public User searchUser(String email) {
 		for (User user : userList) {
 			if (user.getEmail().equals(email)) {
@@ -83,6 +116,10 @@ public class ServerController {
 		return null;
 	}
 	
+	/**
+	 * Crea un único controlador
+	 * @return
+	 */
 	public static ServerController getInstanceOf() {
 		if (controller == null) {
 			controller = new ServerController();

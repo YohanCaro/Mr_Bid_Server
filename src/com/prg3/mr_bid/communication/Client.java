@@ -20,6 +20,12 @@ import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
 import com.prg3.mr_bid.utilities.Constants;
 
+/**
+ * Clase Client - Maneja las peticiones del servidor
+ *
+ * @author Yohan Caro
+ * @version 1.0 - 2/06/2019
+ */
 public class Client implements Runnable {
 	
 	private User user;
@@ -29,6 +35,13 @@ public class Client implements Runnable {
 	private DataOutputStream dataOS;
 	private boolean isConect;
 		
+	/**
+	 * Constructor que crea un cliente del servidor
+	 * @param server servidor
+	 * @param socket socket
+	 * @throws UnknownHostException uhe
+	 * @throws IOException ioe
+	 */
 	public Client(Server server, Socket socket) throws UnknownHostException, IOException {
 		this.socket = socket;
 		this.server = server;
@@ -37,11 +50,17 @@ public class Client implements Runnable {
 		this.isConect = true;
 	}
 	
+	/**
+	 * Inicia el hilo de petiones 
+	 */
 	public void initClient() {
 		new Thread(this).start();
 	}
 
 	@Override
+	/**
+	 * Hilo
+	 */
 	public void run() {
 		Commands command;
 		String jsonString;
@@ -57,9 +76,15 @@ public class Client implements Runnable {
 		}
 	}
 	
-	//al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
-	//envía en un ciclo de n imagenes cada imagen usando un BufferedImage
-	
+
+	/**
+	 * 	al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
+	 * envía en un ciclo de n imagenes cada imagen usando un BufferedImage
+	 * @param numImgs
+	 * @param bidId
+	 * @return
+	 * @throws IOException
+	 */
 	public ArrayList<String> getImages(int numImgs, long bidId) throws IOException {
 		ArrayList<String> biddingsPath = new ArrayList<>();
 		BufferedImage bufferedImage;
@@ -80,11 +105,19 @@ public class Client implements Runnable {
 		
 	}
 	
+	/**
+	 * Recibe las peticiones de los clientes
+	 * @param c commnads
+	 * @param g cadena json
+	 * @throws IOException ioe
+	 */
 	public void reciveRequest(Commands c, String g) throws IOException {
 		switch (c) {
 		case LOGIN:
 			String[] data = g.split(",");
 			if (ServerController.getInstanceOf().loginAccess(data[0], data[1])) {
+				user = ServerController.getInstanceOf().searchUser(data[0]);
+				System.out.println("El usuario: " + user.getFirstName() + " se ha unido!");
 				this.sendData(Commands.ERROR_LOGIN, "true");
 			} else {
 				this.sendData(Commands.ERROR_LOGIN, "false");
@@ -108,10 +141,21 @@ public class Client implements Runnable {
 		}
 	}
 	
+	/**
+	 * Envia un comando al cliente
+	 * @param command comando
+	 * @throws IOException ioe
+	 */
 	public void sendCommand(Commands command) throws IOException {
 		dataOS.writeUTF(Constants.gson.toJson(command));
 	}
 	
+	/**
+	 * Envia un comando y un objeto al cliente
+	 * @param command comando
+	 * @param o objeto en jsonString
+	 * @throws IOException ioe
+	 */
 	public void sendData(Commands command, Object o) throws IOException {
 		dataOS.writeUTF(Constants.gson.toJson(command));
 		dataOS.writeUTF(Constants.gson.toJson(o));
