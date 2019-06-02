@@ -10,7 +10,7 @@ import com.prg3.mr_bid.persistence.FileOperations;
 /**
  * Manager Class of the entities
  *
- * @author Yohan Caro
+ * @author LUIS MARTINEZ
  * @version 1.0 - 2/06/2019
  */
 public class Manager {
