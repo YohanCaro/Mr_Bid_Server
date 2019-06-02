@@ -24,12 +24,19 @@ public class FileOperations {
 	private Gson gson;
 	private static FileOperations fileOperations = null;
 	
+	/**
+	 * Private constructor of the FileOperation class without parameters
+	 */
 	private FileOperations() {
 		gson = new Gson();
 		usersPersistence = new UsersPersistence(gson);
 		biddingPersistence = new BiddingPersistence(gson);
 	}
 	
+	/**
+	 * Method of a singleton design pattern of the FileOperation class
+	 * @return an static reference of the FileOperation class
+	 */
 	public static FileOperations getInstanceOf() {
 		return (fileOperations==null)?fileOperations = new FileOperations():fileOperations;
 	}
