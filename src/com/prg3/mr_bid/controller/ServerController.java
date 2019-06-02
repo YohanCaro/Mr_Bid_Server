@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.prg3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.persistence.FileOperations;
 import com.prg3.mr_bid.persistence.UsersPersistence;
 import com.prg3.mr_bid.utilities.Constants;
 
@@ -11,21 +12,21 @@ public class ServerController {
 	
 	private ArrayList<User> userList;
 	private static ServerController controller;
-	private UsersPersistence usersPersistence;
+	private FileOperations fileOperations;
 	
 	/**
 	 * 
 	 */
 	private ServerController() {
 		userList = new ArrayList<>();
-		usersPersistence = new UsersPersistence(Constants.gson);
+		fileOperations = FileOperations.getInstanceOf();
 		this.loadUsers();
 	}
 	
 	public void addUser(User user) {
 		try {
 			userList.add(user);
-			usersPersistence.addNewUser(user);
+			fileOperations.addUser(user);
 			System.out.println(user.toString() + "\n se ha registardo!");
 		} catch (Exception e) {
 			System.out.println("Error al escribir el archivo!");
@@ -46,7 +47,7 @@ public class ServerController {
 	
 	public void loadUsers() {
 		try {
-			this.userList = usersPersistence.getAllUsers();
+			this.userList = fileOperations.getUsersList();
 			System.out.println("User:\n"+ this.showUsers());
 		} catch (IOException e) {
 			System.out.println("Error al cargar los usuarios!");

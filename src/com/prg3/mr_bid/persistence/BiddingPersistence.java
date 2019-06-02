@@ -117,6 +117,10 @@ public class BiddingPersistence {
 			newChat.add(comment);
 			chats+=bidId+"|"+gson.toJson(newChat)+"\n";
 		}
+		overwriteChatFile(chats);
+	}
+	
+	private void overwriteChatFile(String chats) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(commentFile, false));
 		String[] chatLines = chats.split("\n");
 		for (long i = 0; i < chatLines.length; i++) {

@@ -17,6 +17,7 @@ import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.CreditCard;
 import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.persistence.FileOperations;
 import com.prg3.mr_bid.utilities.Constants;
 
 public class Client implements Runnable {
@@ -62,14 +63,21 @@ public class Client implements Runnable {
 	public ArrayList<String> getImages(int numImgs, long bidId) throws IOException {
 		ArrayList<String> biddingsPath = new ArrayList<>();
 		BufferedImage bufferedImage;
-		for (int i = 0; i < numImgs; i++) {
+		for (int i = 1; i <= numImgs; i++) {
 			bufferedImage = ImageIO.read(socket.getInputStream());
 			String imagePath = "data/biddingImages/bidding"+bidId+"_"+i+".png";
-			ImageIO.write(bufferedImage,"png", new FileOutputStream(imagePath));
+			FileOperations.getInstanceOf().saveImage(imagePath, bufferedImage);
 			bufferedImage.flush();
 			biddingsPath.add(imagePath);
 		}		
 		return biddingsPath;
+	}
+	
+	/**
+	 * What should this method do?
+	 */
+	public void sendImages(long bidId) {
+		
 	}
 	
 	public void reciveRequest(Commands c, String g) throws IOException {

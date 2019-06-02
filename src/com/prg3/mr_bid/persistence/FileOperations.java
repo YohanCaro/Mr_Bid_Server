@@ -1,10 +1,11 @@
 package com.prg3.mr_bid.persistence;
 
+import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
+import javax.imageio.ImageIO;
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
@@ -35,6 +36,10 @@ public class FileOperations {
 	
 	public void addUser(User user) throws Exception {
 		usersPersistence.addNewUser(user);
+	}
+	
+	public void saveImage(String path, BufferedImage bufferedImage) throws FileNotFoundException, IOException {
+		ImageIO.write(bufferedImage, "png", new FileOutputStream(path));
 	}
 	
 	public void deleteUser(User user) throws IOException {
