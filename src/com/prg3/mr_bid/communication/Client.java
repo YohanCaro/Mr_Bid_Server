@@ -83,7 +83,12 @@ public class Client implements Runnable {
 	public void reciveRequest(Commands c, String g) throws IOException {
 		switch (c) {
 		case LOGIN:
-//			Constants.user.setCreditCard(new CreditCard(new BidDate(10, 10, 2010), "Juan", "123", "321"));
+			String[] data = g.split(",");
+			if (ServerController.getInstanceOf().loginAccess(data[0], data[1])) {
+				this.sendData(Commands.ERROR_LOGIN, "true");
+			} else {
+				this.sendData(Commands.ERROR_LOGIN, "false");
+			}
 			break;
 		case SIGNIN:
 			User user = Constants.gson.fromJson(g, User.class);

@@ -63,6 +63,26 @@ public class ServerController {
 		return out;
 	}
 	
+	public boolean loginAccess(String email, String password) {
+		User user = this.searchUser(email);
+		if (user != null) {
+			System.out.println(user.getEmail() + " " + user.getPassword() + " P: " + password);
+			if (user.getPassword().equals(password)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public User searchUser(String email) {
+		for (User user : userList) {
+			if (user.getEmail().equals(email)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
 	public static ServerController getInstanceOf() {
 		if (controller == null) {
 			controller = new ServerController();
