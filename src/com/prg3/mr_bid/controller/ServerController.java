@@ -1,10 +1,7 @@
 package com.prg3.mr_bid.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.prg3.mr_bid.model.entity.User;
-import com.prg3.mr_bid.persistence.FileOperations;
+import com.prg3.mr_bid.model.manager.Manager;
 
 /**
  * Clase ServerController - Controlador del servidor
@@ -14,16 +11,14 @@ import com.prg3.mr_bid.persistence.FileOperations;
  */
 public class ServerController {
 	
-	private ArrayList<User> userList;
 	private static ServerController controller;
-	private FileOperations fileOperations;
+	private Manager manager;
 	
 	/**
 	 * Inicia los usuarios ya registrados
 	 */
 	private ServerController() {
-		userList = new ArrayList<>();
-		fileOperations = FileOperations.getInstanceOf();
+		manager = new Manager();
 		this.loadUsers();
 	}
 	
@@ -32,14 +27,7 @@ public class ServerController {
 	 * @param user usuario
 	 */
 	public void addUser(User user) {
-		try {
-			userList.add(user);
-			fileOperations.addUser(user);
-			System.out.println(user.toString() + "\n se ha registardo!");
-		} catch (Exception e) {
-			System.out.println("Error al escribir el archivo!");
-			e.printStackTrace();
-		}
+		manager.addUser(user);
 	}
 	
 	/**
@@ -48,29 +36,14 @@ public class ServerController {
 	 * @return true/false
 	 */
 	public boolean existUser(String email) {
-		if (!userList.isEmpty()) {
-			for (User user : userList) {
-				if (user.getEmail().equals(email)) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return manager.existUser(email);
 	}
 	
 	/**
 	 * Carga los usuarios 
 	 */
 	public void loadUsers() {
-		try {
-			this.userList = fileOperations.getUsersList();
-			System.out.println("User:\n"+ this.showUsers());
-		} catch (IOException e) {
-			System.out.println("Error al cargar los usuarios!");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		manager.loadUsers();
 	}
 	
 	/**
@@ -78,11 +51,7 @@ public class ServerController {
 	 * @return out users
 	 */
 	public String showUsers() {
-		String out = "";
-		for (User user : userList) {
-			out += user.toString() + "\n";
-		}
-		return out;
+		return manager.showUsers();
 	}
 	
 	/**
@@ -108,12 +77,7 @@ public class ServerController {
 	 * @return user
 	 */
 	public User searchUser(String email) {
-		for (User user : userList) {
-			if (user.getEmail().equals(email)) {
-				return user;
-			}
-		}
-		return null;
+		return manager.searchUser(email);
 	}
 	
 	/**
