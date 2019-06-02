@@ -13,18 +13,31 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.User;
-
+/**
+ * Class of the users persistence
+ * @author Luis!
+ * @version 1.0 - 26/05/2019
+ */
 public class UsersPersistence {
 	private File file;
 	private Gson gson;
 	private BufferedReader bufferedReader;
 	private BufferedWriter bufferedWriter;
 	
+	/**
+	 * Constructor of the userPersistence
+	 * @param gson a gson object to manage all the object conversion
+	 */
 	public UsersPersistence(Gson gson) {
 		file = new File("data/appData/usersData.json");		
 		this.gson = gson;
 	}
 	
+	/**
+	 * Writes a new user into the users file (converted to json structure)
+	 * @param user a user object to be written
+	 * @throws Exception file exception
+	 */
 	public void addNewUser(User user) throws Exception {
 		openFile('w',true);
 		user.setPassword(this.encryptPasswd(user.getPassword()));
@@ -33,6 +46,11 @@ public class UsersPersistence {
 		closeFile('w');
 	}
 	
+	/**
+	 * Deletes an user to the users file
+	 * @param user the user to be deleted
+	 * @throws IOException
+	 */
 	public void deleteUser(User user) throws IOException {
 		openFile('r',true);
 		boolean finded=false;
@@ -48,13 +66,18 @@ public class UsersPersistence {
 		closeFile('r');
 	}
 	
+	/**
+	 * Gets all the users into an array list
+	 * @return an array list of the users into the users file
+	 * @throws Exception file exception/cipher exception
+	 */
 	public ArrayList<User> getAllUsers() throws Exception{
 		ArrayList<User> users = new ArrayList<User>();
 		openFile('r', true);
 		String line = "";
 		while((line = bufferedReader.readLine())!=null) {
 			User user = gson.fromJson(line, User.class);
-			user.setPassword(desencrypt(user.getPassword()));
+			user.setPassword(decrypt(user.getPassword()));
 			users.add(user);
 		}		
 		closeFile('r');
@@ -77,7 +100,7 @@ public class UsersPersistence {
 			String[] splits = line.split("\"");
 			if(splits[12].equals(email)) {
 				user = gson.fromJson(line, User.class);
-				user.setPassword(desencrypt(user.getPassword()));
+				user.setPassword(decrypt(user.getPassword()));
 			}
 		}
 		closeFile('r');			
@@ -100,13 +123,18 @@ public class UsersPersistence {
 			String[] splits = line.split("\"");
 			if((splits[3]+" "+splits[7]).equals(fullName)) {
 				user = gson.fromJson(line, User.class);
-				user.setPassword(desencrypt(user.getPassword()));
+				user.setPassword(decrypt(user.getPassword()));
 			}
 		}
 		closeFile('r');			
 		return user;
 	}
 	
+	/**
+	 * Deletes a line of the users file
+	 * @param indexLine the index of the file line to be deleted
+	 * @throws IOException file exception
+	 */
 	private void deleteLine(int indexLine) throws IOException {
 		String dataFile = "";
 		String currentLine="";
@@ -120,6 +148,11 @@ public class UsersPersistence {
 		overWriteFile(dataFile);
 	}
 	
+	/**
+	 * Overwrites the users file
+	 * @param dataFile a string with the new information of the file
+	 * @throws IOException file exception
+	 */
 	private void overWriteFile(String dataFile) throws IOException {
 		openFile('w',false);
 		String[] lines = dataFile.split("\n");
@@ -164,15 +197,26 @@ public class UsersPersistence {
 		}
 	}
 	
+	/**
+	 * Encrypt a password to a bytes array
+	 * @param password the password to be encrypted
+	 * @return a string with a bytes array
+	 * @throws Exception
+	 */
 	private String encryptPasswd(String password) throws Exception {
-		System.out.println("pass " + password);
 		final byte[] bytes = password.getBytes("UTF-8");
 		final Cipher aes = getCipher(true);
 		final byte[] encrypted = aes.doFinal(bytes);
 		return Arrays.toString(encrypted);
 	}
 
-	private String desencrypt(String encrypted) throws Exception {
+	/**
+	 * Decrypt a encrypted password (in the bytes array structure)
+	 * @param encrypted a encrypted password
+	 * @return the password in a string
+	 * @throws Exception Cipher exception
+	 */
+	private String decrypt(String encrypted) throws Exception {
 		String[] byteValues = encrypted.substring(1, encrypted.length() - 1).split(",");
 		byte[] encryptedBytes = new byte[byteValues.length];				
 		for (int i=0, len=encryptedBytes.length; i<len; i++) 
@@ -183,6 +227,12 @@ public class UsersPersistence {
 		return password;
 	}
 
+	/**
+	 * Gets a cipher object used at the encrypt/decrypt operations
+	 * @param operationMode indicates the mode of operation to do
+	 * @return a cipher object
+	 * @throws Exception A exception of the cipher class
+	 */
 	private Cipher getCipher(boolean operationMode) throws Exception {
 		final String phrase = "\r\n"+"LongPhraseWithDifferentLettersNumbersAndSpecialCharacters_áÁéÉíÍóÓúÚüÜñÑ1234567890!#%$&()=%_!_";
 		final MessageDigest digest = MessageDigest.getInstance("SHA");

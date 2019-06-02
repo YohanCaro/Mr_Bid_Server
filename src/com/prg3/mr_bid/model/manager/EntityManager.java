@@ -18,6 +18,9 @@ public class EntityManager {
 	private ArrayList<Bidding> biddings;
 	private FileOperations fileOperations;
 	
+	/**
+	 * Constructor of the EntityManager class
+	 */
 	public EntityManager() {
 		users = new ArrayList<>();
 		biddings = new ArrayList<>();
@@ -25,8 +28,8 @@ public class EntityManager {
 	}
 	
 	/**
-	 * Añade un usuario al archivo y a la lista
-	 * @param user usuario
+	 * Adds a new user into the users list and write it in the users file
+	 * @param user The user object to be added
 	 */
 	public void addUser(User user) {
 		try {
