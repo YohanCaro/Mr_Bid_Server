@@ -9,6 +9,7 @@ package com.prg3.mr_bid.model.entity;
 public class Bidding {
 	
 	private User owner;
+	private long id;
 	private String biddingName;
 	private TypeProduct typeProduct;
 	private Product product;
@@ -29,8 +30,9 @@ public class Bidding {
 	 * @param isAutomaticIncremet define el tipo de incremento
 	 * @param isPublic define si es publica
 	 */
-	public Bidding(String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
+	public Bidding(long id,String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
 			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic) {
+		this.id = id;
 		this.biddingName = biddingName;
 		this.typeProduct = typeProduct;
 		this.product = product;
@@ -121,6 +123,10 @@ public class Bidding {
 		return owner;
 	}
 	
+	public long getId() {
+		return id;
+	}
+
 	@Override
 	/**
 	 * Convierte la subasta en un cadena

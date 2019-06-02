@@ -13,12 +13,12 @@ import com.prg3.mr_bid.persistence.FileOperations;
  * @author LUIS MARTINEZ
  * @version 1.0 - 2/06/2019
  */
-public class Manager {
+public class EntityManager {
 	private ArrayList<User> users;
 	private ArrayList<Bidding> biddings;
 	private FileOperations fileOperations;
 	
-	public Manager() {
+	public EntityManager() {
 		users = new ArrayList<>();
 		biddings = new ArrayList<>();
 		fileOperations = FileOperations.getInstanceOf();
@@ -106,6 +106,55 @@ public class Manager {
 		return null;
 	}
 
+	public void addBidding(Bidding bidding) {
+		biddings.add(bidding);
+		try {
+			fileOperations.addBidding(bidding);
+		} catch (Exception e) {
+			System.out.println("Error en escritura de archivo");
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteBidding(Bidding bidding) {
+		biddings.remove(bidding);
+		try {
+			fileOperations.deleteBidding(bidding);
+		} catch (IOException e) {
+			System.out.println("Error en escritura de archivo");
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean existsBidding(long id) {
+		boolean exists = false;
+		for (Bidding bidding : biddings) {
+			if(bidding.getId()==id) {
+				exists = true;
+			}
+		}
+		return exists;
+	}
+	
+	public void loadBiddings() {
+		try {
+			this.biddings = fileOperations.getBiddingsList();
+		} catch (IOException e) {
+			System.out.println("Error en lectura de archivo");
+			e.printStackTrace();
+		}
+	}
+	
+	public Bidding getBidding(long id) {
+		Bidding bidding = null;
+		for (Bidding bidding1 : biddings) {
+			if(bidding1.getId()==id) {
+				bidding = bidding1;
+			}
+		}
+		return bidding;
+	}
+	
 	public ArrayList<User> getUsers() {
 		return users;
 	}
@@ -113,7 +162,4 @@ public class Manager {
 	public ArrayList<Bidding> getBiddings() {
 		return biddings;
 	}
-	
-	
-	
 }

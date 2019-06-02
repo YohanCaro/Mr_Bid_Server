@@ -1,7 +1,7 @@
 package com.prg3.mr_bid.controller;
 
 import com.prg3.mr_bid.model.entity.User;
-import com.prg3.mr_bid.model.manager.Manager;
+import com.prg3.mr_bid.model.manager.EntityManager;
 
 /**
  * Clase ServerController - Controlador del servidor
@@ -12,13 +12,13 @@ import com.prg3.mr_bid.model.manager.Manager;
 public class ServerController {
 	
 	private static ServerController controller;
-	private Manager manager;
+	private EntityManager manager;
 	
 	/**
 	 * Inicia los usuarios ya registrados
 	 */
 	private ServerController() {
-		manager = new Manager();
+		manager = new EntityManager();
 		this.loadUsers();
 	}
 	
