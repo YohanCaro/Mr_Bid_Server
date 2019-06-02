@@ -21,7 +21,7 @@ public class FileOperations {
 	private UsersPersistence usersPersistence;
 	private BiddingPersistence biddingPersistence;
 	private Gson gson;
-	public static FileOperations fileOperations = null;
+	private static FileOperations fileOperations = null;
 	
 	private FileOperations() {
 		gson = new Gson();
@@ -29,8 +29,8 @@ public class FileOperations {
 		biddingPersistence = new BiddingPersistence(gson);
 	}
 	
-	public FileOperations getInstanceOf() {
-		return (fileOperations==null)?this.fileOperations = new FileOperations():this.fileOperations;
+	public static FileOperations getInstanceOf() {
+		return (fileOperations==null)?fileOperations = new FileOperations():fileOperations;
 	}
 	
 	public void addUser(User user) throws Exception {
