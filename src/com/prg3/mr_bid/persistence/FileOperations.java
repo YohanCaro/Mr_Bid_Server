@@ -46,7 +46,7 @@ public class FileOperations {
 		usersPersistence.deleteUser(user);
 	}
 	
-	public ArrayList<User> getUsersList() throws IOException {
+	public ArrayList<User> getUsersList() throws Exception {
 		return usersPersistence.getAllUsers();
 	}
 	

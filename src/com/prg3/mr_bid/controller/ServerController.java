@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
-import com.prg3.mr_bid.persistence.UsersPersistence;
-import com.prg3.mr_bid.utilities.Constants;
 
 public class ServerController {
 	
@@ -51,6 +49,9 @@ public class ServerController {
 			System.out.println("User:\n"+ this.showUsers());
 		} catch (IOException e) {
 			System.out.println("Error al cargar los usuarios!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

@@ -48,12 +48,14 @@ public class UsersPersistence {
 		closeFile('r');
 	}
 	
-	public ArrayList<User> getAllUsers() throws IOException{
+	public ArrayList<User> getAllUsers() throws Exception{
 		ArrayList<User> users = new ArrayList<User>();
 		openFile('r', true);
 		String line = "";
 		while((line = bufferedReader.readLine())!=null) {
-			users.add(gson.fromJson(line, User.class));
+			User user = gson.fromJson(line, User.class);
+			user.setPassword(desencrypt(user.getPassword()));
+			users.add(user);
 		}		
 		closeFile('r');
 		return users;
