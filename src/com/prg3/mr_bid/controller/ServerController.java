@@ -1,5 +1,6 @@
 package com.prg3.mr_bid.controller;
 
+import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.model.manager.EntityManager;
 
@@ -54,6 +55,10 @@ public class ServerController {
 		return manager.showUsers();
 	}
 	
+	public void addBidding(Bidding bid) {
+		manager.addBidding(bid);
+	}
+	
 	/**
 	 * Verifica que los datos del lgueo sean los correctos
 	 * @param email correo
@@ -89,6 +94,14 @@ public class ServerController {
 			controller = new ServerController();
 		}
 		return controller;
+	}
+	
+	/**
+	 * Obtiene 
+	 * @return manager
+	 */
+	public EntityManager getManager() {
+		return manager;
 	}
 
 }

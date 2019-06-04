@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import com.prg3.mr_bid.communication.Server;
 
-/**Clase Run - Crear el servidor
+/** Clase Run - Crear el servidor
  *
  * @author Yohan Caro
  * @version 1.0 - 1/06/2019

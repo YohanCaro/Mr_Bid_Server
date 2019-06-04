@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import com.google.gson.Gson;
 import com.prg3.mr_bid.controller.ServerController;
 import com.prg3.mr_bid.model.entity.BidDate;
+import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.CreditCard;
 import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.User;
@@ -118,7 +119,7 @@ public class Client implements Runnable {
 			if (ServerController.getInstanceOf().loginAccess(data[0], data[1])) {
 				user = ServerController.getInstanceOf().searchUser(data[0]);
 				System.out.println("El usuario: " + user.getFirstName() + " se ha unido!");
-				this.sendData(Commands.ERROR_LOGIN, "true");
+				this.sendData(Commands.ERROR_LOGIN, user);
 			} else {
 				this.sendData(Commands.ERROR_LOGIN, "false");
 			}
@@ -136,7 +137,12 @@ public class Client implements Runnable {
 			}
 			break;
 		case UPBIDDING:
-			
+			Bidding b = Constants.gson.fromJson(g, Bidding.class);
+			if (b != null) {
+				ServerController.getInstanceOf().addBidding(b);
+				System.out.println(b.toString());
+				this.sendData(Commands.UPDATE_BID, ServerController.getInstanceOf().getManager().getBiddings());
+			}
 			break;
 		}
 	}

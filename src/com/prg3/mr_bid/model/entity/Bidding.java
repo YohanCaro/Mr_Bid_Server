@@ -126,6 +126,13 @@ public class Bidding {
 	public long getId() {
 		return id;
 	}
+	/**
+	 * Cambia 
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	@Override
 	/**
