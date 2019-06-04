@@ -19,7 +19,7 @@ public class EncryptPasswordsTest {
 	public static void main(String[] args) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		String password = "Esta es una contraseña equisde";
 		
-		final String frase = "FraseLargaConDiferentesLetrasNumerosYCaracteresEspeciales_áÁéÉíÍóÓúÚüÜñÑ1234567890!#%$&()=%_NO_USAR_ESTA_FRASE!_";
+		final String frase = "\r\n"+"LongPhraseWithDifferentLettersNumbersAndSpecialCharacters_áÁéÉíÍóÓúÚüÜñÑ1234567890!#%$&()=%_!_";
 		final MessageDigest digest = MessageDigest.getInstance("SHA");
 		digest.update(frase.getBytes("UTF-8"));
 		final SecretKeySpec key = new SecretKeySpec(digest.digest(), 0, 16, "AES");
