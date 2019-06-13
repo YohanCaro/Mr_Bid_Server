@@ -61,11 +61,11 @@ public class Client implements Runnable {
 	@Override
 	public void run() {
 		Commands command;
-		String jsonString;
+		String jsonString = "";
 		while (isConect) {
 			try {
 				command = Constants.gson.fromJson(this.dataIS.readUTF(), Commands.class);
-				jsonString = this.dataIS.readUTF();
+				if(!command.equals(Commands.UPDATE_BID))jsonString = this.dataIS.readUTF();
 				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
 				server.getClients().remove(this);
@@ -139,6 +139,12 @@ public class Client implements Runnable {
 				this.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings());
 			}
 			break;
+		case UPDATE_BID:
+			System.out.println("Actualizando subastas");
+			ArrayList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
+			this.sendData(Commands.UPDATE_BID, Constants.gson.toJson(biddings));
+			break;
+			
 		}
 	}
 	
@@ -161,5 +167,6 @@ public class Client implements Runnable {
 		dataOS.writeUTF(Constants.gson.toJson(command));
 		dataOS.writeUTF(Constants.gson.toJson(o));
 	}
+	
 
 }

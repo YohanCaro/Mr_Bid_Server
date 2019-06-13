@@ -22,6 +22,7 @@ public class Run {
 		if (args.length == 1) {
 			try {
 				Server server = new Server(Integer.parseInt(args[0]));
+				System.out.println(server.getInetAddress().getLocalHost());
 				System.out.println("Servidor encendido!");
 				server.start();
 //				server.close();
