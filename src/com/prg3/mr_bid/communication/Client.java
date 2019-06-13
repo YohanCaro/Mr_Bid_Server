@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -140,11 +141,18 @@ public class Client implements Runnable {
 			}
 			break;
 		case UPDATE_BID:
-			System.out.println("Actualizando subastas");
 			ArrayList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
 			this.sendData(Commands.UPDATE_BID, Constants.gson.toJson(biddings));
+			break;	
+		case SENDIMG:
+			String[] datas = g.split(" ");
+			long id = Long.parseLong(datas[1]);
+			ArrayList<String> paths = getImages(Integer.parseInt(datas[0]), 
+					id);
+			ArrayList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
+			newBiddings.get((int) id).getProduct().setImages(paths);
+			FileOperations.getInstanceOf().updateBiddings(newBiddings);
 			break;
-			
 		}
 	}
 	

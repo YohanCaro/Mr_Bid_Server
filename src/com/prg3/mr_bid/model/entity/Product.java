@@ -49,5 +49,9 @@ public class Product {
 	public ArrayList<String> getImages() {
 		return images;
 	}
+
+	public void setImages(ArrayList<String> paths) {
+		this.images = paths;		
+	}
 	
 }
