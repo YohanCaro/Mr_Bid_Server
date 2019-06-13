@@ -59,9 +59,6 @@ public class Client implements Runnable {
 	}
 
 	@Override
-	/**
-	 * Hilo
-	 */
 	public void run() {
 		Commands command;
 		String jsonString;
@@ -118,7 +115,6 @@ public class Client implements Runnable {
 			String[] data = g.split(",");
 			if (ServerController.getInstanceOf().loginAccess(data[0], data[1])) {
 				user = ServerController.getInstanceOf().searchUser(data[0]);
-				System.out.println("El usuario: " + user.getFirstName() + " se ha unido!");
 				this.sendData(Commands.ERROR_LOGIN, user);
 			} else {
 				this.sendData(Commands.ERROR_LOGIN, "false");
@@ -140,8 +136,7 @@ public class Client implements Runnable {
 			Bidding b = Constants.gson.fromJson(g, Bidding.class);
 			if (b != null) {
 				ServerController.getInstanceOf().addBidding(b);
-				System.out.println(b.toString());
-				this.sendData(Commands.UPDATE_BID, ServerController.getInstanceOf().getManager().getBiddings());
+				this.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings());
 			}
 			break;
 		}

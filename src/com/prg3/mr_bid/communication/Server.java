@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import com.prg3.mr_bid.controller.ServerController;
 import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.CreditCard;
 import com.prg3.mr_bid.model.entity.Product;
@@ -64,8 +65,8 @@ public class Server extends ServerSocket implements Runnable {
 	 */
 	public Client createClient() throws UnknownHostException, IOException {
 		Client c = new Client(this, this.accept());
-		System.out.println(".");
 		c.initClient();
+		c.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings()); //Envia lista de subastas
 		return c;
 	}
 	

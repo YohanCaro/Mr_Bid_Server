@@ -36,6 +36,7 @@ public class EntityManager {
 			users.add(user);
 			fileOperations.addUser(user);
 			System.out.println(user.toString() + "\n se ha registardo!");
+			this.loadUsers();
 		} catch (Exception e) {
 			System.out.println("Error al escribir el archivo!");
 			e.printStackTrace();
@@ -74,7 +75,6 @@ public class EntityManager {
 	public void loadUsers() {
 		try {
 			this.users = fileOperations.getUsersList();
-			System.out.println("User:\n"+ this.showUsers());
 		} catch (IOException e) {
 			System.out.println("Error al cargar los usuarios!");
 		} catch (Exception e) {

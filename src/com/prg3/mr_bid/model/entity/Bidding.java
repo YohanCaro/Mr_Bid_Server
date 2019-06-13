@@ -8,7 +8,6 @@ package com.prg3.mr_bid.model.entity;
  */
 public class Bidding {
 	
-	private User owner;
 	private long id;
 	private String biddingName;
 	private TypeProduct typeProduct;
@@ -18,6 +17,7 @@ public class Bidding {
 	private BidTime finishTime;
 	private boolean isAutomaticIncremet;
 	private boolean isPublic;
+	private User owner;
 	
 	/**
 	 * Contruye una subasta con los siguientes datos
@@ -41,6 +41,32 @@ public class Bidding {
 		this.finishTime = finishTime;
 		this.isAutomaticIncremet = isAutomaticIncremet;
 		this.isPublic = isPublic;
+	}
+	
+	/**
+	 * Contruye una subasta con los siguientes datos
+	 * @param biddingName nombre de la subasta
+	 * @param typeProduct tipo de susbasta 
+	 * @param product producto
+	 * @param publicationTime tiempo de publicación
+	 * @param initTime tiempo de inicio
+	 * @param finishTime teiempo de finalizado
+	 * @param isAutomaticIncremet define el tipo de incremento
+	 * @param isPublic define si es publica
+	 * Dueño de la subasta
+	 */
+	public Bidding(long id,String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
+			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, User user) {
+		this.id = id;
+		this.biddingName = biddingName;
+		this.typeProduct = typeProduct;
+		this.product = product;
+		this.publicationTime = publicationTime;
+		this.initTime = initTime;
+		this.finishTime = finishTime;
+		this.isAutomaticIncremet = isAutomaticIncremet;
+		this.isPublic = isPublic;
+		this.owner = user;
 	}
 	
 	/**

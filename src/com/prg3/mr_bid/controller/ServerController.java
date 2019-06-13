@@ -21,6 +21,7 @@ public class ServerController {
 	private ServerController() {
 		manager = new EntityManager();
 		this.loadUsers();
+		this.loadBiddings();
 	}
 	
 	/**
@@ -59,6 +60,10 @@ public class ServerController {
 		manager.addBidding(bid);
 	}
 	
+	public void loadBiddings() {
+		manager.loadBiddings();
+	}
+	
 	/**
 	 * Verifica que los datos del lgueo sean los correctos
 	 * @param email correo
@@ -68,7 +73,6 @@ public class ServerController {
 	public boolean loginAccess(String email, String password) {
 		User user = this.searchUser(email);
 		if (user != null) {
-			System.out.println(user.getEmail() + " " + user.getPassword() + " P: " + password);
 			if (user.getPassword().equals(password)) {
 				return true;
 			}
