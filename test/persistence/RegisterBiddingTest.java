@@ -17,7 +17,7 @@ public class RegisterBiddingTest {
 				new BidTime(new BidDate(21, 5, 2019), 24), 
 				new BidTime(new BidDate(21, 5, 2019), 24), 
 				new BidTime(new BidDate(30, 5, 2019), 24), 
-				true, true);
+				true, true, 1000);
 		try {
 			persistence.addNewBidding(bidding);
 			Bidding bidding2 = persistence.getBiddingByName("Subasta de Navaja Suiza");

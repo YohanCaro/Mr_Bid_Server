@@ -18,6 +18,7 @@ public class Bidding {
 	private boolean isAutomaticIncremet;
 	private boolean isPublic;
 	private String owner;
+	private int value;
 	
 	/**
 	 * Contruye una subasta con los siguientes datos
@@ -31,7 +32,7 @@ public class Bidding {
 	 * @param isPublic define si es publica
 	 */
 	public Bidding(long id,String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
-			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic) {
+			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, int value) {
 		this.id = id;
 		this.biddingName = biddingName;
 		this.typeProduct = typeProduct;
@@ -41,6 +42,7 @@ public class Bidding {
 		this.finishTime = finishTime;
 		this.isAutomaticIncremet = isAutomaticIncremet;
 		this.isPublic = isPublic;
+		this.value = value;
 	}
 	
 	/**
@@ -123,6 +125,22 @@ public class Bidding {
 	 */
 	public BidTime getFinishTime() {
 		return finishTime;
+	}
+	
+	/**
+	 * Obtiene 
+	 * @return value
+	 */
+	public int getValue() {
+		return value;
+	}
+	
+	/**
+	 * Cambia 
+	 * @param value the value to set
+	 */
+	public void setValue(int value) {
+		this.value = value;
 	}
 	
 	/**
