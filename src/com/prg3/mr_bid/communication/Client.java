@@ -3,6 +3,7 @@ package com.prg3.mr_bid.communication;
 import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -66,7 +67,9 @@ public class Client implements Runnable {
 		while (isConect) {
 			try {
 				command = Constants.gson.fromJson(this.dataIS.readUTF(), Commands.class);
-				if(!command.equals(Commands.UPDATE_BID))jsonString = this.dataIS.readUTF();
+				if(!command.equals(Commands.UPDATE_BID)|| !command.equals(Commands.GETIMG)) {
+					jsonString = this.dataIS.readUTF();
+				}
 				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
 				server.getClients().remove(this);
@@ -99,9 +102,17 @@ public class Client implements Runnable {
 	
 	/**
 	 * What should this method do?
+	 * @throws IOException 
 	 */
-	public void sendImages(long bidId) {
-		
+	public void sendImages(long bidId) throws IOException {
+		ArrayList<String> paths = FileOperations.getInstanceOf().
+				getBiddingsList().get((int) bidId).getProduct().getImages();
+		sendData(Commands.GETIMG, paths.size()+" "+bidId);
+		for (int i = 0; i < paths.size(); i++) {
+			BufferedImage bufferedImage = ImageIO.read(new File(paths.get(i)));
+			ImageIO.write(bufferedImage, "png", dataOS);
+			bufferedImage.flush();
+		}
 	}
 	
 	/**
@@ -152,6 +163,9 @@ public class Client implements Runnable {
 			ArrayList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
 			newBiddings.get((int) id).getProduct().setImages(paths);
 			FileOperations.getInstanceOf().updateBiddings(newBiddings);
+			break;
+		case GETIMG:
+			
 			break;
 		}
 	}
