@@ -17,7 +17,7 @@ public class Bidding {
 	private BidTime finishTime;
 	private boolean isAutomaticIncremet;
 	private boolean isPublic;
-	private User owner;
+	private String owner;
 	
 	/**
 	 * Contruye una subasta con los siguientes datos
@@ -56,7 +56,7 @@ public class Bidding {
 	 * Dueño de la subasta
 	 */
 	public Bidding(long id,String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
-			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, User user) {
+			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, String emailUser) {
 		this.id = id;
 		this.biddingName = biddingName;
 		this.typeProduct = typeProduct;
@@ -66,14 +66,14 @@ public class Bidding {
 		this.finishTime = finishTime;
 		this.isAutomaticIncremet = isAutomaticIncremet;
 		this.isPublic = isPublic;
-		this.owner = user;
+		this.owner = emailUser;
 	}
 	
 	/**
 	 * Cambia el propietario
 	 * @param owner pripietario
 	 */
-	public void setOwner(User owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 
@@ -145,7 +145,7 @@ public class Bidding {
 	 * Obtiene le propietario de la subasta
 	 * @return owner propietario
 	 */
-	public User getOwner() {
+	public String getOwner() {
 		return owner;
 	}
 	
