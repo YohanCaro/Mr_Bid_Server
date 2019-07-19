@@ -67,9 +67,13 @@ public class Client implements Runnable {
 		while (isConect) {
 			try {
 				command = Constants.gson.fromJson(this.dataIS.readUTF(), Commands.class);
-				if(!command.equals(Commands.UPDATE_BID)|| !command.equals(Commands.GETIMG)) {
-					jsonString = this.dataIS.readUTF();
-				}
+				try {
+					if(!command.equals(Commands.UPDATE_BID)|| !command.equals(Commands.GETIMG)) {
+						jsonString = this.dataIS.readUTF();
+					}
+				} catch (NullPointerException e) {
+					
+				}	
 				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
 				server.getClients().remove(this);
