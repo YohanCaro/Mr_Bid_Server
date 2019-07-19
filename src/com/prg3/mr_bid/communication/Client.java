@@ -92,6 +92,7 @@ public class Client implements Runnable {
 	 * @throws IOException
 	 */
 	public ArrayList<String> getImages(int numImgs, long bidId) throws IOException {
+		System.out.println("Id: " + bidId);
 		ArrayList<String> biddingsPath = new ArrayList<>();
 		BufferedImage bufferedImage;
 		for (int i = 1; i <= numImgs; i++) {
@@ -157,7 +158,7 @@ public class Client implements Runnable {
 			break;
 		case UPDATE_BID:
 			ArrayList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
-			this.sendData(Commands.UPDATE_BID, Constants.gson.toJson(biddings));
+			this.sendData(Commands.UPDATE_BID, biddings);
 			break;	
 		case SENDIMG:
 			String[] datas = g.split(" ");
