@@ -157,6 +157,7 @@ public class Client implements Runnable {
 			break;
 		case UPDATE_BID:
 			ArrayList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
+			System.out.println(Constants.gson.toJson(biddings));
 			this.sendData(Commands.UPDATE_BID, Constants.gson.toJson(biddings));
 			break;	
 		case SENDIMG:
