@@ -22,6 +22,7 @@ public class Server extends ServerSocket implements Runnable {
 	
 	private ArrayList<Client> clients;
 	private boolean isLive;
+	Server_frame server_frame;
 
 	/**
 	 * Crea el servidor con un puerto
@@ -32,6 +33,7 @@ public class Server extends ServerSocket implements Runnable {
 		super(port);
 		this.isLive = true;
 		this.clients = new ArrayList<>();
+		this.server_frame = new Server_frame();
 	}
 	
 	/**
