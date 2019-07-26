@@ -74,6 +74,7 @@ public class Client implements Runnable {
 				} catch (NullPointerException e) {
 					
 				}	
+				System.out.println("le llega el servidor... "+(command.getValue()));
 				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
 				server.getClients().remove(this);
@@ -127,6 +128,7 @@ public class Client implements Runnable {
 	 * @throws IOException ioe
 	 */
 	public void reciveRequest(Commands c, String g) throws IOException {
+		System.out.println("llegó al servidor el comando: "+c.getValue());
 		switch (c) {
 		case LOGIN:
 			String[] data = g.split(",");
@@ -170,7 +172,11 @@ public class Client implements Runnable {
 			FileOperations.getInstanceOf().updateBiddings(newBiddings);
 			break;
 		case GETIMG:
-			
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+			ArrayList<Bidding> idBid = FileOperations.getInstanceOf().getBiddingsList();
+			for (Bidding bidding : idBid) {
+				this.sendImages(bidding.getId());
+			}
 			break;
 		}
 	}
