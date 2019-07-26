@@ -110,6 +110,7 @@ public class EntityManager {
 	}
 
 	public void addBidding(Bidding bidding) {
+		
 		bidding.setId(biddings.size() + 1);
 		biddings.add(bidding);
 		try {
