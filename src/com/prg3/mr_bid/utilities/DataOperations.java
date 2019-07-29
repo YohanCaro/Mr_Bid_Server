@@ -16,14 +16,20 @@ public class DataOperations {
 	
 	public String completeLenght(String data, int lenght) {
 		String dataC = data;
-		for (int i = 0; dataC.length()<lenght; i++, dataC+=" ");		
+		while( dataC.length()<lenght) {
+			dataC+=" ";
+		}	
 		return dataC;
 	}
 	
 	public String deleteFinalSpaces(String data) {
 		String freeSpaces = "";
+		boolean finalSpace = false;
 		for (int i = data.length()-1; i >= 0; i--) {
 			if(data.charAt(i)!=' ') {
+				finalSpace=true;
+			}
+			if(finalSpace) {
 				freeSpaces+=data.charAt(i);
 			}
 		}
@@ -32,7 +38,7 @@ public class DataOperations {
 	
 	private String invertString(String inverted) {
 		String normalS = "";
-		for (int i = inverted.length()-1; i>0; i--) {
+		for (int i = inverted.length()-1; i>=0; i--) {
 			normalS+=inverted.charAt(i);
 		}
 		return normalS;

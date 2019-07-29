@@ -15,6 +15,11 @@ public class BytesProductTest {
 		for (int i = 0; i < productBytes.length; i++) {
 			System.out.print(productBytes[i]+" ");
 		}
-		System.out.println("\nlongitud: "+productBytes.length);
+		System.out.println();
+		
+		Product sameProd = product.getByBytes(productBytes);
+		System.out.println(sameProd.getNameProduct()+"|nombre");
+		System.out.println(sameProd.getDescription()+"|Descripción");
+		System.out.println(sameProd.getImage()+"|ruta imagen");
 	}
 }
