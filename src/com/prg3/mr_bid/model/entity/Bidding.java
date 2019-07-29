@@ -177,6 +177,27 @@ public class Bidding {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	/**
+	 * id long = 4 bytes
+	 * biddingName 20 char = 20 bytes
+	 * typeProduct Integer = 2 bytes
+	 * product = 80 bytes
+	 * publicationTime =  bytes
+	 * initTime =  bytes
+	 * finishTime =  bytes
+	 * isAutomaticIncrement = 1 byte (0 true, 1 false)
+	 * isPublic = 1 byte
+	 * owner 20 char = 20 bytes
+	 * value Int = 2 bytes
+	 * @return
+	 */
+	public byte[] getBytes() {
+		byte[] bidBytes = null;
+		
+		return bidBytes;
+	}
+	
 
 	@Override
 	/**

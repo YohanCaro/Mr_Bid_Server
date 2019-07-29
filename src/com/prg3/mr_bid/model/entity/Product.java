@@ -93,28 +93,4 @@ public class Product {
 		return productBytes;
 	}
 	
-	public Product getByBytes(byte[] bytes) throws UnsupportedEncodingException {
-		Product product = null;
-		byte[] nameBytes = new byte[20];
-		for (int i = 0; i < nameBytes.length; i++) {
-			nameBytes[i] = bytes[i];
-		}
-		byte[] descBytes = new byte[20];
-		for (int i = 0; i < descBytes.length; i++) {
-			descBytes[i] = bytes[i+20];
-		}
-		byte[] imgBytes = new byte[40];
-		for (int i = 0; i < imgBytes.length; i++) {
-			imgBytes[i] = bytes[i+40];
-		}
-		String name = new String(nameBytes, "UTF-8");
-		name = DataOperations.getInstanceOf().deleteFinalSpaces(name);
-		String desc = new String(descBytes, "UTF-8");
-		desc = DataOperations.getInstanceOf().deleteFinalSpaces(desc);
-		String img = new String(imgBytes, "UTF-8");
-		img = DataOperations.getInstanceOf().deleteFinalSpaces(img);
-		product = new Product(name, desc, img);
-		return product;
-	}
-	
 }
