@@ -4,21 +4,15 @@ import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import com.google.gson.Gson;
 import com.prg3.mr_bid.controller.ServerController;
-import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.Bidding;
-import com.prg3.mr_bid.model.entity.CreditCard;
-import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
 import com.prg3.mr_bid.utilities.Constants;
@@ -85,11 +79,11 @@ public class Client implements Runnable {
 	
 
 	/**
-	 * 	al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
+	 * Al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
 	 * envía en un ciclo de n imagenes cada imagen usando un BufferedImage
 	 * @param numImgs
 	 * @param bidId
-	 * @return
+	 * @returnString con la ruta
 	 * @throws IOException
 	 */
 	public String getImage(long bidId) throws IOException {
@@ -105,8 +99,8 @@ public class Client implements Runnable {
 	}
 	
 	/**
-	 * What should this method do?
-	 * @throws IOException 
+	 * Envia lasimagenes de una determinada subasta identidicada por su id
+	 * @throws IOException exception
 	 */
 	public void sendImages(long bidId) throws IOException {
 		String path = FileOperations.getInstanceOf().
@@ -196,5 +190,12 @@ public class Client implements Runnable {
 		dataOS.writeUTF(Constants.gson.toJson(o));
 	}
 	
+	/**
+	 * Obtiene el sockect del cliente
+	 * @return socket s
+	 */
+	public Socket getSocket() {
+		return socket;
+	}
 
 }

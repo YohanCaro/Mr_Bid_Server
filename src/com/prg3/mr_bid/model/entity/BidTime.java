@@ -27,15 +27,34 @@ public class BidTime {
 	}
 	
 	/**
-	 * Convierte la edad
-	 * @return edad
+	 * Obtiene el tiempo en dias
+	 * @return t d
 	 */
-	public short getTimeOnDays() {
+	public float getTimeOnDays() {
+		if (calendar == null) {
+			calendar = new GregorianCalendar();
+		}
 		short year = (short) (date.getYear() - calendar.get(calendar.YEAR));
-		short month = (short) (date.getMonth() - calendar.get(calendar.MONTH));
+		short month = (short) (date.getMonth() - (calendar.get(calendar.MONTH)+1));
 		short day = (short) (date.getDay() - calendar.get(calendar.DAY_OF_MONTH));
 		
 		return (short) (year*365 + month*30 + day);
+	}
+	
+	/**
+	 * Obtiene el tiempo comparado con la fecha actual (en horas)
+	 * @return time t
+	 */
+	public float getTime() {
+		return this.getTimeOnHours() + this.getActualHour();
+	}
+	
+	/**
+	 * Obtiene la difrencia de una hora con la hora actual
+	 * @return t h
+	 */
+	public float getActualHour() {
+		return this.hours - calendar.get(calendar.HOUR_OF_DAY) - ((float)calendar.get(calendar.MINUTE)/60);
 	}
 	
 	/**
@@ -44,6 +63,14 @@ public class BidTime {
 	 */
 	public float getTimeOnHours() {
 		return this.getTimeOnDays()*24;
+	}
+	
+	/**
+	 * Obtiene el tiempo en horas 
+	 * @return horas t
+	 */
+	public float getTimeOnHours(int tim) {
+		return tim*24;
 	}
 	
 	/**

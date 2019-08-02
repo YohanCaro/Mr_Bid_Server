@@ -1,14 +1,17 @@
 package com.prg3.mr_bid.model.entity;
 
-import java.util.ArrayList;
+import com.prg3.mr_bid.structures.bst_file.IDataRecorder;
+import com.prg3.mr_bid.utilities.Utilities;
 
 /**
- * Clase User - Clase que crea un usuario
+ * Clase User - Clase que crea un usuario de la aplicación
  *
  * @author Yohan Caro
  * @version 1.0 - 2/06/2019
  */
-public class User {
+public class User implements IDataRecorder<User> {
+	
+	public final static int RECORD_SIZE = 118;
 	
 	private String firstName;
 	private String lastName;
@@ -19,8 +22,6 @@ public class User {
 	private TypeDocument typeDocument;
 	private Gender gender;
 	private CreditCard creditCard;
-	private ArrayList<Bidding> myBiddings;
-	private ArrayList<Bidding> myParcitipations;
 	
 	/**
 	 * Crea un usuario con los siguientes datos
@@ -48,8 +49,6 @@ public class User {
 		this.gender = gender;
 		this.creditCard = creditCard;
 		
-		myBiddings = new ArrayList<>();
-		myParcitipations = new ArrayList<>();
 	}
 	
 	/**
@@ -123,30 +122,37 @@ public class User {
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
-	
-	/**
-	 * Obtiene las subastas 
-	 * @return myBiddings mb
-	 */
-	public ArrayList<Bidding> getMyBiddings() {
-		return myBiddings;
-	}
-	
-	/**
-	 * Obtiene las participaciones 
-	 * @return myParcitipations mp
-	 */
-	public ArrayList<Bidding> getMyParcitipations() {
-		return myParcitipations;
-	}
-	
+		
 	@Override
-	/**
-	 * To string
-	 */
 	public String toString() {
 		return "Nombre y apellido: " + firstName + " email " + email +
 				"\nFecha de nacimiento: " + birthDate.getDateString() + " genero " + gender.getValue();
+	}
+
+	@Override
+	public byte[] getBytes() {
+		byte[] bytes = new byte[RECORD_SIZE];
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(firstName), 0);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(lastName), 20);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(email), 40);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(password), 60);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(birthDate.getDateString()), 80);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(document), 90);
+		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(typeDocument.ordinal()), 110);
+		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(gender.ordinal()), 114);
+		return bytes;
+	}
+
+	@Override
+	public User getData(byte[] bytes) {
+		return new User(Utilities.bytesToString(Utilities.cutBytes(bytes, 0, 20)),
+				Utilities.bytesToString(Utilities.cutBytes(bytes, 20, 40)),
+				Utilities.bytesToString(Utilities.cutBytes(bytes, 40, 60)),
+				Utilities.bytesToString(Utilities.cutBytes(bytes, 60, 80)),
+				new BidDate(Utilities.bytesToString(Utilities.cutBytes(bytes, 80, 90))),
+				Utilities.bytesToString(Utilities.cutBytes(bytes, 90, 110)),
+				TypeDocument.values()[Utilities.bytesToInt(bytes, 110)],
+				Gender.values()[Utilities.bytesToInt(bytes, 114)], null);
 	}
 
 }
