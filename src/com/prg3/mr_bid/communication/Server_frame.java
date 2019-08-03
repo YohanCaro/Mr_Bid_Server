@@ -4,9 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class Server_frame extends javax.swing.JFrame {
+public class Server_frame {
 	ArrayList clientOutputStreams;
 	ArrayList<String> users;
+	int port;
 
 	public class ClientHandler implements Runnable {
 		BufferedReader reader;
@@ -25,7 +26,9 @@ public class Server_frame extends javax.swing.JFrame {
 			}
 
 		}
-
+		
+		
+		
 		@Override
 		public void run() {
 			String message, connect = "Connect", disconnect = "Disconnect", chat = "Chat";
@@ -60,9 +63,7 @@ public class Server_frame extends javax.swing.JFrame {
 		}
 	}
 
-	public Server_frame() {
-		initComponents();
-	}
+
 
 	@SuppressWarnings("unchecked")
 
@@ -144,6 +145,14 @@ public class Server_frame extends javax.swing.JFrame {
 				System.out.println("Error telling everyone. \n");
 			}
 		}
+	}
+
+	public Server_frame() {
+		initComponents();
+		// TODO Auto-generated constructor stub
+	}
+	public int getPort() {
+		return port;
 	}
 
 }
