@@ -4,21 +4,15 @@ import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import com.google.gson.Gson;
 import com.prg3.mr_bid.controller.ServerController;
-import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.Bidding;
-import com.prg3.mr_bid.model.entity.CreditCard;
-import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
 import com.prg3.mr_bid.utilities.Constants;
@@ -85,40 +79,37 @@ public class Client implements Runnable {
 	
 
 	/**
-	 * 	al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
+	 * Al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
 	 * envía en un ciclo de n imagenes cada imagen usando un BufferedImage
 	 * @param numImgs
 	 * @param bidId
-	 * @return
+	 * @returnString con la ruta
 	 * @throws IOException
 	 */
-	public ArrayList<String> getImages(int numImgs, long bidId) throws IOException {
+	public String getImage(long bidId) throws IOException {
 		System.out.println("Id: " + bidId);
-		ArrayList<String> biddingsPath = new ArrayList<>();
+		String biddingsPath = "";
 		BufferedImage bufferedImage;
-		for (int i = 1; i <= numImgs; i++) {
-			bufferedImage = ImageIO.read(socket.getInputStream());
-			String imagePath = "data/biddingImages/bidding"+bidId+"_"+i+".png";
-			FileOperations.getInstanceOf().saveImage(imagePath, bufferedImage);
-			bufferedImage.flush();
-			biddingsPath.add(imagePath);
-		}		
+		bufferedImage = ImageIO.read(socket.getInputStream());
+		String imagePath = "data/biddingImages/bidding"+bidId+".png";
+		FileOperations.getInstanceOf().saveImage(imagePath, bufferedImage);
+		bufferedImage.flush();
+		biddingsPath= imagePath;		
 		return biddingsPath;
 	}
 	
 	/**
-	 * What should this method do?
-	 * @throws IOException 
+	 * Envia lasimagenes de una determinada subasta identidicada por su id
+	 * @throws IOException exception
 	 */
 	public void sendImages(long bidId) throws IOException {
-		ArrayList<String> paths = FileOperations.getInstanceOf().
-				getBiddingsList().get((int) bidId).getProduct().getImages();
-		sendData(Commands.GETIMG, paths.size()+" "+bidId);
-		for (int i = 0; i < paths.size(); i++) {
-			BufferedImage bufferedImage = ImageIO.read(new File(paths.get(i)));
-			ImageIO.write(bufferedImage, "png", dataOS);
-			bufferedImage.flush();
-		}
+		String path = FileOperations.getInstanceOf().
+				getBiddingsList().get((int) bidId-1).getProduct().getImage();
+		System.out.println("enviando imagen subasta "+bidId+" del servidor ");
+		sendData(Commands.GETIMG, bidId);
+		BufferedImage bufferedImage = ImageIO.read(new File(path));
+		ImageIO.write(bufferedImage, "png", dataOS);
+		this.dataOS.flush();
 	}
 	
 	/**
@@ -163,12 +154,10 @@ public class Client implements Runnable {
 			this.sendData(Commands.UPDATE_BID, biddings);
 			break;	
 		case SENDIMG:
-			String[] datas = g.split(" ");
-			long id = Long.parseLong(datas[1]);
-			ArrayList<String> paths = getImages(Integer.parseInt(datas[0]), 
-					id);
+			long id = Long.parseLong(g);
+			String path = getImage(id);
 			ArrayList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
-			newBiddings.get((int) id).getProduct().setImages(paths);
+			newBiddings.get((int) id-1).getProduct().setImage(path);
 			FileOperations.getInstanceOf().updateBiddings(newBiddings);
 			break;
 		case GETIMG:
@@ -201,5 +190,12 @@ public class Client implements Runnable {
 		dataOS.writeUTF(Constants.gson.toJson(o));
 	}
 	
+	/**
+	 * Obtiene el sockect del cliente
+	 * @return socket s
+	 */
+	public Socket getSocket() {
+		return socket;
+	}
 
 }

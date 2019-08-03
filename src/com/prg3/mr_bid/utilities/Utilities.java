@@ -1,15 +1,52 @@
-package com.prg3.mr_bid.structures.bst_file;
+package com.prg3.mr_bid.utilities;
 
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/**
- * Clase Utilities - 
+import javax.swing.JOptionPane;
+
+import com.prg3.mr_bid.model.entity.BidDate;
+import com.prg3.mr_bid.model.entity.BidState;
+import com.prg3.mr_bid.model.entity.BidTime;
+import com.prg3.mr_bid.model.entity.Bidding;
+
+/** Clase Utilities - Utilidades de la apicación
  *
  * @author Yohan Caro
- * @version 1.0 - 17/07/2019
+ * @version 1.0 - 1/06/2019
  */
 public class Utilities {
+	
+	/**
+	 * Envia un mensaje de advertencia
+	 * @param menssage mensjae
+	 * @param title titulo del JOptionPane
+	 */
+	public static void showMessageWarning(String menssage, String title) {
+		JOptionPane.showMessageDialog(null, menssage, title, JOptionPane.WARNING_MESSAGE);
+	}
 
+	/**
+	 * Envia un mensaje de Error
+	 * @param menssage mensjae
+	 * @param title titulo del JOptionPane
+	 */
+	public static void showMessageError(String menssage, String title) {
+		JOptionPane.showMessageDialog(null, menssage, title, JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**
+	 * Envia un mensaje de información
+	 * @param menssage mensjae
+	 * @param title titulo del JOptionPane
+	 */
+	public static void showMessageInfo(String menssage, String title) {
+		JOptionPane.showMessageDialog(null, menssage, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	/**
 	 * Pasa una cadena a un array de caracteres con un numero maxiomo de caracteres
 	 * Si no pasa el numero de caracteres, llena con espacios
@@ -136,6 +173,11 @@ public class Utilities {
 		return string;
 	}
 	
+	/**
+	 * Convierte un array de bytes en un long
+	 * @param bytes array
+	 * @return num numero
+	 */
 	public static long bytesToLong(byte[] bytes) {
 		long num = 0;
 		for (int i = 0; i < 8; i++) {
@@ -145,6 +187,12 @@ public class Utilities {
 		return num;
 	}
 	
+	/**
+	 * Convierte un array de bytes en un entero
+	 * @param bytes array
+	 * @param initB donde iniciar
+	 * @return num - numero
+	 */
 	public static int bytesToInt(byte[] bytes, int initB) {
 		int num = 0;
 		for (int i = initB; i < initB + 4; i++) {
@@ -154,10 +202,22 @@ public class Utilities {
 		return num;
 	}
 	
+	/**
+	 * Obtiene un character de un byte
+	 * @param b byte
+	 * @return char c
+	 */
 	public static char getCharTo(byte b) {
 		return (char) (b < 0 ? b + 256 : b);
 	}
 	
+	/**
+	 * Corta los un array de bytes, en un posicion inicialy una final
+	 * @param bytes b
+	 * @param posI posicion inicial
+	 * @param posF posicion final
+	 * @return bytes out
+	 */
 	public static byte[] cutBytes(byte[] bytes, int posI, int posF) {
 		byte[] out = new byte[posF-posI];
 		for (int i = 0; i < posF-posI; i++) {
@@ -165,5 +225,5 @@ public class Utilities {
 		}
 		return out;
 	}
-	
+
 }

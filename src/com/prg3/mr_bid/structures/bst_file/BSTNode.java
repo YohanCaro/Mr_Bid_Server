@@ -1,5 +1,7 @@
 package com.prg3.mr_bid.structures.bst_file;
 
+import com.prg3.mr_bid.utilities.Utilities;
+
 /**
  * Clase BSTNode - 
  *

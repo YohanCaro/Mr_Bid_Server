@@ -33,7 +33,7 @@ public class Server extends ServerSocket implements Runnable {
 		super(port);
 		this.isLive = true;
 		this.clients = new ArrayList<>();
-		this.server_frame = new Server_frame();
+//		this.server_frame = new Server_frame();
 	}
 	
 	/**
@@ -68,8 +68,16 @@ public class Server extends ServerSocket implements Runnable {
 	public Client createClient() throws UnknownHostException, IOException {
 		Client c = new Client(this, this.accept());
 		c.initClient();
+		this.showUsers();
 		c.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings()); //Envia lista de subastas
 		return c;
+	}
+	
+	public void showUsers() {
+		System.out.println("Lista de usuarios!");
+		for (int i = 0; i < clients.size(); i++) {
+			System.out.println("* " + clients.get(i).getSocket().getInetAddress().getHostName());
+		}
 	}
 	
 	/**

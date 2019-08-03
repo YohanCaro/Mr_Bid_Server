@@ -23,6 +23,7 @@ public class BidDate {
 		this.month = (short) (month-1);
 		this.year = year;
 	}
+	
 		
 	/**
 	 * Crea una fecha con datos enteros
@@ -32,6 +33,30 @@ public class BidDate {
 	 */
 	public BidDate(int day, int month, int year) {
 		this((short)day, (short) (month), (short)year);
+	}
+	
+	/**
+	 * Crea una fecha apartir de una cadena
+	 * @param date string (dd-mm-yyyy)
+	 */
+	public BidDate(String date) {
+		this(stringToDate(date)[0], stringToDate(date)[1], stringToDate(date)[2]);
+	}
+	
+	/**
+	 * Convierte una cadena en un vector de cadenas (de fechas)
+	 * @param date fecha String
+	 * @return shortDate si la cadena que entra no está vacia
+	 */
+	public static short[] stringToDate(String date) {
+		if (date != null && !date.isEmpty()) {
+			short[] shortDate = new short[3];
+			for (int i = 0; i < shortDate.length; i++) {
+				shortDate[i] = Short.parseShort(date.split("/")[i]);
+			}
+			return shortDate;
+		}
+		return null;
 	}
 	
 	/**
