@@ -161,6 +161,7 @@ public class Client implements Runnable {
 			FileOperations.getInstanceOf().updateBiddings(newBiddings);
 			break;
 		case GETIMG:
+			System.out.println("jbfl{");
 			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			ArrayList<Bidding> idBid = FileOperations.getInstanceOf().getBiddingsList();
 			for (Bidding bidding : idBid) {
@@ -169,6 +170,7 @@ public class Client implements Runnable {
 			break;
 		}
 	}
+	
 	
 	/**
 	 * Envia un comando al cliente
