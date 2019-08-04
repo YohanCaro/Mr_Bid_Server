@@ -101,7 +101,7 @@ public class Client implements Runnable {
 	}
 	
 	/**
-	 * Envia lasimagenes de una determinada subasta identidicada por su id
+	 * Envia las imagenes de una determinada subasta identidicada por su id
 	 * @throws IOException exception
 	 */
 	public void sendImages(long bidId) throws IOException {
