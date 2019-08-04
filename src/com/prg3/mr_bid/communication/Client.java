@@ -62,15 +62,14 @@ public class Client implements Runnable {
 		String jsonString = "";
 		while (isConect) {
 			try {
+				System.out.println("ESCUCHANDO...");
 				command = Constants.gson.fromJson(this.dataIS.readUTF(), Commands.class);
 				try {
 					if(!command.equals(Commands.UPDATE_BID)|| !command.equals(Commands.GETIMG)) {
 						jsonString = this.dataIS.readUTF();
 					}
-				} catch (NullPointerException e) {
-					
+				} catch (NullPointerException e) {					
 				}	
-				System.out.println("le llega el servidor... "+(command.getValue()));
 				this.reciveRequest(command, jsonString);
 			} catch (IOException e) {
 				server.getClients().remove(this);
@@ -88,7 +87,7 @@ public class Client implements Runnable {
 	 * @throws IOException
 	 */
 	public String getImage(long bidId) throws IOException {
-		System.out.println("Id: " + bidId);
+//		System.out.println("Id: " + bidId);
 		String biddingsPath = "";
 		BufferedImage bufferedImage;
 		bufferedImage = ImageIO.read(socket.getInputStream());
@@ -108,7 +107,7 @@ public class Client implements Runnable {
 	public void sendImages(long bidId) throws IOException {
 		String path = FileOperations.getInstanceOf().
 				getBiddingsList().get((int) bidId-1).getProduct().getImage();
-		System.out.println("enviando imagen subasta "+bidId+" del servidor ");
+//		System.out.println("enviando imagen subasta "+bidId+" del servidor ");
 		sendData(Commands.GETIMG, bidId);
 		BufferedImage bufferedImage = ImageIO.read(new File(path));
 		ImageIO.write(bufferedImage, "png", dataOS);
@@ -147,27 +146,30 @@ public class Client implements Runnable {
 			break;
 		case UPBIDDING:
 			Bidding b = Constants.gson.fromJson(g, Bidding.class);
+			System.out.println("	Le llegó nueva subasta serv "+b.getBiddingName());
 			if (b != null) {
 				ServerController.getInstanceOf().addBidding(b);
+				System.out.println("ServerController.getInstanceOf().addBidding(b) ya");
 //				this.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings());
 				SimpleList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
+				System.out.println("getBiddingList ya");
 				this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
+				System.out.println("UPDATE_BID ya");
 			}
 			break;
 		case UPDATE_BID:
 			SimpleList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
-//			this.sendData(Commands.UPDATE_BID, biddings);
 			this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
 			break;	
 		case SENDIMG:
-			long id = Long.parseLong(g.replace(" ", ""));
-			String path = getImage(id);
-			SimpleList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
-			newBiddings.get((int) id-1).getProduct().setImage(path);
-			FileOperations.getInstanceOf().updateBiddings(newBiddings);
+//			long id = Long.parseLong(g.replace(" ", ""));
+//			String path = getImage(id);
+//			SimpleList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
+//			newBiddings.get((int) id-1).getProduct().setImage(path);
+//			FileOperations.getInstanceOf().updateBiddings(newBiddings);
+			
 			break;
 		case GETIMG:
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			SimpleList<Bidding> idBid = FileOperations.getInstanceOf().getBiddingsList();
 			Cursor<Bidding> cursor = new Cursor<>(idBid);
 			while(!cursor.isOut()) {

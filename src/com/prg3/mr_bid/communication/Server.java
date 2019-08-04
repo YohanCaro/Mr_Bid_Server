@@ -79,7 +79,7 @@ public class Server extends ServerSocket implements Runnable {
 	}
 	
 	public void showUsers() {
-		System.out.println("Lista de usuarios!");
+//		System.out.println("Lista de usuarios!");
 		Cursor<Client> cursor = new Cursor<>(clients);
 		while (!cursor.isOut()) {
 			System.out.println("* " + cursor.nextAndGetInfo().getSocket().getInetAddress().getCanonicalHostName());

@@ -42,8 +42,8 @@ public class BSTFile <T extends IDataRecorder<T>> {
 	public void insert(long index, T data) throws IOException {
 		T t = this.masterDataBin.read(index);
 		int compValue = this.comparator.compare(data, t);
+//		int compValue = (t!=null)?this.comparator.compare(data, t):0;
 		BSTNode nodeBin = this.idDataBin.read(index);
-
 		if (compValue < 0) {
 			if (nodeBin.leftIndex == NULL) {
 				nodeBin.leftIndex = this.rootIndex;
@@ -104,6 +104,10 @@ public class BSTFile <T extends IDataRecorder<T>> {
 		}
 		return t;
 	}
-	
 
+	public long getRootIndex() {
+		return rootIndex;
+	}
+	
+	
 }
