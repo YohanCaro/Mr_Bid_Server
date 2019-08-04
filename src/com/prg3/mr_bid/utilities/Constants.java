@@ -1,8 +1,6 @@
 package com.prg3.mr_bid.utilities;
 
 import com.google.gson.Gson;
-import com.prg3.mr_bid.model.entity.Product;
-import com.prg3.mr_bid.model.entity.User;
 
 /**
  * Clase Constants - Constantes
@@ -12,8 +10,21 @@ import com.prg3.mr_bid.model.entity.User;
  */
 public class Constants {
 	
-	public static User user = null;
-	public static Product product = null;
-	public static Gson gson = new Gson();
-
+	public static Gson gson = new Gson();//borrar ...
+	/**
+	 * Ruta de archivo contenedor de la información de los usuarios registrados
+	 */
+	public static String usersFilePath = "data/appData/usersData.txt";
+	/**
+	 * Ruta de archivo contenedor de la información de las subastas creadas en la aplicación
+	 */
+	public static String biddingsFilePath = "data/appData/bidsData.txt";
+	/**
+	 * Ruta de archivo contenedor de indices que alimentan al arbol bst de usuarios
+	 */
+	public static String indexUsersPath = "data/bstApp/bstUsers.txt";
+	/**
+	 * Ruta de archivo contenedor de indices que alimentan al arbol bst de subastas
+	 */
+	public static String indexBiddingsPath = "data/bstApp/bstBiddings.txt";
 }

@@ -39,7 +39,7 @@ public class BSTFile <T extends IDataRecorder<T>> {
 
 	}
 
-	private void insert(long index, T data) throws IOException {
+	public void insert(long index, T data) throws IOException {
 		T t = this.masterDataBin.read(index);
 		int compValue = this.comparator.compare(data, t);
 		BSTNode nodeBin = this.idDataBin.read(index);
@@ -71,7 +71,7 @@ public class BSTFile <T extends IDataRecorder<T>> {
 		return this.search(data, this.comparator);
 	}
 
-	public long search(T data, Comparator<T> comparator) {
+	private long search(T data, Comparator<T> comparator) {
 		return search(0, data, comparator);
 	}
 

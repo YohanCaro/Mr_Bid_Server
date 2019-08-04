@@ -14,7 +14,7 @@ import com.prg3.mr_bid.utilities.Utilities;
  * @version 1.0 - 2/06/2019
  */
 public class Bidding implements IDataRecorder<Bidding>{
-	private final static int RECORD_SIZE = 191;
+	public final static int RECORD_SIZE = 191;
 	private long id;
 	private String biddingName;
 	private TypeProduct typeProduct;
