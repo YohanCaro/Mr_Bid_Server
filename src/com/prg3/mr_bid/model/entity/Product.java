@@ -61,6 +61,10 @@ public class Product {
 	public String toString() {
 		return "Product [nameProduct=" + nameProduct + ", description=" + description + ", image=" + image + "]";
 	}
+	
+	public String stringProduct() {
+		return nameProduct + "-" + description + "-" + image;
+	}
 
 	/**
 	 * 20 char name = 21 bytes

@@ -1,11 +1,12 @@
 package com.prg3.mr_bid.model.manager;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
+import com.prg3.mr_bid.structures.simple_list.Cursor;
+import com.prg3.mr_bid.structures.simple_list.SimpleList;
 
 /**
  * Manager Class of the entities
@@ -14,17 +15,21 @@ import com.prg3.mr_bid.persistence.FileOperations;
  * @version 1.0 - 2/06/2019
  */
 public class EntityManager {
-	private ArrayList<User> users;
-	private ArrayList<Bidding> biddings;
+	private SimpleList<User> users;
+	private SimpleList<Bidding> biddings;
 	private FileOperations fileOperations;
+	private Cursor<User> cursorUsers;
+	private Cursor<Bidding> cursorBiddings;
 	
 	/**
 	 * Constructor of the EntityManager class
 	 */
 	public EntityManager() {
-		users = new ArrayList<>();
-		biddings = new ArrayList<>();
+		users = new SimpleList<>();
+		biddings = new SimpleList<>();
 		fileOperations = FileOperations.getInstanceOf();
+		cursorBiddings = new Cursor<>(biddings);
+		cursorUsers = new Cursor<>(users);
 	}
 	
 	/**
@@ -59,11 +64,10 @@ public class EntityManager {
 	 * @return true/false
 	 */
 	public boolean existUser(String email) {
-		if (!users.isEmpty()) {
-			for (User user : users) {
-				if (user.getEmail().equals(email)) {
-					return true;
-				}
+		cursorUsers.reset();
+		while (!cursorUsers.isOut()) {
+			if (cursorUsers.nextAndGetInfo().getEmail().equals(email)) {
+				return true;
 			}
 		}
 		return false;
@@ -78,7 +82,6 @@ public class EntityManager {
 		} catch (IOException e) {
 			System.out.println("Error al cargar los usuarios!");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -89,8 +92,9 @@ public class EntityManager {
 	 */
 	public String showUsers() {
 		String out = "";
-		for (User user : users) {
-			out += user.toString() + "\n";
+		cursorUsers.reset();
+		while (!cursorUsers.isOut()) {
+			out += cursorUsers.nextAndGetInfo().toString() + "\n";
 		}
 		return out;
 	}
@@ -101,23 +105,24 @@ public class EntityManager {
 	 * @return user
 	 */
 	public User searchUser(String email) {
-		for (User user : users) {
+		cursorUsers.reset();
+		while (!cursorUsers.isOut()) {
+			User user = cursorUsers.getInfo();
 			if (user.getEmail().equals(email)) {
 				return user;
 			}
+			cursorUsers.next();
 		}
 		return null;
 	}
 
 	public void addBidding(Bidding bidding) {
-		
 		bidding.setId(biddings.size() + 1);
 		biddings.add(bidding);
 		try {
 			fileOperations.addBidding(bidding);
 		} catch (Exception e) {
 			System.out.println("Error en escritura de archivo");
-			e.printStackTrace();
 		}
 	}
 	
@@ -127,18 +132,16 @@ public class EntityManager {
 			fileOperations.deleteBidding(bidding);
 		} catch (IOException e) {
 			System.out.println("Error en escritura de archivo");
-			e.printStackTrace();
 		}
 	}
 	
 	public boolean existsBidding(long id) {
-		boolean exists = false;
-		for (Bidding bidding : biddings) {
-			if(bidding.getId()==id) {
-				exists = true;
+		while (!cursorBiddings.isOut()) {
+			if(cursorBiddings.nextAndGetInfo().getId() == id) {
+				return true;
 			}
 		}
-		return exists;
+		return false;
 	}
 	
 	public void loadBiddings() {
@@ -151,20 +154,21 @@ public class EntityManager {
 	}
 	
 	public Bidding getBidding(long id) {
-		Bidding bidding = null;
-		for (Bidding bidding1 : biddings) {
-			if(bidding1.getId()==id) {
-				bidding = bidding1;
+		Bidding bidding = cursorBiddings.nextAndGetInfo();
+		
+		while (!cursorBiddings.isOut()) {
+			if(bidding.getId() == id) {
+				bidding = cursorBiddings.nextAndGetInfo();
 			}
 		}
 		return bidding;
 	}
 	
-	public ArrayList<User> getUsers() {
+	public SimpleList<User> getUsers() {
 		return users;
 	}
 
-	public ArrayList<Bidding> getBiddings() {
+	public SimpleList<Bidding> getBiddings() {
 		return biddings;
 	}
 }

@@ -96,6 +96,10 @@ public class BidTime {
 	public String toString() {
 		return "BidTime [date=" + date.getDateString() + ", hours=" + hours + " ]";
 	}
+	
+	public String stringTime() {
+		return date.getDateString() + "-" + hours;
+	}
 
 	public byte[] getBytes() throws UnsupportedEncodingException {
 		byte[] bytes = new byte[14];

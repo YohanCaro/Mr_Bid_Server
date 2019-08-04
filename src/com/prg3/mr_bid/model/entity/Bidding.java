@@ -213,14 +213,17 @@ public class Bidding implements IDataRecorder<Bidding>{
 	}
 
 	@Override
-	/**
-	 * Convierte la subasta en un cadena
-	 * @return string c
-	 */
 	public String toString() {
 		return "Nombre de publicacion: " + biddingName + ", tipo: " + typeProduct.name() + 
 				"\nProducto: " + product.toString() + "\nTiempo de publicacion: " + publicationTime.toString() 
 				+ "\nTiempo de inico: " + initTime.toString() + "\nTiempo final: " + finishTime.toString();
+	}
+	
+	public String stringBid() {
+		return id + "-" + biddingName + "-" + typeProduct.ordinal() + "-" + product.stringProduct()
+		+ "-" + publicationTime.stringTime() + "-" + initTime.stringTime() + "-"
+		+ finishTime.stringTime() + "-" + (isAutomaticIncremet?1:0) + "-" 
+		+ (isPublic?1:0) + "-" + owner + "-" + value;
 	}
 	
 	public Product getProduct(byte[] bytes) throws UnsupportedEncodingException {

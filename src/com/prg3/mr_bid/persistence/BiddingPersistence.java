@@ -3,13 +3,14 @@ package com.prg3.mr_bid.persistence;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.Bidding;
+import com.prg3.mr_bid.structures.simple_list.SimpleList;
 
 /**
  * A class for the bidding persistence
@@ -70,7 +71,7 @@ public class BiddingPersistence {
 	 * @param biddings an array list of all the existing bidding objects
 	 * @throws IOException
 	 */
-	public void updateBiddings(ArrayList<Bidding> biddings) throws IOException {
+	public void updateBiddings(SimpleList<Bidding> biddings) throws IOException {
 		String data = "";
 		for (int i = 0; i < biddings.size(); i++) 
 			data+=gson.toJson(biddings.get(i))+"\n";
@@ -82,8 +83,8 @@ public class BiddingPersistence {
 	 * @return an array list with all the bidding objects
 	 * @throws IOException
 	 */
-	public ArrayList<Bidding> getAllBiddings() throws IOException {
-		ArrayList<Bidding> biddings = new ArrayList<Bidding>();
+	public SimpleList<Bidding> getAllBiddings() throws IOException {
+		SimpleList<Bidding> biddings = new SimpleList<Bidding>();
 		openFile('r', true);
 		String line = "";
 		while((line = bufferedReader.readLine())!=null) {

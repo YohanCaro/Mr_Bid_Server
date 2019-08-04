@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -15,7 +14,10 @@ import com.prg3.mr_bid.controller.ServerController;
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.persistence.FileOperations;
+import com.prg3.mr_bid.structures.simple_list.Cursor;
+import com.prg3.mr_bid.structures.simple_list.SimpleList;
 import com.prg3.mr_bid.utilities.Constants;
+import com.prg3.mr_bid.utilities.Utilities;
 
 /**
  * Clase Client - Maneja las peticiones del servidor
@@ -150,22 +152,23 @@ public class Client implements Runnable {
 			}
 			break;
 		case UPDATE_BID:
-			ArrayList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
-			this.sendData(Commands.UPDATE_BID, biddings);
+			SimpleList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
+//			this.sendData(Commands.UPDATE_BID, biddings);
+			this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
 			break;	
 		case SENDIMG:
 			long id = Long.parseLong(g);
 			String path = getImage(id);
-			ArrayList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
+			SimpleList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
 			newBiddings.get((int) id-1).getProduct().setImage(path);
 			FileOperations.getInstanceOf().updateBiddings(newBiddings);
 			break;
 		case GETIMG:
-			System.out.println("jbfl{");
 			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-			ArrayList<Bidding> idBid = FileOperations.getInstanceOf().getBiddingsList();
-			for (Bidding bidding : idBid) {
-				this.sendImages(bidding.getId());
+			SimpleList<Bidding> idBid = FileOperations.getInstanceOf().getBiddingsList();
+			Cursor<Bidding> cursor = new Cursor<>(idBid);
+			while(!cursor.isOut()) {
+				this.sendImages(cursor.nextAndGetInfo().getId());
 			}
 			break;
 		}
@@ -189,7 +192,11 @@ public class Client implements Runnable {
 	 */
 	public void sendData(Commands command, Object o) throws IOException {
 		dataOS.writeUTF(Constants.gson.toJson(command));
-		dataOS.writeUTF(Constants.gson.toJson(o));
+		if (o.getClass().equals(String.class)) {
+			dataOS.writeUTF(o.toString());
+		} else {
+			dataOS.writeUTF(Constants.gson.toJson(o));
+		}
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.structures.simple_list.SimpleList;
 /**
  * Class of the users persistence
  * @author Luis!
@@ -71,8 +72,8 @@ public class UsersPersistence {
 	 * @return an array list of the users into the users file
 	 * @throws Exception file exception/cipher exception
 	 */
-	public ArrayList<User> getAllUsers() throws Exception{
-		ArrayList<User> users = new ArrayList<User>();
+	public SimpleList<User> getAllUsers() throws Exception{
+		SimpleList<User> users = new SimpleList<User>();
 		openFile('r', true);
 		String line = "";
 		while((line = bufferedReader.readLine())!=null) {

@@ -3,17 +3,12 @@ package com.prg3.mr_bid.utilities;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import com.prg3.mr_bid.model.entity.BidDate;
-import com.prg3.mr_bid.model.entity.BidState;
-import com.prg3.mr_bid.model.entity.BidTime;
 import com.prg3.mr_bid.model.entity.Bidding;
+import com.prg3.mr_bid.structures.simple_list.Cursor;
+import com.prg3.mr_bid.structures.simple_list.SimpleList;
 
 /** Clase Utilities - Utilidades de la apicación
  *
@@ -47,6 +42,23 @@ public class Utilities {
 	 */
 	public static void showMessageInfo(String menssage, String title) {
 		JOptionPane.showMessageDialog(null, menssage, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	/**
+	 * Convierte una lista de subastas en un string
+	 * @param list lista de susbastas
+	 * @return output string
+	 */
+	public static String biddingsToString(SimpleList<Bidding> list) {
+		Cursor<Bidding> cursor = new Cursor<>(list);
+		String output = "";
+		
+		while (!cursor.isOut()) {
+			output += cursor.getInfo().stringBid() + (cursor.isLast()?"":"#");
+			cursor.next();
+		}
+		
+		return output;
 	}
 	
 	/**

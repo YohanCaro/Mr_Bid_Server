@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import com.google.gson.Gson;
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.structures.simple_list.SimpleList;
 
 
 /**
@@ -53,7 +54,7 @@ public class FileOperations {
 		usersPersistence.deleteUser(user);
 	}
 	
-	public ArrayList<User> getUsersList() throws Exception {
+	public SimpleList<User> getUsersList() throws Exception {
 		return usersPersistence.getAllUsers();
 	}
 	
@@ -65,11 +66,11 @@ public class FileOperations {
 		biddingPersistence.deleteBidding(bidding);
 	}
 	
-	public void updateBiddings(ArrayList<Bidding> biddings) throws IOException {
+	public void updateBiddings(SimpleList<Bidding> biddings) throws IOException {
 		biddingPersistence.updateBiddings(biddings);
 	}
 	
-	public ArrayList<Bidding> getBiddingsList() throws IOException{
+	public SimpleList<Bidding> getBiddingsList() throws IOException{
 		return biddingPersistence.getAllBiddings();
 	}
 	
