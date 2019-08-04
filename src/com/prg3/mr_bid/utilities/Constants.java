@@ -10,7 +10,7 @@ import com.google.gson.Gson;
  */
 public class Constants {
 	
-	public static Gson gson = new Gson();//borrar ...
+	public static Gson gson = new Gson();
 	/**
 	 * Ruta de archivo contenedor de la información de los usuarios registrados
 	 */
