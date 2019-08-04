@@ -29,7 +29,7 @@ public class EntityManager {
 		biddings = new SimpleList<>();
 		fileOperations = FileOperations.getInstanceOf();
 		cursorBiddings = new Cursor<>(biddings);
-		cursorUsers = new Cursor<>(users);
+		
 	}
 	
 	/**
@@ -65,8 +65,11 @@ public class EntityManager {
 	 */
 	public boolean existUser(String email) {
 		cursorUsers.reset();
+		System.out.println("C: " + (cursorUsers.isEmpty()));
 		while (!cursorUsers.isOut()) {
-			if (cursorUsers.nextAndGetInfo().getEmail().equals(email)) {
+			System.out.println("cursorUsers.getInfo().getEmail() / " + email);
+//			if (cursorUsers.nextAndGetInfo().getEmail().equals(email)) {
+			if (cursorUsers.getInfo().getEmail().equals(email)) {
 				return true;
 			}
 		}
@@ -79,6 +82,7 @@ public class EntityManager {
 	public void loadUsers() {
 		try {
 			this.users = fileOperations.getUsersList();
+			cursorUsers = new Cursor<>(users);
 		} catch (IOException e) {
 			System.out.println("Error al cargar los usuarios!");
 		} catch (Exception e) {
@@ -105,6 +109,7 @@ public class EntityManager {
 	 * @return user
 	 */
 	public User searchUser(String email) {
+		System.out.println("search: " + cursorUsers.size() + " - " + users.size());
 		cursorUsers.reset();
 		while (!cursorUsers.isOut()) {
 			User user = cursorUsers.getInfo();

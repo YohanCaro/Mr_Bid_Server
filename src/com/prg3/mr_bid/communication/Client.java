@@ -148,7 +148,9 @@ public class Client implements Runnable {
 			Bidding b = Constants.gson.fromJson(g, Bidding.class);
 			if (b != null) {
 				ServerController.getInstanceOf().addBidding(b);
-				this.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings());
+//				this.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings());
+				SimpleList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
+				this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
 			}
 			break;
 		case UPDATE_BID:

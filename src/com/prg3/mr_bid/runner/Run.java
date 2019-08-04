@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.prg3.mr_bid.runner;
 
 import java.io.IOException;

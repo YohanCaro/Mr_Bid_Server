@@ -10,7 +10,8 @@ import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.structures.simple_list.Cursor;
 import com.prg3.mr_bid.structures.simple_list.SimpleList;
 
-/** Clase Utilities - Utilidades de la apicación
+/** 
+ * Clase Utilities - Utilidades de la apicación
  *
  * @author Yohan Caro
  * @version 1.0 - 1/06/2019
@@ -57,7 +58,6 @@ public class Utilities {
 			output += cursor.getInfo().stringBid() + (cursor.isLast()?"":"#");
 			cursor.next();
 		}
-		
 		return output;
 	}
 	
