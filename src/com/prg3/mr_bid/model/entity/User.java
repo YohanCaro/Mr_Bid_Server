@@ -127,12 +127,12 @@ public class User implements IDataRecorder<User> {
 		
 	@Override
 	public String toString() {
-		return "Nombre y apellido: " + firstName + " email " + email +
+		return "Nombre y apellido: " + firstName+" "+lastName + " email " + email +
 				"\nFecha de nacimiento: " + birthDate.getDateString() + " genero " + gender.getValue();
 	}
 
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes() throws UnsupportedEncodingException {
 		byte[] bytes = new byte[RECORD_SIZE];
 		bytes = Utilities.completeBytes(bytes, 
 				Utilities.stringToBytes(Utilities.completeLength(firstName, 20)), 0);

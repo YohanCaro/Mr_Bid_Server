@@ -139,13 +139,10 @@ public class Utilities {
 	 * Convierte una cadena en una array de bytes
 	 * @param string cadena
 	 * @return bytes array
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static byte[] stringToBytes(String string) {
-		byte[] bytes = new byte[string.length()];
-		for (int i = 0; i < string.length(); i++) {
-			bytes[i] = (byte) string.charAt(i);
-		}
-		return bytes;
+	public static byte[] stringToBytes(String string) throws UnsupportedEncodingException {
+		return string.getBytes("UTF-8");
 	}
 	
 	/**

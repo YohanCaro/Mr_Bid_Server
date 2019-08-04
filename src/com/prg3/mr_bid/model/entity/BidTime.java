@@ -1,5 +1,6 @@
 package com.prg3.mr_bid.model.entity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -96,7 +97,7 @@ public class BidTime {
 		return "BidTime [date=" + date.getDateString() + ", hours=" + hours + " ]";
 	}
 
-	public byte[] getBytes() {
+	public byte[] getBytes() throws UnsupportedEncodingException {
 		byte[] bytes = new byte[14];
 		bytes = Utilities.completeBytes(bytes, 
 				Utilities.stringToBytes(Utilities.completeLength(date.getDateString(), 10)), 0);
