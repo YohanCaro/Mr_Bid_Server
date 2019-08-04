@@ -12,7 +12,7 @@ public class Constants {
 	
 	public static Gson gson = new Gson();
 	/**
-	 * Ruta de archivo contenedor de la información de los usuarios registrados en la aplicación
+	 * Ruta de archivo contenedor de la información de los usuarios registrados en la aplicacion
 	 */
 	public static String usersFilePath = "data/appData/usersData.DAT";
 	/**
