@@ -52,7 +52,7 @@ public class BidDate {
 		if (date != null && !date.isEmpty()) {
 			short[] shortDate = new short[3];
 			for (int i = 0; i < shortDate.length; i++) {
-				shortDate[i] = Short.parseShort(date.split("/")[i]);
+				shortDate[i] = Short.parseShort((date.replace(" ", "")).split("/")[i]);
 			}
 			return shortDate;
 		}

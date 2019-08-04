@@ -57,6 +57,11 @@ public class Product {
 		this.image = path;		
 	}
 	
+	@Override
+	public String toString() {
+		return "Product [nameProduct=" + nameProduct + ", description=" + description + ", image=" + image + "]";
+	}
+
 	/**
 	 * 20 char name = 21 bytes
 	 * 20 char description = 20 bytes

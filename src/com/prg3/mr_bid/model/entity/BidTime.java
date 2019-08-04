@@ -91,6 +91,11 @@ public class BidTime {
 		return hours;
 	}
 
+	@Override
+	public String toString() {
+		return "BidTime [date=" + date.getDateString() + ", hours=" + hours + " ]";
+	}
+
 	public byte[] getBytes() {
 		byte[] bytes = new byte[14];
 		bytes = Utilities.completeBytes(bytes, 
