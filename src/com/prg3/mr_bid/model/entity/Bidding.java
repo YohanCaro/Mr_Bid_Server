@@ -1,12 +1,19 @@
 package com.prg3.mr_bid.model.entity;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.rmi.CORBA.Util;
+
+import com.prg3.mr_bid.structures.bst_file.IDataRecorder;
+import com.prg3.mr_bid.utilities.Utilities;
+
 /**
  * Clase Bidding - Modelo de la subasta con todos sus datos
  *
  * @author Yohan Caro
  * @version 1.0 - 2/06/2019
  */
-public class Bidding {
+public class Bidding implements IDataRecorder{
 	
 	private long id;
 	private String biddingName;
@@ -55,7 +62,7 @@ public class Bidding {
 	 * @param finishTime teiempo de finalizado
 	 * @param isAutomaticIncremet define el tipo de incremento
 	 * @param isPublic define si es publica
-	 * Dueño de la subasta
+	 * @param emailUser Dueño de la subasta
 	 */
 	public Bidding(long id,String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
 			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, String emailUser) {
@@ -69,6 +76,33 @@ public class Bidding {
 		this.isAutomaticIncremet = isAutomaticIncremet;
 		this.isPublic = isPublic;
 		this.owner = emailUser;
+	}
+	
+	/**
+	 * Contruye una subasta con los siguientes datos
+	 * @param biddingName nombre de la subasta
+	 * @param typeProduct tipo de susbasta 
+	 * @param product producto
+	 * @param publicationTime tiempo de publicación
+	 * @param initTime tiempo de inicio
+	 * @param finishTime teiempo de finalizado
+	 * @param isAutomaticIncremet define el tipo de incremento
+	 * @param isPublic define si es publica
+	 * @param emailUser Dueño de la subasta
+	 */
+	public Bidding(long id,String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
+			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, String emailUser, int value) {
+		this.id = id;
+		this.biddingName = biddingName;
+		this.typeProduct = typeProduct;
+		this.product = product;
+		this.publicationTime = publicationTime;
+		this.initTime = initTime;
+		this.finishTime = finishTime;
+		this.isAutomaticIncremet = isAutomaticIncremet;
+		this.isPublic = isPublic;
+		this.owner = emailUser;
+		this.value = value;
 	}
 	
 	/**
@@ -177,27 +211,6 @@ public class Bidding {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	/**
-	 * id long = 4 bytes
-	 * biddingName 20 char = 20 bytes
-	 * typeProduct Integer = 2 bytes
-	 * product = 80 bytes
-	 * publicationTime =  bytes
-	 * initTime =  bytes
-	 * finishTime =  bytes
-	 * isAutomaticIncrement = 1 byte (0 true, 1 false)
-	 * isPublic = 1 byte
-	 * owner 20 char = 20 bytes
-	 * value Int = 2 bytes
-	 * @return
-	 */
-	public byte[] getBytes() {
-		byte[] bidBytes = null;
-		
-		return bidBytes;
-	}
-	
 
 	@Override
 	/**
@@ -208,6 +221,86 @@ public class Bidding {
 		return "Nombre de publicacion: " + biddingName + ", tipo: " + typeProduct.name() + 
 				"\nProducto: " + product.toString() + "\nTiempo de publicacion: " + publicationTime.toString() 
 				+ "\nTiempo de inico: " + initTime.toString() + "\nTiempo final: " + finishTime.toString();
+	}
+	
+	public Product getProduct(byte[] bytes) throws UnsupportedEncodingException {
+		return new Product(
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 0, 20))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 20, 40))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 40, 81))));
+	}
+
+	/**
+	 * id long = 8 bytes
+	 * biddingName 30 char = 30 bytes
+	 * typeProduct Integer = 4 bytes
+	 * product = 81 bytes   -123
+	 * publicationTime = 14 bytes  -137
+	 * initTime = 14 bytes         -151
+	 * finishTime = 14 bytes       -165
+	 * isAutomaticIncrement = 1 byte (0 true, 1 false) -166
+	 * isPublic = 1 byte               -167
+	 * owner 20 char = 20 bytes      -187
+	 * value int = 4 bytes       -191
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Override
+	public byte[] getBytes() throws UnsupportedEncodingException {
+		byte[] bytes = new byte[191];
+		bytes = Utilities.completeBytes(bytes, Utilities.longToBytes(id), 0);
+		bytes = Utilities.completeBytes(bytes,
+				Utilities.stringToBytes(Utilities.completeLength(biddingName, 20)), 8);
+		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(typeProduct.ordinal()), 38);
+		bytes = Utilities.completeBytes(bytes, product.getBytes(), 42);
+		bytes = Utilities.completeBytes(bytes, publicationTime.getBytes(), 123);
+		bytes = Utilities.completeBytes(bytes, initTime.getBytes(), 137);
+		bytes = Utilities.completeBytes(bytes, finishTime.getBytes(), 151);
+		bytes = Utilities.completeBytes(bytes, (byte) ((isAutomaticIncremet)?0:1), 165);
+		bytes = Utilities.completeBytes(bytes, (byte) ((isPublic)?0:1), 166);
+		bytes = Utilities.completeBytes(bytes,
+				Utilities.stringToBytes(Utilities.completeLength(owner, 20)), 167);
+		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(value), 187);
+		return bytes;
+	}
+	
+	/**
+	 * id long = 8 bytes
+	 * biddingName 30 char = 30 bytes
+	 * typeProduct Integer = 4 bytes
+	 * product = 81 bytes   -123
+	 * publicationTime = 14 bytes  -137
+	 * initTime = 14 bytes         -151
+	 * finishTime = 14 bytes       -165
+	 * isAutomaticIncrement = 1 byte (0 true, 1 false) -166
+	 * isPublic = 1 byte               -167
+	 * owner 20 char = 20 bytes      -187
+	 * value int = 4 bytes       -191
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Override
+	public Bidding getData(byte[] bytes) throws UnsupportedEncodingException {
+		return new Bidding(Utilities.bytesToLong(Utilities.cutBytes(bytes, 0, 8)),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 8, 38))),
+				TypeProduct.values()[Utilities.bytesToInt(bytes, 38)],
+				this.getProduct(Utilities.cutBytes(bytes, 42, 123)), 				
+				new BidTime(
+						new BidDate(
+						Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 123, 133)))), 
+						Utilities.bytesToFloat(Utilities.cutBytes(bytes, 133, 137))), 
+				new BidTime(
+						new BidDate(
+						Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 137, 147)))), 
+						Utilities.bytesToFloat(Utilities.cutBytes(bytes, 147, 151))), 
+				new BidTime(
+						new BidDate(
+						Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 151, 161)))), 
+						Utilities.bytesToFloat(Utilities.cutBytes(bytes, 161, 165))), 
+				(Utilities.cutBytes(bytes, 165, 166)[0]==0), 
+				(Utilities.cutBytes(bytes, 166, 167)[0]==0), 
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 167, 187))),
+				Utilities.bytesToInt(bytes, 187));
 	}
 
 }

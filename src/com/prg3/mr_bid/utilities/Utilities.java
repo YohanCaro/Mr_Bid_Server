@@ -1,5 +1,7 @@
 package com.prg3.mr_bid.utilities;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -73,7 +75,11 @@ public class Utilities {
 	 */
 	public static String cutStringWhitAditionalSpace(String string) {
 		for (int i = 0, count = 0; i < string.length(); i++) {
-			count += (string.charAt(i)==32)?1:-count;
+			if(string.charAt(i)==32||string.charAt(i)==0) {
+				count++;
+			}else {
+				count = 0;
+			}
 			if (count >= 2) {
 				return string.substring(0, i-1);
 			}
@@ -124,6 +130,11 @@ public class Utilities {
 		return out;
 	}
 	
+	public static byte[] completeBytes(byte[] out, byte aux, int pos) {		
+		out[pos] = aux;
+		return out;
+	}
+	
 	/**
 	 * Convierte una cadena en una array de bytes
 	 * @param string cadena
@@ -164,13 +175,10 @@ public class Utilities {
 	 * 
 	 * @param bytes array de bytes
 	 * @return String con bytes decodificados
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String bytesToString(byte[] bytes) {
-		String string = "";
-		for (int i = 0; i < bytes.length; i++) {
-			string += getCharTo(bytes[i]);
-		}
-		return string;
+	public static String bytesToString(byte[] bytes) throws UnsupportedEncodingException {
+		return new String(bytes, "UTF-8");
 	}
 	
 	/**
@@ -226,4 +234,21 @@ public class Utilities {
 		return out;
 	}
 
+	public static float bytesToFloat(byte[] bytes) {
+		return ByteBuffer.wrap(bytes).getFloat();
+	}
+
+	public static String completeLength(String string, int length) {
+		String data = string;
+		while(data.length()<length) {
+			data+=" ";
+		}
+		return data;
+	}
+
+	public static byte[] floatToBytes(float value) {
+		byte[] bytes = new byte[4];
+	    ByteBuffer.wrap(bytes).putFloat(value);
+	    return bytes;
+	}
 }

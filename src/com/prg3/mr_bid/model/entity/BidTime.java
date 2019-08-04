@@ -3,6 +3,8 @@ package com.prg3.mr_bid.model.entity;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import com.prg3.mr_bid.utilities.Utilities;
+
 /**
  * Clase BidTime - Crea una fecha con una hora especifica
  *
@@ -87,6 +89,14 @@ public class BidTime {
 	 */
 	public float getHours() {
 		return hours;
+	}
+
+	public byte[] getBytes() {
+		byte[] bytes = new byte[14];
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(date.getDateString(), 10)), 0);
+		bytes = Utilities.completeBytes(bytes, Utilities.floatToBytes(hours), 10);
+		return bytes;
 	}
 
 }

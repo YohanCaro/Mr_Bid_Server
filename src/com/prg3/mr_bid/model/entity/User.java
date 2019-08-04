@@ -1,5 +1,7 @@
 package com.prg3.mr_bid.model.entity;
 
+import java.io.UnsupportedEncodingException;
+
 import com.prg3.mr_bid.structures.bst_file.IDataRecorder;
 import com.prg3.mr_bid.utilities.Utilities;
 
@@ -132,25 +134,32 @@ public class User implements IDataRecorder<User> {
 	@Override
 	public byte[] getBytes() {
 		byte[] bytes = new byte[RECORD_SIZE];
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(firstName), 0);
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(lastName), 20);
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(email), 40);
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(password), 60);
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(birthDate.getDateString()), 80);
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(document), 90);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(firstName, 20)), 0);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(lastName,20)), 20);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(email,20)), 40);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(password,20)), 60);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(birthDate.getDateString(),10)), 80);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(document,20)), 90);
 		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(typeDocument.ordinal()), 110);
 		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(gender.ordinal()), 114);
 		return bytes;
 	}
 
 	@Override
-	public User getData(byte[] bytes) {
-		return new User(Utilities.bytesToString(Utilities.cutBytes(bytes, 0, 20)),
-				Utilities.bytesToString(Utilities.cutBytes(bytes, 20, 40)),
-				Utilities.bytesToString(Utilities.cutBytes(bytes, 40, 60)),
-				Utilities.bytesToString(Utilities.cutBytes(bytes, 60, 80)),
+	public User getData(byte[] bytes) throws UnsupportedEncodingException {
+		return new User(
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 0, 20))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 20, 40))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 40, 60))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 60, 80))),
 				new BidDate(Utilities.bytesToString(Utilities.cutBytes(bytes, 80, 90))),
-				Utilities.bytesToString(Utilities.cutBytes(bytes, 90, 110)),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 90, 110))),
 				TypeDocument.values()[Utilities.bytesToInt(bytes, 110)],
 				Gender.values()[Utilities.bytesToInt(bytes, 114)], null);
 	}

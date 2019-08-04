@@ -3,7 +3,7 @@ package com.prg3.mr_bid.model.entity;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import com.prg3.mr_bid.utilities.DataOperations;
+import com.prg3.mr_bid.utilities.Utilities;
 
 /**
  * Clase Product - Crea un producto para subastar
@@ -58,39 +58,21 @@ public class Product {
 	}
 	
 	/**
-	 * 20 char name = 20 bytes
+	 * 20 char name = 21 bytes
 	 * 20 char description = 20 bytes
 	 * 40 char imagePath = 40 bytes 
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
 	public byte[] getBytes() throws UnsupportedEncodingException {
-		byte[] productBytes = new byte[80];
-		String data = nameProduct;
-		if(data.length()<20) {
-			data = DataOperations.getInstanceOf().completeLenght(data, 20);
-		}
-		byte[] tempBytes = data.getBytes("UTF-8");
-		for (int i = 0; i < tempBytes.length && i<20; i++) {
-			productBytes[i] = tempBytes[i];
-		}
-		data = this.description;
-		if(data.length()<20) {
-			data = DataOperations.getInstanceOf().completeLenght(data, 20);
-		}
-		tempBytes = data.getBytes("UTF-8");
-		for (int i = 20; i-20 < tempBytes.length && i<40; i++) {
-			productBytes[i] = tempBytes[i-20];
-		}
-		data = this.image;
-		if(data.length()<40) {
-			data = DataOperations.getInstanceOf().completeLenght(data, 40);
-		}
-		tempBytes = data.getBytes("UTF-8");
-		for (int i = 40;i-40<tempBytes.length&&i<80; i++) {
-			productBytes[i] = tempBytes[i-40];
-		}	
-		return productBytes;
+		byte[] bytes = new byte[81];
+		String data = Utilities.completeLength(nameProduct, 20);
+		bytes = Utilities.completeBytes(bytes, data.getBytes("UTF-8"), 0);
+		data = Utilities.completeLength(description, 21);
+		bytes = Utilities.completeBytes(bytes, data.getBytes("UTF-8"), 20);
+		data = Utilities.completeLength(description, 40);
+		bytes = Utilities.completeBytes(bytes, data.getBytes("UTF-8"), 40);
+		return bytes;
 	}
 	
 }
