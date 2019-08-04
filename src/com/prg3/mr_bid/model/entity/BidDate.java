@@ -20,7 +20,7 @@ public class BidDate {
 	 */
 	public BidDate(short day, short month, short year) {
 		this.day = day;
-		this.month = (short) (month-1);
+		this.month = month;
 		this.year = year;
 	}
 	

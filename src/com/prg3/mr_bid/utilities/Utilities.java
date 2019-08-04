@@ -260,4 +260,14 @@ public class Utilities {
 	    ByteBuffer.wrap(bytes).putFloat(value);
 	    return bytes;
 	}
+	
+	public static boolean isByteArrayEmpty(byte[] bytes) {
+		boolean isEmpty = true;
+		for (int i = 0; i < bytes.length&&isEmpty; i++) {
+			if(bytes[i]!=0) {
+				isEmpty = false;
+			}
+		}
+		return isEmpty;
+	}
 }

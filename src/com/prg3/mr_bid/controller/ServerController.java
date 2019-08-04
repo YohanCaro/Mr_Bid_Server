@@ -1,5 +1,7 @@
 package com.prg3.mr_bid.controller;
 
+import java.io.FileNotFoundException;
+
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.model.manager.EntityManager;
@@ -17,8 +19,9 @@ public class ServerController {
 	
 	/**
 	 * Inicia los usuarios ya registrados
+	 * @throws FileNotFoundException 
 	 */
-	private ServerController() {
+	private ServerController() throws FileNotFoundException {
 		manager = new EntityManager();
 		this.loadUsers();
 		this.loadBiddings();
@@ -92,8 +95,9 @@ public class ServerController {
 	/**
 	 * Crea un único controlador
 	 * @return
+	 * @throws FileNotFoundException 
 	 */
-	public static ServerController getInstanceOf() {
+	public static ServerController getInstanceOf() throws FileNotFoundException {
 		if (controller == null) {
 			controller = new ServerController();
 		}

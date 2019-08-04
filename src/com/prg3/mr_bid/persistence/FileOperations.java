@@ -4,54 +4,45 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
-import com.google.gson.Gson;
+
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.structures.simple_list.SimpleList;
+import com.prg3.mr_bid.utilities.Constants;
 
-
-/**
- * @author Luis!
- * @version 19-05-2019 
- * 
- * The FileOperations class contains all the methods related to 
- * the persistence of the program 
- */
 public class FileOperations {
-	private UsersPersistence usersPersistence;
 	private BiddingPersistence biddingPersistence;
-	private Gson gson;
-	private static FileOperations fileOperations = null;
+	private UsersPersistence usersPersistence;
+	private static FileOperations fileOperations2 = null;
 	
-	/**
-	 * Private constructor of the FileOperation class without parameters
-	 */
-	private FileOperations() {
-		gson = new Gson();
-		usersPersistence = new UsersPersistence(gson);
-		biddingPersistence = new BiddingPersistence(gson);
+	private FileOperations() throws FileNotFoundException {
+		biddingPersistence = new BiddingPersistence(Constants.biddingsFilePath, 
+				Constants.indexBiddingsPath);
+		usersPersistence = new UsersPersistence(Constants.usersFilePath,
+				Constants.indexUsersPath);		
 	}
 	
 	/**
-	 * Method of a singleton design pattern of the FileOperation class
-	 * @return an static reference of the FileOperation class
+	 * Metodo de patron de diseño singleton de la clase FileOperation
+	 * @return una referencia estatica de la clase FileOperation
+	 * @throws FileNotFoundException los archivos no se encuentran en la ruta especificada
 	 */
-	public static FileOperations getInstanceOf() {
-		return (fileOperations==null)?fileOperations = new FileOperations():fileOperations;
+	public static FileOperations getInstanceOf() throws FileNotFoundException {
+		return (fileOperations2==null)?fileOperations2 = new FileOperations():fileOperations2;
 	}
 	
-	public void addUser(User user) throws Exception {
+	public void addUser(User user) throws IOException {
 		usersPersistence.addNewUser(user);
 	}
 	
-	public void saveImage(String path, BufferedImage bufferedImage) throws FileNotFoundException, IOException {
-		ImageIO.write(bufferedImage, "png", new FileOutputStream(path));
+	public void deleteUser(User user) {
+		usersPersistence.deleteUser(user);
 	}
 	
-	public void deleteUser(User user) throws IOException {
-		usersPersistence.deleteUser(user);
+	public User getUserByEmail(String email) {
+		return usersPersistence.getUserByEmail(email);
 	}
 	
 	public SimpleList<User> getUsersList() throws Exception {
@@ -70,21 +61,20 @@ public class FileOperations {
 		biddingPersistence.updateBiddings(biddings);
 	}
 	
+	public void updateBidding(Bidding bidding) throws IOException {
+		biddingPersistence.updateBidding(bidding);
+	}
+	
+	public Bidding getBiddingById(long id) {
+		return biddingPersistence.getBiddingById(id);
+	}
+	
 	public SimpleList<Bidding> getBiddingsList() throws IOException{
 		return biddingPersistence.getAllBiddings();
 	}
-	
-	public String objectToJson(Object object) {
-		return gson.toJson(object);
+
+	public void saveImage(String path, BufferedImage bufferedImage) throws FileNotFoundException, IOException {
+		ImageIO.write(bufferedImage, "png", new FileOutputStream(path));
 	}
 	
-	/**
-	 * Converts a string json into an object of a specific class
-	 * @param json
-	 * @param class1
-	 * @return
-	 */
-	public Object jsonToObject(String json, Class class1) {
-		return gson.fromJson(json, class1);
-	}
 }

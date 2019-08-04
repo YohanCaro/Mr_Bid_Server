@@ -81,8 +81,7 @@ public class Client implements Runnable {
 	
 
 	/**
-	 * Al crear una subasta, el cliente envia el número de imagenes de la subasta, luego
-	 * envía en un ciclo de n imagenes cada imagen usando un BufferedImage
+	 * Al crear una subasta, el cliente envia la imagen usando un BufferedImage
 	 * @param numImgs
 	 * @param bidId
 	 * @returnString con la ruta
@@ -93,10 +92,12 @@ public class Client implements Runnable {
 		String biddingsPath = "";
 		BufferedImage bufferedImage;
 		bufferedImage = ImageIO.read(socket.getInputStream());
-		String imagePath = "data/biddingImages/bidding"+bidId+".png";
-		FileOperations.getInstanceOf().saveImage(imagePath, bufferedImage);
-		bufferedImage.flush();
-		biddingsPath= imagePath;		
+		if(bufferedImage!=null) {
+			String imagePath = "data/biddingImages/bidding"+bidId+".png";
+			FileOperations.getInstanceOf().saveImage(imagePath, bufferedImage);
+			bufferedImage.flush();
+			biddingsPath= imagePath;
+		}
 		return biddingsPath;
 	}
 	
@@ -159,7 +160,7 @@ public class Client implements Runnable {
 			this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
 			break;	
 		case SENDIMG:
-			long id = Long.parseLong(g);
+			long id = Long.parseLong(g.replace(" ", ""));
 			String path = getImage(id);
 			SimpleList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
 			newBiddings.get((int) id-1).getProduct().setImage(path);

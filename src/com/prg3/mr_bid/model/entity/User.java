@@ -50,9 +50,13 @@ public class User implements IDataRecorder<User> {
 		this.typeDocument = typeDocument;
 		this.gender = gender;
 		this.creditCard = creditCard;
-		
 	}
 	
+	public User() {
+	}
+
+
+
 	/**
 	 * Cambia la tarjeta de credito del usuario
 	 * @param creditCard the creditCard to set
@@ -141,7 +145,7 @@ public class User implements IDataRecorder<User> {
 		bytes = Utilities.completeBytes(bytes, 
 				Utilities.stringToBytes(Utilities.completeLength(email,20)), 40);
 		bytes = Utilities.completeBytes(bytes, 
-				Utilities.stringToBytes(Utilities.completeLength(password,20)), 60);
+				Utilities.stringToBytes(Utilities.completeLength(password,20)), 60);		
 		bytes = Utilities.completeBytes(bytes, 
 				Utilities.stringToBytes(Utilities.completeLength(birthDate.getDateString(),10)), 80);
 		bytes = Utilities.completeBytes(bytes, 
@@ -158,7 +162,8 @@ public class User implements IDataRecorder<User> {
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 20, 40))),
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 40, 60))),
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 60, 80))),
-				new BidDate(Utilities.bytesToString(Utilities.cutBytes(bytes, 80, 90))),
+				new BidDate(
+					Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 80, 90)))),
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 90, 110))),
 				TypeDocument.values()[Utilities.bytesToInt(bytes, 110)],
 				Gender.values()[Utilities.bytesToInt(bytes, 114)], null);

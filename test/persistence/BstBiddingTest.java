@@ -1,14 +1,15 @@
 package persistence;
 
-import java.io.UnsupportedEncodingException;
+import java.io.FileNotFoundException;
 
 import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.BidTime;
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.TypeProduct;
+import com.prg3.mr_bid.persistence.FileOperations;
 
-public class BytesBiddingTest {
+public class BstBiddingTest {
 	public static void main(String[] args) {
 		Bidding bidding = new Bidding(1,"Subasta de Navaja Suiza", 
 				TypeProduct.OTHERS, 
@@ -16,19 +17,19 @@ public class BytesBiddingTest {
 				new BidTime(new BidDate(21, 5, 2019), 24), 
 				new BidTime(new BidDate(21, 5, 2019), 24), 
 				new BidTime(new BidDate(30, 5, 2019), 24), 
-				true, true, "Don Luis" ,1000);	
+				true, true, "Don Luis" ,1000);
 		try {
-			byte[] bytes = bidding.getBytes();
-			for (int i = 0; i < bytes.length; i++) {
-				System.out.print(bytes[i]+" ");
-			}
-			System.out.println();
-			System.out.println("Reconstruyendo objeto...");
-			Bidding newBidding = bidding.getData(bytes);
+			FileOperations fileOperations2 = FileOperations.getInstanceOf();
+			fileOperations2.addBidding(bidding);
+			System.out.println("Subasta añadida al archivo...");
+			System.out.println("Obteniendo subasta por id");
+			Bidding newBidding = fileOperations2.getBiddingById(1);
 			System.out.println(newBidding.toString());
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("esto no debería pasar");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 }

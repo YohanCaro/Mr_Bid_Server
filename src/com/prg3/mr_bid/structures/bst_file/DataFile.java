@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import com.prg3.mr_bid.utilities.Utilities;
+
 /**
  * Clase DataFile - 
  *
@@ -41,12 +43,15 @@ public class DataFile <T extends IDataRecorder<T>> extends RandomAccessFile {
 		byte[] b = new byte[this.recordSize];
 		this.read(b);
 		T t = null;
-		try {
-			t = this.classType.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			System.err.println(e.getMessage());
+		if(!Utilities.isByteArrayEmpty(b)) {
+			try {
+				t = this.classType.newInstance();
+				t = t.getData(b);
+			} catch (InstantiationException | IllegalAccessException e ) {
+				System.err.println(e.getMessage());
+			}
 		}
-		return t.getData(b);
+		return t;
 	}
 	
 	

@@ -105,6 +105,9 @@ public class Bidding implements IDataRecorder<Bidding>{
 		this.value = value;
 	}
 	
+	public Bidding() {
+	}
+	
 	/**
 	 * Cambia el propietario
 	 * @param owner pripietario

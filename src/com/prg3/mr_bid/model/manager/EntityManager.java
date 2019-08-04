@@ -1,5 +1,6 @@
 package com.prg3.mr_bid.model.manager;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.prg3.mr_bid.model.entity.Bidding;
@@ -9,8 +10,7 @@ import com.prg3.mr_bid.structures.simple_list.Cursor;
 import com.prg3.mr_bid.structures.simple_list.SimpleList;
 
 /**
- * Manager Class of the entities
- *
+ * Clase manager de las entidades utilizadas en la aplicación
  * @author LUIS MARTINEZ
  * @version 1.0 - 2/06/2019
  */
@@ -22,19 +22,20 @@ public class EntityManager {
 	private Cursor<Bidding> cursorBiddings;
 	
 	/**
-	 * Constructor of the EntityManager class
+	 * Constructor de la clase EntityManager
+	 * @throws FileNotFoundException no se encuentran los archivos de subastas y usuarios 
 	 */
-	public EntityManager() {
+	public EntityManager() throws FileNotFoundException {
 		users = new SimpleList<>();
 		biddings = new SimpleList<>();
 		fileOperations = FileOperations.getInstanceOf();
 		cursorBiddings = new Cursor<>(biddings);
-		
+		cursorUsers = new Cursor<>(users);
 	}
 	
 	/**
-	 * Adds a new user into the users list and write it in the users file
-	 * @param user The user object to be added
+	 * Añade un nuevo usuario en la lista de usuarios y lo añade al BST de usuarios en persistencia
+	 * @param user El objeto usuario a añadir
 	 */
 	public void addUser(User user) {
 		try {
@@ -48,28 +49,24 @@ public class EntityManager {
 		}
 	}
 	
+	/**
+	 * Elimina un usuario de la lista de usuarios y lo elimina del BST de usuarios en persistencia
+	 * @param user El objeto usuario a eliminar
+	 */
 	public void deleteUser(User user) {
 		users.remove(user);
-		try {
-			fileOperations.deleteUser(user);
-		} catch (IOException e) {
-			System.out.println("Error al escribir el archivo!");
-			e.printStackTrace();
-		}
+		fileOperations.deleteUser(user);
 	}
 	
 	/**
-	 * Analiza si un usuario existe, mediante el correo
-	 * @param email correo
+	 * Analiza si un usuario existe mediante el correo
+	 * @param email correo del usuario
 	 * @return true/false
 	 */
 	public boolean existUser(String email) {
 		cursorUsers.reset();
-		System.out.println("C: " + (cursorUsers.isEmpty()));
 		while (!cursorUsers.isOut()) {
-			System.out.println("cursorUsers.getInfo().getEmail() / " + email);
-//			if (cursorUsers.nextAndGetInfo().getEmail().equals(email)) {
-			if (cursorUsers.getInfo().getEmail().equals(email)) {
+			if (cursorUsers.nextAndGetInfo().getEmail().equals(email)) {
 				return true;
 			}
 		}
@@ -77,7 +74,7 @@ public class EntityManager {
 	}
 	
 	/**
-	 * Carga los usuarios 
+	 * Carga los usuarios desde la persistencia
 	 */
 	public void loadUsers() {
 		try {
@@ -104,12 +101,11 @@ public class EntityManager {
 	}
 	
 	/**
-	 * Busca un usuario por el correo
-	 * @param email correo
-	 * @return user
+	 * Busca un usuario por su correo electronico
+	 * @param email correo del usuario
+	 * @return objeto usuario, en caso de que este sea encontrado
 	 */
 	public User searchUser(String email) {
-		System.out.println("search: " + cursorUsers.size() + " - " + users.size());
 		cursorUsers.reset();
 		while (!cursorUsers.isOut()) {
 			User user = cursorUsers.getInfo();
@@ -121,6 +117,10 @@ public class EntityManager {
 		return null;
 	}
 
+	/**
+	 * Añade una nueva subasta en la lista de subastas y la añade al BST de subastas en persistencia
+	 * @param user El objeto subasta a añadir
+	 */
 	public void addBidding(Bidding bidding) {
 		bidding.setId(biddings.size() + 1);
 		biddings.add(bidding);
@@ -131,6 +131,10 @@ public class EntityManager {
 		}
 	}
 	
+	/**
+	 * Elimina una subasta de la lista de subastas y la elimina del BST de subastas en persistencia
+	 * @param user El objeto subasta a eliminar
+	 */
 	public void deleteBidding(Bidding bidding) {
 		biddings.remove(bidding);
 		try {
@@ -140,6 +144,11 @@ public class EntityManager {
 		}
 	}
 	
+	/**
+	 * Analiza si una subasta existe mediante la búsqueda por id
+	 * @param id identificador de la subasta
+	 * @return true/false
+	 */
 	public boolean existsBidding(long id) {
 		while (!cursorBiddings.isOut()) {
 			if(cursorBiddings.nextAndGetInfo().getId() == id) {
@@ -149,6 +158,9 @@ public class EntityManager {
 		return false;
 	}
 	
+	/**
+	 * Carga las subastas desde la persistencia
+	 */
 	public void loadBiddings() {
 		try {
 			this.biddings = fileOperations.getBiddingsList();
@@ -158,21 +170,10 @@ public class EntityManager {
 		}
 	}
 	
-	public Bidding getBidding(long id) {
-		Bidding bidding = cursorBiddings.nextAndGetInfo();
-		
-		while (!cursorBiddings.isOut()) {
-			if(bidding.getId() == id) {
-				bidding = cursorBiddings.nextAndGetInfo();
-			}
-		}
-		return bidding;
-	}
-	
-	public SimpleList<User> getUsers() {
-		return users;
-	}
-
+	/**
+	 * Devuelve la lista de subastas
+	 * @return lista simple de objetos Bidding
+	 */
 	public SimpleList<Bidding> getBiddings() {
 		return biddings;
 	}
