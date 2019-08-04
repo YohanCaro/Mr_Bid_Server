@@ -40,7 +40,7 @@ public class BSTFile <T extends IDataRecorder<T>> {
 	}
 
 	public void insert(long index, T data) throws IOException {
-		T t = this.masterDataBin.read(index-1);
+		T t = this.masterDataBin.read(index);
 		int compValue = this.comparator.compare(data, t);
 		BSTNode nodeBin = this.idDataBin.read(index);
 
