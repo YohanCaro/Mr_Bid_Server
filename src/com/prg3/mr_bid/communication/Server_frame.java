@@ -40,7 +40,7 @@ public class Server_frame {
 					data = message.split(":");
 
 					for (String token : data) {
-						System.out.println(token + "\n ");
+						System.out.println(token + "\n");
 					}
 					if (data[2].equals(connect)) {
 						tellEveryone((data[0] + ":" + data[1] + ":" + chat));
