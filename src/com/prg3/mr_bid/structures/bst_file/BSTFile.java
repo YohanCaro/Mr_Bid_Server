@@ -12,7 +12,7 @@ import java.util.Comparator;
  */
 public class BSTFile <T extends IDataRecorder<T>> {
 	
-	protected static final long NULL = -1;
+	public static final long NULL = -1;
 	
 	private long rootIndex;
 	private DataFile<T> masterDataBin;
@@ -42,9 +42,9 @@ public class BSTFile <T extends IDataRecorder<T>> {
 	public void insert(long index, T data) throws IOException {
 		T t = this.masterDataBin.read(index);
 		int compValue = this.comparator.compare(data, t);
-//		int compValue = (t!=null)?this.comparator.compare(data, t):0;
 		BSTNode nodeBin = this.idDataBin.read(index);
 		if (compValue < 0) {
+			System.out.println(data.toString()+" \nes menor a\n"+t.toString());
 			if (nodeBin.leftIndex == NULL) {
 				nodeBin.leftIndex = this.rootIndex;
 				this.idDataBin.write(new BSTNode(this.rootIndex), this.rootIndex);
@@ -107,6 +107,10 @@ public class BSTFile <T extends IDataRecorder<T>> {
 
 	public long getRootIndex() {
 		return rootIndex;
+	}
+
+	public void setRootIndex(long rootIndex) {
+		this.rootIndex = rootIndex;
 	}
 	
 	

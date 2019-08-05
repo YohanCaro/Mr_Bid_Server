@@ -62,7 +62,6 @@ public class Client implements Runnable {
 		String jsonString = "";
 		while (isConect) {
 			try {
-				System.out.println("ESCUCHANDO...");
 				command = Constants.gson.fromJson(this.dataIS.readUTF(), Commands.class);
 				try {
 					if(!command.equals(Commands.UPDATE_BID)|| !command.equals(Commands.GETIMG)) {
@@ -87,7 +86,6 @@ public class Client implements Runnable {
 	 * @throws IOException
 	 */
 	public String getImage(long bidId) throws IOException {
-//		System.out.println("Id: " + bidId);
 		String biddingsPath = "";
 		BufferedImage bufferedImage;
 		bufferedImage = ImageIO.read(socket.getInputStream());
@@ -107,7 +105,6 @@ public class Client implements Runnable {
 	public void sendImages(long bidId) throws IOException {
 		String path = FileOperations.getInstanceOf().
 				getBiddingsList().get((int) bidId-1).getProduct().getImage();
-//		System.out.println("enviando imagen subasta "+bidId+" del servidor ");
 		sendData(Commands.GETIMG, bidId);
 		BufferedImage bufferedImage = ImageIO.read(new File(path));
 		ImageIO.write(bufferedImage, "png", dataOS);
@@ -121,7 +118,6 @@ public class Client implements Runnable {
 	 * @throws IOException ioe
 	 */
 	public void reciveRequest(Commands c, String g) throws IOException {
-		System.out.println("llegó al servidor el comando: "+c.getValue());
 		switch (c) {
 		case LOGIN:
 			String[] data = g.split(",");
@@ -146,15 +142,10 @@ public class Client implements Runnable {
 			break;
 		case UPBIDDING:
 			Bidding b = Constants.gson.fromJson(g, Bidding.class);
-			System.out.println("	Le llegó nueva subasta serv "+b.getBiddingName());
 			if (b != null) {
 				ServerController.getInstanceOf().addBidding(b);
-				System.out.println("ServerController.getInstanceOf().addBidding(b) ya");
-//				this.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings());
 				SimpleList<Bidding> biddings = FileOperations.getInstanceOf().getBiddingsList();
-				System.out.println("getBiddingList ya");
 				this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
-				System.out.println("UPDATE_BID ya");
 			}
 			break;
 		case UPDATE_BID:
@@ -175,6 +166,14 @@ public class Client implements Runnable {
 			while(!cursor.isOut()) {
 				this.sendImages(cursor.nextAndGetInfo().getId());
 			}
+			break;
+		case NEWOFFER:
+			String[] datas = g.split("-");
+			Bidding updateBid = FileOperations.getInstanceOf().getBiddingById(Long.parseLong(datas[0]));
+			updateBid.setValue(Integer.parseInt(datas[1]));
+			SimpleList<Bidding> bids = FileOperations.getInstanceOf().getBiddingsList();
+			bids.set((int)(updateBid.getId()-1), updateBid);
+			FileOperations.getInstanceOf().updateBiddings(bids);
 			break;
 		}
 	}

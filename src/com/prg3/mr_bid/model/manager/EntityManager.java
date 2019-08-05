@@ -125,6 +125,7 @@ public class EntityManager {
 		bidding.setId(biddings.size() + 1);
 		biddings.add(bidding);
 		try {
+			System.out.println("añadiendo subasta a persistencia\n"+bidding.getId()+" , value: "+bidding.getValue());
 			fileOperations.addBidding(bidding);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -15,8 +15,8 @@ public class BstBiddingTest {
 				TypeProduct.OTHERS, 
 				new Product("Navaja Suiza", "Sirve para apuñalar", "data/biddingImages/bidding0_1.png"), 
 				new BidTime(new BidDate(21, 5, 2019), 24), 
-				new BidTime(new BidDate(21, 5, 2019), 24), 
-				new BidTime(new BidDate(30, 5, 2019), 24), 
+				new BidTime(new BidDate(5, 8, 2019), 6), 
+				new BidTime(new BidDate(30, 8, 2019), 24), 
 				true, true, "Don Luis" ,1000);
 		try {
 			FileOperations fileOperations2 = FileOperations.getInstanceOf();

@@ -1,12 +1,16 @@
 package com.prg3.mr_bid.persistence;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.structures.bst_file.BSTFile;
 import com.prg3.mr_bid.structures.simple_list.Cursor;
 import com.prg3.mr_bid.structures.simple_list.SimpleList;
+import com.prg3.mr_bid.utilities.Constants;
 
 /**
  * Clase que maneja la persistencia de los objetos Bidding, usando un arbol BST para esto
@@ -52,17 +56,41 @@ public class BiddingPersistence {
 		bstBiddings.delete(bidding);
 	}
 	
+//	/**
+//	 * Actualiza todos los objetos Bidding almacenados actualmente en persistencia
+//	 * @param biddings lista simple con los objetos Bidding atualizados
+//	 * @throws IOException error en la escritura de archivos
+//	 */
+//	public void updateBiddings(SimpleList<Bidding> biddings) throws IOException {
+//		long currentIndex = 0;
+//		Cursor<Bidding> bidCursor = new Cursor<>(biddings);
+//		while(!bidCursor.isOut()) {
+//			bstBiddings.insert(currentIndex, bidCursor.getInfo());
+//			currentIndex++;
+//			bidCursor.next();
+//		}
+//	}
+	
+	private void cleanFiles() throws IOException {
+		this.bstBiddings.setRootIndex(bstBiddings.NULL);
+		BufferedWriter bw = new BufferedWriter(new FileWriter(Constants.biddingsFilePath));
+		bw.write("");
+		bw.close();
+		bw = new BufferedWriter(new FileWriter(Constants.indexBiddingsPath));
+		bw.write("");
+		bw.close();
+	}
+	
 	/**
 	 * Actualiza todos los objetos Bidding almacenados actualmente en persistencia
 	 * @param biddings lista simple con los objetos Bidding atualizados
 	 * @throws IOException error en la escritura de archivos
 	 */
 	public void updateBiddings(SimpleList<Bidding> biddings) throws IOException {
-		long currentIndex = 0;
+		this.cleanFiles();		
 		Cursor<Bidding> bidCursor = new Cursor<>(biddings);
 		while(!bidCursor.isOut()) {
-			bstBiddings.insert(currentIndex, bidCursor.getInfo());
-			currentIndex++;
+			bstBiddings.add(bidCursor.getInfo());
 			bidCursor.next();
 		}
 	}
@@ -73,7 +101,8 @@ public class BiddingPersistence {
 	 * @throws IOException error en la escritura de archivos
 	 */
 	public void updateBidding(Bidding bidding) throws IOException {
-		bstBiddings.insert(bidding.getId(), bidding);
+		System.out.println("Actualizando a nuevo valor "+bidding.getValue());
+		bstBiddings.insert(bidding.getId()-1, bidding);
 	}
 	
 	/**
@@ -100,7 +129,7 @@ public class BiddingPersistence {
 	 * @return objeto Bidding
 	 */
 	public Bidding getBiddingById(long id) {
-		return bstBiddings.getData(id);
+		return bstBiddings.getData(id-1);
 	}
 	
 }

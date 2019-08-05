@@ -388,7 +388,7 @@ public class SimpleList<T> {
     		}
     		return cont;
     	} else {
-    		return -1;
+    		return 0;
     	}
     }
         

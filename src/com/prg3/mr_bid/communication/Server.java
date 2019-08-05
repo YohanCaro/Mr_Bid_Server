@@ -10,6 +10,7 @@ import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.CreditCard;
 import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.User;
+import com.prg3.mr_bid.persistence.FileOperations;
 import com.prg3.mr_bid.structures.simple_list.Cursor;
 import com.prg3.mr_bid.structures.simple_list.SimpleList;
 import com.prg3.mr_bid.utilities.Constants;
@@ -72,14 +73,12 @@ public class Server extends ServerSocket implements Runnable {
 		Client c = new Client(this, this.accept());
 		c.initClient();
 		this.showUsers();
-//		c.sendData(Commands.UPBIDDING, ServerController.getInstanceOf().getManager().getBiddings()); //Envia lista de subastas
 		c.sendData(Commands.UPBIDDING,
-				Utilities.biddingsToString(ServerController.getInstanceOf().getManager().getBiddings()));
+				Utilities.biddingsToString(FileOperations.getInstanceOf().getBiddingsList()));
 		return c;
 	}
 	
 	public void showUsers() {
-//		System.out.println("Lista de usuarios!");
 		Cursor<Client> cursor = new Cursor<>(clients);
 		while (!cursor.isOut()) {
 			System.out.println("* " + cursor.nextAndGetInfo().getSocket().getInetAddress().getCanonicalHostName());
