@@ -142,6 +142,13 @@ public class Utilities {
 		return out;
 	}
 	
+	/**
+	 * Agrega un byte en un arreglo de bytes en una determinada posición
+	 * @param out arreglo de bytes
+	 * @param aux byte a agregar
+	 * @param pos posición donde agregar
+	 * @return el mismo arreglo con el byte agregado
+	 */
 	public static byte[] completeBytes(byte[] out, byte aux, int pos) {		
 		out[pos] = aux;
 		return out;
@@ -243,10 +250,22 @@ public class Utilities {
 		return out;
 	}
 
+	/**
+	 * Convierte un arreglo de bytes en un numero float
+	 * @param bytes arreglo de bytes con representacion de un float
+	 * @return numero float
+	 */
 	public static float bytesToFloat(byte[] bytes) {
 		return ByteBuffer.wrap(bytes).getFloat();
 	}
 
+	/**
+	 * Completa la longitud deseada de una cadena de caracteres, 
+	 * añadiendole espacios al final
+	 * @param string cadena a completar
+	 * @param length tamaño deseado
+	 * @return cadena con tamaño deseado
+	 */
 	public static String completeLength(String string, int length) {
 		String data = string;
 		while(data.length()<length) {
@@ -254,13 +273,24 @@ public class Utilities {
 		}
 		return data;
 	}
-
+	
+	/**
+	 * Convierte un numero float en su representacion en bytes
+	 * @param value numero float a convertir
+	 * @return arreglo de bytes que representan al numero float
+	 */
 	public static byte[] floatToBytes(float value) {
 		byte[] bytes = new byte[4];
 	    ByteBuffer.wrap(bytes).putFloat(value);
 	    return bytes;
 	}
 	
+	/**
+	 * Analiza si un arreglo de bytes esta vacio. 
+	 * (Esto significa que solo contiene bytes ceros '0')
+	 * @param bytes arreglo a analizar
+	 * @return true si esta vacio, false en caso contrario
+	 */
 	public static boolean isByteArrayEmpty(byte[] bytes) {
 		boolean isEmpty = true;
 		for (int i = 0; i < bytes.length&&isEmpty; i++) {

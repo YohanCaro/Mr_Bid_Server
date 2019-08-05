@@ -10,6 +10,9 @@ import com.google.gson.Gson;
  */
 public class Constants {
 	
+	/**
+	 * Objeto de la clase Gson para operaciones con objetos con estructura (.json)
+	 */
 	public static Gson gson = new Gson();
 	/**
 	 * Ruta de archivo contenedor de la información de los usuarios registrados en la aplicacion

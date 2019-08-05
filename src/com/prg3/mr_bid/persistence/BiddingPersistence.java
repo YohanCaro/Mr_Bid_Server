@@ -15,7 +15,7 @@ import com.prg3.mr_bid.utilities.Constants;
 /**
  * Clase que maneja la persistencia de los objetos Bidding, usando un arbol BST para esto
  * @author Luis!
- *
+ * @since 2/08/2019 v1.0
  */
 public class BiddingPersistence {
 	private BSTFile<Bidding> bstBiddings;
@@ -56,23 +56,13 @@ public class BiddingPersistence {
 		bstBiddings.delete(bidding);
 	}
 	
-//	/**
-//	 * Actualiza todos los objetos Bidding almacenados actualmente en persistencia
-//	 * @param biddings lista simple con los objetos Bidding atualizados
-//	 * @throws IOException error en la escritura de archivos
-//	 */
-//	public void updateBiddings(SimpleList<Bidding> biddings) throws IOException {
-//		long currentIndex = 0;
-//		Cursor<Bidding> bidCursor = new Cursor<>(biddings);
-//		while(!bidCursor.isOut()) {
-//			bstBiddings.insert(currentIndex, bidCursor.getInfo());
-//			currentIndex++;
-//			bidCursor.next();
-//		}
-//	}
-	
+	/**
+	 * Limpia los archivos que contienen tanto la información de las subastas, 
+	 * como los indices del arbol bst de registros de las mismas.
+	 * @throws IOException problema con archivos
+	 */
 	private void cleanFiles() throws IOException {
-		this.bstBiddings.setRootIndex(bstBiddings.NULL);
+		this.bstBiddings.setRootIndex(BSTFile.NULL);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(Constants.biddingsFilePath));
 		bw.write("");
 		bw.close();
@@ -101,7 +91,6 @@ public class BiddingPersistence {
 	 * @throws IOException error en la escritura de archivos
 	 */
 	public void updateBidding(Bidding bidding) throws IOException {
-		System.out.println("Actualizando a nuevo valor "+bidding.getValue());
 		bstBiddings.insert(bidding.getId()-1, bidding);
 	}
 	
