@@ -22,7 +22,6 @@ public class Run {
 				System.out.println(server.getInetAddress().getLocalHost());
 				System.out.println("Servidor encendido!");
 				server.start();
-//				server.close();
 			} catch (NumberFormatException | IOException e) {
 				System.err.println("Error: El parámetro debe ser numerico!");
 			} 

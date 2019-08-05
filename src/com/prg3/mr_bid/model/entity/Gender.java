@@ -7,7 +7,7 @@ package com.prg3.mr_bid.model.entity;
  */
 public enum Gender {
 	
-	FEMALE("femanino"), MALE ("masculino");
+	FEMALE("femenino"), MALE ("masculino");
 	
 	private String value;
 	

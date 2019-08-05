@@ -112,8 +112,8 @@ public class Client implements Runnable {
 	}
 	
 	/**
-	 * Recibe las peticiones de los clientes
-	 * @param c commnads
+	 * Recibe y evalua las peticiones de los clientes
+	 * @param c objeto Commands con comando de peticion
 	 * @param g cadena json
 	 * @throws IOException ioe
 	 */
@@ -153,11 +153,6 @@ public class Client implements Runnable {
 			this.sendData(Commands.UPDATE_BID, Utilities.biddingsToString(biddings));
 			break;	
 		case SENDIMG:
-//			long id = Long.parseLong(g.replace(" ", ""));
-//			String path = getImage(id);
-//			SimpleList<Bidding> newBiddings = FileOperations.getInstanceOf().getBiddingsList();			
-//			newBiddings.get((int) id-1).getProduct().setImage(path);
-//			FileOperations.getInstanceOf().updateBiddings(newBiddings);
 			
 			break;
 		case GETIMG:

@@ -29,7 +29,7 @@ public class Server extends ServerSocket implements Runnable {
 	Server_frame server_frame;
 
 	/**
-	 * Crea el servidor con un puerto
+	 * Crea el servidor con un puerto definido por el usuario
 	 * @param port puerto
 	 * @throws IOException ioe
 	 */
@@ -37,7 +37,6 @@ public class Server extends ServerSocket implements Runnable {
 		super(port);
 		this.isLive = true;
 		this.clients = new SimpleList<>();
-//		this.server_frame = new Server_frame();
 	}
 	
 	/**
@@ -49,7 +48,7 @@ public class Server extends ServerSocket implements Runnable {
 
 	@Override
 	/**
-	 * Hilo de recepción de peticiones
+	 * Hilo de recepción de peticiones 
 	 */
 	public void run() {
 		while (isLive) {
@@ -76,6 +75,9 @@ public class Server extends ServerSocket implements Runnable {
 		return c;
 	}
 	
+	/**
+	 * Muestra los usuarios conectados
+	 */
 	public void showUsers() {
 		Cursor<Client> cursor = new Cursor<>(clients);
 		while (!cursor.isOut()) {

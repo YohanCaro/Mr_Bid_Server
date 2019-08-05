@@ -52,17 +52,16 @@ public class ServerController {
 	}
 	
 	/**
-	 * Muestra los usurios registrados (Se tiene que quitar)
-	 * @return out users
+	 * Añade una subasta a la persistencia y a memoria en ejecucion
+	 * @param bid objeto Bidding
 	 */
-	public String showUsers() {
-		return manager.showUsers();
-	}
-	
 	public void addBidding(Bidding bid) {
 		manager.addBidding(bid);
 	}
 	
+	/**
+	 * Carga en memoria todos los objetos Bidding de la persistencia
+	 */
 	public void loadBiddings() {
 		manager.loadBiddings();
 	}
@@ -102,14 +101,6 @@ public class ServerController {
 			controller = new ServerController();
 		}
 		return controller;
-	}
-	
-	/**
-	 * Obtiene 
-	 * @return manager
-	 */
-	public EntityManager getManager() {
-		return manager;
 	}
 
 }

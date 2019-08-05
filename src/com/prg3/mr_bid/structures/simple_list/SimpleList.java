@@ -89,8 +89,6 @@ public class SimpleList<T> {
 				aux = aux.next;
 			}
 			aux.next = new Node<T>(info);
-//			for (Node<T> aux = this.head; aux.next != null; aux2 = aux, aux = aux.next); 
-//			aux2.next = new Node<T>(info);
 		}
 	}
 	
@@ -365,14 +363,6 @@ public class SimpleList<T> {
 			ant.next = aux.next;
 		}
 	}
-    
-    /**
-     * Convierte la lista en un JsonArray
-     * @return string json
-     */
-//    public String toJsonArray() {
-//		return new Gson().toJson(this);
-//    }
 	
     /**
      * Give the size of the list

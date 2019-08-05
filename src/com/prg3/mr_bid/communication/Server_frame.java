@@ -67,12 +67,11 @@ public class Server_frame {
 
 	private void initComponents() {
 		b_startActionPerformed();
-	}// </editor-fold>//GEN-END:initComponents
+	}
 
-	private void b_startActionPerformed() {// GEN-FIRST:event_b_startActionPerformed
+	private void b_startActionPerformed() {
 		Thread starter = new Thread(new ServerStart());
 		starter.start();
-
 		System.out.println("Server started...\n");
 	}
 
@@ -137,7 +136,6 @@ public class Server_frame {
 				writer.println(message);
 				System.out.println("Sending: " + message + "\n");
 				writer.flush();
-				// ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
 
 			} catch (Exception ex) {
 				System.out.println("Error telling everyone. \n");
@@ -147,7 +145,6 @@ public class Server_frame {
 
 	public Server_frame() {
 		initComponents();
-		// TODO Auto-generated constructor stub
 	}
 	public int getPort() {
 		return port;
