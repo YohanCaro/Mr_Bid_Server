@@ -28,7 +28,6 @@ public class BytesBiddingTest {
 			System.out.println(newBidding.toString());
 		} catch (UnsupportedEncodingException e) {
 			System.out.println("esto no debería pasar");
-			e.printStackTrace();
 		}
 	}
 }

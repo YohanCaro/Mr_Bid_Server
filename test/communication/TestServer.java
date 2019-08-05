@@ -13,7 +13,6 @@ public class TestServer {
 			server.start();
 		} catch (IOException e) {
 			System.err.println("El servidor explotó!");
-			e.printStackTrace();
 		}
 	}
 

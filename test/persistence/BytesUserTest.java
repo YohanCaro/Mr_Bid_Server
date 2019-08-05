@@ -25,8 +25,6 @@ public class BytesUserTest {
 			System.out.println(newUser.toString());
 			System.out.println(newUser.getPassword());
 		} catch (UnsupportedEncodingException e) {
-			
-			e.printStackTrace();
 		}
 		
 	}

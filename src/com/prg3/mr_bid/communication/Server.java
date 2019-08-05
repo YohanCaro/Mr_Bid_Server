@@ -56,9 +56,7 @@ public class Server extends ServerSocket implements Runnable {
 			try {
 				clients.add(this.createClient());
 			} catch (UnknownHostException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}

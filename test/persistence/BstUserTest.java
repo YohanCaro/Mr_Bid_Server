@@ -31,9 +31,7 @@ public class BstUserTest {
 			User newUser = fileOperations2.getUserByEmail("luis1234@hotmail.com");
 			System.out.println(newUser.toString());
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

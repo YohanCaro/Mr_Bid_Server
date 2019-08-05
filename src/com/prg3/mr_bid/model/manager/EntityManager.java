@@ -41,11 +41,10 @@ public class EntityManager {
 		try {
 			users.add(user);
 			fileOperations.addUser(user);
-			System.out.println(user.toString() + "\n se ha registardo!");
+			System.out.println(user.toString() + "\n se ha registrado!");
 			this.loadUsers();
 		} catch (Exception e) {
 			System.out.println("Error al escribir el archivo!");
-			e.printStackTrace();
 		}
 	}
 	
@@ -83,7 +82,6 @@ public class EntityManager {
 		} catch (IOException e) {
 			System.out.println("Error al cargar los usuarios!");
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -125,10 +123,8 @@ public class EntityManager {
 		bidding.setId(biddings.size() + 1);
 		biddings.add(bidding);
 		try {
-			System.out.println("añadiendo subasta a persistencia\n"+bidding.getId()+" , value: "+bidding.getValue());
 			fileOperations.addBidding(bidding);
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.out.println("Error en escritura de archivo");
 		}
 	}
@@ -142,7 +138,7 @@ public class EntityManager {
 		try {
 			fileOperations.deleteBidding(bidding);
 		} catch (IOException e) {
-			System.out.println("Error en escritura de archivo");
+			System.err.println("Error en escritura de archivo");
 		}
 	}
 	
@@ -168,7 +164,6 @@ public class EntityManager {
 			this.biddings = fileOperations.getBiddingsList();
 		} catch (IOException e) {
 			System.out.println("Error en lectura de archivo");
-			e.printStackTrace();
 		}
 	}
 	

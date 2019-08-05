@@ -56,7 +56,6 @@ public class Server_frame {
 				}
 			} catch (Exception ex) {
 				System.out.println("Lost a connection. \n");
-				ex.printStackTrace();
 				clientOutputStreams.remove(client);
 			}
 		}

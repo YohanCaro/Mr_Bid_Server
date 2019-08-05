@@ -26,9 +26,7 @@ public class BstBiddingTest {
 			Bidding newBidding = fileOperations2.getBiddingById(1);
 			System.out.println(newBidding.toString());
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 	}
