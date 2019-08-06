@@ -68,19 +68,22 @@ public class Product {
 
 	/**
 	 * 20 char name = 21 bytes
-	 * 20 char description = 20 bytes
+	 * 30 char description = 30 bytes
 	 * 40 char imagePath = 40 bytes 
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
 	public byte[] getBytes() throws UnsupportedEncodingException {
-		byte[] bytes = new byte[81];
-		String data = Utilities.completeLength(nameProduct, 20);
-		bytes = Utilities.completeBytes(bytes, data.getBytes("UTF-8"), 0);
-		data = Utilities.completeLength(description, 21);
-		bytes = Utilities.completeBytes(bytes, data.getBytes("UTF-8"), 20);
-		data = Utilities.completeLength(description, 40);
-		bytes = Utilities.completeBytes(bytes, data.getBytes("UTF-8"), 40);
+		byte[] bytes = new byte[91];
+		String data = Utilities.completeLength(nameProduct, 21);
+		System.out.println(data);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(data), 0);
+		data = Utilities.completeLength(description, 30);
+		System.out.println(data);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(data), 21);
+		data = Utilities.completeLength(image, 40);
+		System.out.println(data);
+		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(data), 51);
 		return bytes;
 	}
 	

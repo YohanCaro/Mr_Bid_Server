@@ -11,13 +11,13 @@ import com.prg3.mr_bid.persistence.FileOperations;
 
 public class BstBiddingTest {
 	public static void main(String[] args) {
-		Bidding bidding = new Bidding(1,"Subasta de Navaja Suiza", 
+		Bidding bidding = new Bidding(1, 1000,"Subasta de Navaja Suiza", 
 				TypeProduct.OTHERS, 
 				new Product("Navaja Suiza", "Sirve para apuñalar", "data/biddingImages/bidding0_1.png"), 
 				new BidTime(new BidDate(21, 5, 2019), 24), 
 				new BidTime(new BidDate(5, 8, 2019), 6), 
 				new BidTime(new BidDate(30, 8, 2019), 24), 
-				true, true, "Don Luis" ,1000);
+				true, true, "Don Luis");
 		try {
 			FileOperations fileOperations2 = FileOperations.getInstanceOf();
 			fileOperations2.addBidding(bidding);
