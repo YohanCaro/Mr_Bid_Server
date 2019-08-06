@@ -165,8 +165,8 @@ public class User implements IDataRecorder<User> {
 				new BidDate(
 					Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 80, 90)))),
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 90, 110))),
-				TypeDocument.values()[Utilities.bytesToInt(bytes, 110)],
-				Gender.values()[Utilities.bytesToInt(bytes, 114)], null);
+				TypeDocument.values()[Utilities.bytesToInt(Utilities.cutBytes(bytes, 110, 114))],
+				Gender.values()[Utilities.bytesToInt(Utilities.cutBytes(bytes, 114, 118))], null);
 	}
 
 }

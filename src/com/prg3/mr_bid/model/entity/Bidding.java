@@ -289,7 +289,7 @@ public class Bidding implements IDataRecorder<Bidding>{
 	public Bidding getData(byte[] bytes) throws UnsupportedEncodingException {
 		return new Bidding(Utilities.bytesToLong(Utilities.cutBytes(bytes, 0, 8)),
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 8, 38))),
-				TypeProduct.values()[Utilities.bytesToInt(bytes, 38)],
+				TypeProduct.values()[Utilities.bytesToInt(Utilities.cutBytes(bytes, 38, 42))],
 				this.getProduct(Utilities.cutBytes(bytes, 42, 123)), 				
 				new BidTime(
 						new BidDate(
@@ -306,7 +306,7 @@ public class Bidding implements IDataRecorder<Bidding>{
 				(Utilities.cutBytes(bytes, 165, 166)[0]==0), 
 				(Utilities.cutBytes(bytes, 166, 167)[0]==0), 
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 167, 187))),
-				Utilities.bytesToInt(bytes, 187));
+				Utilities.bytesToInt(Utilities.cutBytes(bytes, 187, 191)));
 	}
 
 }

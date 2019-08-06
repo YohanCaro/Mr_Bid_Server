@@ -105,12 +105,7 @@ public class Utilities {
 	 * @return bytes array
 	 */
 	public static byte[] intToBytes(int integer) {
-		byte[] bytes = new byte[4];
-		for (int i = 3; i >= 0; i--) {
-			bytes[i] = (byte) (integer & 0xFF);
-			integer >>= 4;
-		}
-		return bytes;
+		return ByteBuffer.allocate(Integer.BYTES).putInt(integer).array();
 	}
 
 	/**
@@ -217,13 +212,8 @@ public class Utilities {
 	 * @param initB donde iniciar
 	 * @return num - numero
 	 */
-	public static int bytesToInt(byte[] bytes, int initB) {
-		int num = 0;
-		for (int i = initB; i < initB + 4; i++) {
-			num <<= 4;
-			num |= (bytes[i] & 0xFF);
-		}
-		return num;
+	public static int bytesToInt(byte[] bytes) {
+		return ByteBuffer.wrap(bytes).getInt();
 	}
 	
 	/**

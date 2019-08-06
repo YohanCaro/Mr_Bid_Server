@@ -44,7 +44,6 @@ public class BSTFile <T extends IDataRecorder<T>> {
 		int compValue = this.comparator.compare(data, t);
 		BSTNode nodeBin = this.idDataBin.read(index);
 		if (compValue < 0) {
-			System.out.println(data.toString()+" \nes menor a\n"+t.toString());
 			if (nodeBin.leftIndex == NULL) {
 				nodeBin.leftIndex = this.rootIndex;
 				this.idDataBin.write(new BSTNode(this.rootIndex), this.rootIndex);
