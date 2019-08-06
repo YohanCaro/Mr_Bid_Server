@@ -76,13 +76,10 @@ public class Product {
 	public byte[] getBytes() throws UnsupportedEncodingException {
 		byte[] bytes = new byte[91];
 		String data = Utilities.completeLength(nameProduct, 21);
-		System.out.println(data);
 		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(data), 0);
 		data = Utilities.completeLength(description, 30);
-		System.out.println(data);
 		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(data), 21);
 		data = Utilities.completeLength(image, 40);
-		System.out.println(data);
 		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(data), 51);
 		return bytes;
 	}

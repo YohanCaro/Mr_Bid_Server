@@ -30,7 +30,7 @@ public class Bidding implements IDataRecorder<Bidding>{
 	 * @param product producto
 	 * @param publicationTime tiempo de publicación
 	 * @param initTime tiempo de inicio
-	 * @param finishTime teiempo de finalizado
+	 * @param finishTime tiempo de finalizado
 	 * @param isAutomaticIncremet define el tipo de incremento
 	 * @param isPublic define si es publica
 	 * @param emailUser Dueño de la subasta

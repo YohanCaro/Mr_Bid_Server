@@ -31,7 +31,16 @@ public class BidInfo {
 	 */
 	public BidInfo(long id, int value) {
 		this.id = id;
-		this.highestBidder = "";
+		this.highestBidder = "Sin pujas";
+		this.value = value;
+	}
+	
+	/**
+	 * Constructor de la clase BidInfo para una nueva subasta
+	 * @param value valor de la puja inicial
+	 */
+	public BidInfo(int value) {
+		this.highestBidder = "Sin pujas";
 		this.value = value;
 	}
 
