@@ -125,6 +125,7 @@ public class EntityManager {
 		try {
 			fileOperations.addBidding(bidding);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Error en escritura de archivo");
 		}
 	}

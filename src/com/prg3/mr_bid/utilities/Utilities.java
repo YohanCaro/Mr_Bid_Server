@@ -52,8 +52,7 @@ public class Utilities {
 	 */
 	public static String biddingsToString(SimpleList<Bidding> list) {
 		Cursor<Bidding> cursor = new Cursor<>(list);
-		String output = "";
-		
+		String output = "";		
 		while (!cursor.isOut()) {
 			output += cursor.getInfo().stringBid() + (cursor.isLast()?"":"#");
 			cursor.next();
