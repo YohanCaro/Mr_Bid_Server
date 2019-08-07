@@ -9,6 +9,7 @@ public class ServerChat {
 
 	ArrayList<String> users;
 	int port;
+	private long idSala;
 
 	public class ClientHandler implements Runnable {
 		BufferedReader reader;
@@ -32,11 +33,22 @@ public class ServerChat {
 		public void run() {
 			String message, connect = "Connect", disconnect = "Disconnect", chat = "Chat";
 			String[] data;
+			String[] data2;
 
 			try {
 				while ((message = reader.readLine()) != null) {
 					System.out.println("Received: " + message + "\n");
 					data = message.split(":");
+					data2 = message.split("Sala");
+
+					System.out.println("data" + data2[0]);// iMPORTANTE ACA SE ALAMACENA EL IDENTIFICADOR DE LA SALA DE
+															// DONDE SE ESTA MANDANDO EL MENSAJE
+
+					System.out.println("pos1" + data[0]);
+					System.out.println("pos2" + data[1]);
+					System.out.println("pos3s" + data[2]);
+					
+
 
 					for (String token : data) {
 						System.out.println(token + "\n");
@@ -44,12 +56,14 @@ public class ServerChat {
 
 					if (data[2].equals(connect)) {
 						tellEveryone((data[0] + ":" + data[1] + ":" + chat));
+						System.out.println("ESTA CONCETADO" + data[1]);
 						userAdd(data[0]);
 					} else if (data[2].equals(disconnect)) {
 						tellEveryone((data[0] + ":has disconnected." + ":" + chat));
 						userRemove(data[0]);
-					} else if (data[2].equals(chat)) {
+					} else if (data[2].equals(chat)) {// aca creo que es donde se manda el mensaje al cliente
 						tellEveryone(message);
+						System.out.println("Segunada condicion" + message);
 					} else {
 						System.out.println("No Conditions were met. \n");
 					}
@@ -129,6 +143,7 @@ public class ServerChat {
 	public void tellEveryone(String message) {
 		Iterator it = clientOutputStreams.iterator();
 		// System.out.println("it antes del " + it);
+//		System.out.println("El identificador de la sale es: "+idSala);
 
 		while (it.hasNext()) {
 			System.out.println(it.hasNext());
