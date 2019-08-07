@@ -77,7 +77,8 @@ public class BidInfo {
 	public byte[] getBytes() throws UnsupportedEncodingException {
 		byte[] bytes = new byte[32];
 		bytes = Utilities.completeBytes(bytes, Utilities.longToBytes(id), 0);
-		bytes = Utilities.completeBytes(bytes, Utilities.stringToBytes(highestBidder), 8);
+		bytes = Utilities.completeBytes(bytes, 
+				Utilities.stringToBytes(Utilities.completeLength(highestBidder, 20)), 8);
 		bytes = Utilities.completeBytes(bytes, Utilities.intToBytes(value), 28);
 		return bytes;
 	}

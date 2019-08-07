@@ -1,19 +1,16 @@
 package persistence;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-
 import com.prg3.mr_bid.model.entity.BidDate;
 import com.prg3.mr_bid.model.entity.BidTime;
 import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.Product;
 import com.prg3.mr_bid.model.entity.TypeProduct;
-import com.prg3.mr_bid.utilities.Utilities;
 
 public class BytesBiddingTest {
 	public static void main(String[] args) {
 		//Probar aca valor grande
-		Bidding bidding = new Bidding(1, 110000200,"Subasta de Navaja Suiza", 
+		Bidding bidding = new Bidding(1, 1100000,"Subasta de Navaja Suiza", 
 				TypeProduct.OTHERS, 
 				new Product("Navaja Suiza", "Sirve para apuñalar", "data/biddingImages/bidding0_1.png"), 
 				new BidTime(new BidDate(21, 5, 2019), 24), 
@@ -28,7 +25,7 @@ public class BytesBiddingTest {
 			System.out.println();
 			System.out.println("Reconstruyendo objeto...");
 			Bidding newBidding = bidding.getData(bytes);
-			System.out.println(newBidding.getValue());
+			System.out.println("Value: "+newBidding.getValue());
 			System.out.println(newBidding.toString());
 		} catch (UnsupportedEncodingException e) {
 			System.out.println("esto no debería pasar");

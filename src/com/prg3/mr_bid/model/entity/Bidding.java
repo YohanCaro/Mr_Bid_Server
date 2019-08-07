@@ -61,7 +61,7 @@ public class Bidding implements IDataRecorder<Bidding>{
 	 * @param isPublic define si es publica
 	 * @param emailUser Dueño de la subasta
 	 */
-	public Bidding(long id, int value, String highestBidder, String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
+	public Bidding(long id,String highestBidder, int value, String biddingName, TypeProduct typeProduct, Product product, BidTime publicationTime,
 			BidTime initTime, BidTime finishTime, boolean isAutomaticIncremet, boolean isPublic, String emailUser) {
 		this.bidInfo = new BidInfo(id, highestBidder, value);
 		this.biddingName = biddingName;
@@ -206,9 +206,9 @@ public class Bidding implements IDataRecorder<Bidding>{
 	
 	public Product getProduct(byte[] bytes) throws UnsupportedEncodingException {
 		return new Product(
-				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 0, 20))),
-				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 20, 40))),
-				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 40, 81))));
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 0, 21))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 21, 51))),
+				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 51, 91))));
 	}
 
 	/**
@@ -261,8 +261,8 @@ public class Bidding implements IDataRecorder<Bidding>{
 	public Bidding getData(byte[] bytes) throws UnsupportedEncodingException {
 		return new Bidding(
 				Utilities.bytesToLong(Utilities.cutBytes(bytes, 0, 8)),
-				Utilities.bytesToInt(Utilities.cutBytes(bytes, 8, 12)),
-				Utilities.bytesToString(Utilities.cutBytes(bytes, 12, 32)),
+				Utilities.bytesToString(Utilities.cutBytes(bytes, 8, 28)),
+				Utilities.bytesToInt(Utilities.cutBytes(bytes, 28, 32)),
 				Utilities.cutStringWhitAditionalSpace(Utilities.bytesToString(Utilities.cutBytes(bytes, 32, 62))),
 				TypeProduct.values()[Utilities.bytesToInt(Utilities.cutBytes(bytes, 62, 66))],
 				this.getProduct(Utilities.cutBytes(bytes, 66, 157)), 				

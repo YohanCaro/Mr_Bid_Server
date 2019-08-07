@@ -18,6 +18,7 @@ public class BstBiddingTest {
 				new BidTime(new BidDate(5, 8, 2019), 6), 
 				new BidTime(new BidDate(30, 8, 2019), 24), 
 				true, true, "Don Luis");
+		System.out.println();
 		try {
 			FileOperations fileOperations2 = FileOperations.getInstanceOf();
 			fileOperations2.addBidding(bidding);

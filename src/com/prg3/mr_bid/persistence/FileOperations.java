@@ -11,6 +11,7 @@ import com.prg3.mr_bid.model.entity.Bidding;
 import com.prg3.mr_bid.model.entity.User;
 import com.prg3.mr_bid.structures.simple_list.SimpleList;
 import com.prg3.mr_bid.utilities.Constants;
+import com.prg3.mr_bid.utilities.Utilities;
 
 /**
  * Clase que maneja la persistencia de los objetos Bidding y User, 
