@@ -4,8 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class Server_frame {
+public class ServerChat {
 	ArrayList clientOutputStreams;
+
 	ArrayList<String> users;
 	int port;
 
@@ -26,9 +27,7 @@ public class Server_frame {
 			}
 
 		}
-		
-		
-		
+
 		@Override
 		public void run() {
 			String message, connect = "Connect", disconnect = "Disconnect", chat = "Chat";
@@ -42,6 +41,7 @@ public class Server_frame {
 					for (String token : data) {
 						System.out.println(token + "\n");
 					}
+
 					if (data[2].equals(connect)) {
 						tellEveryone((data[0] + ":" + data[1] + ":" + chat));
 						userAdd(data[0]);
@@ -55,13 +55,11 @@ public class Server_frame {
 					}
 				}
 			} catch (Exception ex) {
-				System.out.println("Lost a connection. \n");
+				System.out.println("Lost a connection chat. \n");
 				clientOutputStreams.remove(client);
 			}
 		}
 	}
-
-
 
 	@SuppressWarnings("unchecked")
 
@@ -72,6 +70,7 @@ public class Server_frame {
 	private void b_startActionPerformed() {
 		Thread starter = new Thread(new ServerStart());
 		starter.start();
+
 		System.out.println("Server started...\n");
 	}
 
@@ -129,13 +128,17 @@ public class Server_frame {
 
 	public void tellEveryone(String message) {
 		Iterator it = clientOutputStreams.iterator();
+		// System.out.println("it antes del " + it);
 
 		while (it.hasNext()) {
+			System.out.println(it.hasNext());
 			try {
 				PrintWriter writer = (PrintWriter) it.next();
+				System.out.println(writer);
 				writer.println(message);
 				System.out.println("Sending: " + message + "\n");
 				writer.flush();
+				// ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
 
 			} catch (Exception ex) {
 				System.out.println("Error telling everyone. \n");
@@ -143,9 +146,11 @@ public class Server_frame {
 		}
 	}
 
-	public Server_frame() {
+	public ServerChat() {
 		initComponents();
+		// TODO Auto-generated constructor stub
 	}
+
 	public int getPort() {
 		return port;
 	}
