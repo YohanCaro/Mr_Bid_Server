@@ -71,7 +71,6 @@ public class ServerChat {
 					clientOutputStreams.add(writer);
 					Thread listener = new Thread(new ClientHandler(clientSock, writer));
 					listener.start();
-					System.out.println("Got a connection. \n");
 				}
 			} catch (Exception ex) {
 				System.out.println("Error making a connection. \n");
