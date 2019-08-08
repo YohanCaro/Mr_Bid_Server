@@ -17,6 +17,8 @@ public class Run {
 	 */
 	public static void main(String[] args) {
 		if (args.length == 1) {
+			
+			
 			try {
 				Server server = new Server(Integer.parseInt(args[0]));
 				System.out.println(server.getInetAddress().getLocalHost());
